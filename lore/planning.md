@@ -59,6 +59,17 @@ toasters and other funny kitchen appliances try to attack you
 - after 2 minutes of surviving human dies of heart failure
 - you win (assuming you don't get toasted)
 
+## shops
+
+killing enemies gives player money
+
+money can be spent on new weapons and armors
+
+1. dinner table
+- fork and jam gun
+- t1 armor
+- powers?
+
 ## tech stack
 
 - esbuild bundler
