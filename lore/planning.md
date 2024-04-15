@@ -8,6 +8,10 @@ player is a slice of bread
 player should have
 - name
 - 100 health
+- race/bread type
+- stamina
+- mana (maybe)
+- dashing (consumes stamina)
 
 ## game progression
 
@@ -16,6 +20,7 @@ player gets
 - better armor
 - max health increases
 - special temporary powers
+- stat increases
 
 30 levels
 - lvl 10 boss
@@ -92,3 +97,7 @@ money can be spent on new weapons and armors
 - esbuild bundler
 - pixijs for rendering
 - typescript programming language
+
+
+## art
+- pixel bread lying flat, armor and other items will stack on top of the flat bread
