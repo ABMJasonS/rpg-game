@@ -1,3 +1,5 @@
+# game title: breakfast revenge
+
 # Game Plan
 top down gameplay (player moves in all four directions, camera is hovering on top of the player pointing down)
 
