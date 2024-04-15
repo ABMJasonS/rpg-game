@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "target": "ES2016",
+      "module": "ESNext",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "allowJs": true,
+      "checkJs": true,
+      "noImplicitAny": true,
+      "noImplicitOverride": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "skipLibCheck": true
+    },
+    "display": "Recommended",
+    "$schema": "https://json.schemastore.org/tsconfig"
+}
