@@ -1,5 +1,5 @@
 # Game Plan
-top down
+top down gameplay (player moves in all four directions, camera is hovering on top of the player pointing down)
 
 player is a slice of bread
 
@@ -26,16 +26,19 @@ melees
 - starting butter knife
 - fork
 - butcher knife
+- bayonet (weak but attachable to musket)
+- laser sword
 
 ranged
 - jam gun (makes enemies slow)
 - sausage gun
+- musket
 - the sun
 
 ### armors
 
 - t1: jam
-- t2:
+- t2: butter
 - t3: metal jacket
 
 ## enemies
@@ -69,6 +72,18 @@ money can be spent on new weapons and armors
 - fork and jam gun
 - t1 armor
 - powers?
+
+2. after 1st boss
+- t2 armor
+- butcher knife
+- sausage gun
+- bayonet
+- musket
+
+3. after 2nd boss
+- t3 armor
+- the sun
+- laser sword
 
 ## tech stack
 
