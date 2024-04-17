@@ -1,1 +1,1 @@
-import {Application} from "../modules/pixi.js"
+import { Application } from "../modules/pixi.js";
