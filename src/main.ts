@@ -1,14 +1,17 @@
 import { Application } from "pixi.js";
 import { $ } from "./dom.js";
 
-const app = new Application();
+(async () => {
+  const app = new Application();
+  
+  await app.init({
+    resizeTo: $("#main-frame"),
+    background: 0xffffff
+  })
 
-app.init({
-  resizeTo: $("#main-frame")
-})
-
-$("#main-frame").appendChild(app.canvas);
-
-app.ticker.add((ticker) => {
-  $("#player-stats").innerHTML = ticker.FPS.toString();
-});
+  $("#main-frame").appendChild(app.canvas);
+  
+  app.ticker.add((ticker) => {
+    $("#fps-counter").innerHTML = ticker.FPS.toString();
+  });
+})()
