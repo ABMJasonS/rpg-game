@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "esbuild src/main.ts --outfile=public/main.js --bundle --watch --servedir=public"
+    "dev": "esbuild src/main.ts --outdir=public --bundle --watch --servedir=public"
   },
   "keywords": [],
   "author": "",
