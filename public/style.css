@@ -1,14 +1,16 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400!important;
+    font-style: normal;
+    
 }
 
 html, body {
     width: 100%;
     height: 100%;
-    font-family: "Silkscreen", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+    color: white;
 }
 
 .main-container {
@@ -28,11 +30,17 @@ html, body {
 #title {
     grid-area: a;
     border: none;
+    font-weight: 400;
+    height: max-content;
+    margin: 0;
+    margin-left: 10px;
+    font-size: 30px;
 }
 
 #player-stats {
     grid-area: b;
     margin-bottom: 0;
+    margin-top: 0;
 }
 
 #item-equip {
@@ -45,13 +53,17 @@ html, body {
     border: none;
     display: grid;
     grid-template-areas: 
-    "a a a a a a c c c"
-    "b b b b b b c c c"
-    "b b b b b b c c c"
-    "b b b b b b c c c"
-    "b b b b b b c c c"
-    "b b b b b b c c c"
-    "b b b b b b c c c";
+    "a a a a a a c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c"
+    "b b b b b b c c c c";
 }
 
 #main-frame {
@@ -85,4 +97,27 @@ html, body {
     "main main main main main main main main map map map"
     "main main main main main main main main map map map"
     "main main main main main main main main map map map";
+}
+
+#item-equip {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+}
+
+#playerview {
+    border: none;
+}
+
+#equipbox {
+    text-align: center;
+    border: none;
+    justify-content: center;
+}
+
+#box {
+    height: 9em;
+    width: 9em;
+    padding: 4px;
+    margin: auto;
+    margin-top: 15px;
 }
