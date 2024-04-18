@@ -25,12 +25,18 @@ import { GameObject } from "./gameobject.js";
   }
 
   game.addObject(object)
+
+  let fps = "";
   
   app.ticker.add((ticker) => {
-    $("#fps-counter").innerHTML = ticker.FPS.toFixed(0);
+    fps = ticker.FPS.toFixed(0);
   });
 
   setInterval(() => {
     game.act(1 / 240)
   }, 1000 / 240)
+
+  setInterval(() => {
+    $("#fps-counter").innerText = fps
+  }, 1000)
 })()
