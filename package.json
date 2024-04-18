@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "esbuild src/main.ts --outdir=public --bundle --watch --servedir=public"
+    "dev": "esbuild src/main.ts --outdir=public --bundle --watch --servedir=public",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "esbuild": "^0.20.2"
+    "@eslint/js": "^9.0.0",
+    "esbuild": "^0.20.2",
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^7.7.0"
   },
   "dependencies": {
     "pixi.js": "^8.1.0"
