@@ -11,10 +11,12 @@ export class GameScene {
 
   addObject(object: GameObject) {
     this.objects.push(object)
+    this.application.stage.addChild(object.pixiContainer)
   }
 
   removeObject(object: GameObject) {
     this.objects.filter(obj => obj != object)
+    this.application.stage.removeChild(object.pixiContainer)
   }
 
   act(delta: number) {
