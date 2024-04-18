@@ -9,9 +9,9 @@ import { $ } from "./dom.js";
     background: 0xffffff
   })
 
-  $("#main-frame").appendChild(app.canvas);
+  $("#main-frame").appendChild(app.canvas)
   
   app.ticker.add((ticker) => {
-    $("#fps-counter").innerHTML = ticker.FPS.toString();
+    $("#fps-counter").innerHTML = ticker.FPS.toFixed(0);
   });
 })()
