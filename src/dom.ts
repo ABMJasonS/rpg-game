@@ -20,7 +20,7 @@ export const html = (string: TemplateStringsArray): string => string.join("");
  * @param selector The CSS selector
  * @returns 
  */
-export function $<T extends HTMLElement>(selector: string, all = false): T {
+export function $<T extends HTMLElement>(selector: string): T {
   const element = document.querySelector(selector);
   
   if (element instanceof HTMLElement) {

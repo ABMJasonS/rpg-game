@@ -2,7 +2,7 @@
  * A signal value that updates all it's `Derived<T>` subscribers
  */
 export class Signal<T> {
-    private subscribers: Derived<any>[];
+    private subscribers: Derived<unknown>[] = [];
     private value: T;
 
     /**
@@ -38,7 +38,7 @@ export class Signal<T> {
         return this.value;
     }
 
-    _addSubscriber(subscriber: Derived<any>) {
+    _addSubscriber(subscriber: Derived<unknown>) {
         this.subscribers.push(subscriber)
     }
 
@@ -55,8 +55,9 @@ export class Signal<T> {
 export class Derived<T> {
     private derivedFunction: () => T;
     private destructor: (() => void) | undefined;
+    // @ts-expect-error It is defined, see the this._update() in the constructor
     private value: T;
-    dependencies: Signal<any>;
+    dependencies: Signal<unknown>[];
 
     /**
      * Creates a derived value
@@ -64,7 +65,7 @@ export class Derived<T> {
      * @param destructor The destructor of the derived value
      * @param dependencies The dependencies of the derived value
      */
-    constructor(derivedFunction: () => T, destructor: (() => void) | undefined, dependencies: Signal<any>[]) {
+    constructor(derivedFunction: () => T, destructor: (() => void) | undefined, dependencies: Signal<unknown>[]) {
         this.derivedFunction = derivedFunction;
         this.destructor = destructor;
         this.dependencies = dependencies;
@@ -79,5 +80,9 @@ export class Derived<T> {
     _update() {
         if (this.destructor) this.destructor();
         this.value = this.derivedFunction();
+    }
+
+    get() {
+        return this.value
     }
 }
