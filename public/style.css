@@ -33,9 +33,22 @@ html, body {
     font-weight: 400;
     height: max-content;
     margin: 0;
-    margin-left: 10px;
     font-size: 30px;
     margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    position: relative;
+}
+
+#gametitle {
+    margin-left: 10px;
+}
+
+#location {
+    position: absolute;
+    right: 10px;
+    bottom: 0;
 }
 
 #player-stats {
