@@ -1,58 +1,51 @@
-<!DOCTYPE html>
-<html lang="en" tabindex="-1">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Breakfast Revenge</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body tabindex="-1">
-    <div class="main-container" id="game" tabindex="-1">
-        <div id="top">
-            <div id="title">
-                <span id="gametitle">Breakfast Revenge: </span>
-                <span id="location">( Location Placeholder )</span>
-            </div>
-            <div id="player-stats">
-                <h1 id="name">
-                    Name (Race)
-                </h1>
-                <div id="stats">
-                    <p>HP: </p>
-                    <progress id="hp" value="100" max="100"></progress>
-                    <p>MANa: </p>
-                    <progress id="mana" value="100" max="100"></progress>
-                    <p>stamina: </p>
-                    <progress id="stamina" value="100" max="100"></progress>
-                </div>
-            </div>
-            <div id="item-equip">
-                <div id="playerview">
-
-                </div>
-                <div id="equipbox">
-                    <h2>equip items</h2>
-                    <div id="box">
-                        
-                    </div>
-                </div>
-            </div>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main-container" id="game">
+      <div id="top">
+        <div id="title">
+          <span id="gametitle">Breakfast Revenge: </span>
+          <span id="location">( Location Placeholder )</span>
         </div>
-        <div id="bottom">
-            <div id="main-frame">
-                <span id="fps-counter">--</span>
-            </div>
-            <div id="inventory">
-
-            </div>
-            <div id="mini-map">
-
-            </div>
+        <div id="player-stats">
+          <h1 id="name">Name (Race)</h1>
+          <div id="stats">
+            <p>HP:</p>
+            <progress id="hp" value="100" max="100"></progress>
+            <p>MANa:</p>
+            <progress id="mana" value="100" max="100"></progress>
+            <p>stamina:</p>
+            <progress id="stamina" value="100" max="100"></progress>
+          </div>
         </div>
+        <div id="item-equip">
+          <div id="playerview"></div>
+          <div id="equipbox">
+            <h2>equip items</h2>
+            <div id="box"></div>
+          </div>
+        </div>
+      </div>
+      <div id="bottom">
+        <div id="main-frame">
+          <span id="fps-counter">--</span>
+        </div>
+        <div id="inventory"></div>
+        <div id="mini-map"></div>
+      </div>
     </div>
     <script src="./main.js"></script>
-</body>
+  </body>
 </html>

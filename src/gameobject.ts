@@ -18,6 +18,6 @@ export class GameObject {
    * @param delta The delta time (time between last frame and second-last frame in seconds)
    */
   act(delta: number) {
-    console.log(`This method should be overwritten! Delta time is ${delta}`)
+    console.log(`This method should be overwritten! Delta time is ${delta}`);
   }
 }

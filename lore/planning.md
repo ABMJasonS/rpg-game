@@ -1,11 +1,13 @@
 # game title: breakfast revenge
 
 # Game Plan
+
 top down gameplay (player moves in all four directions, camera is hovering on top of the player pointing down)
 
 player is a slice of bread
 
 player should have
+
 - name
 - 100 health
 - race/bread type
@@ -16,6 +18,7 @@ player should have
 ## game progression
 
 player gets
+
 - new and more powerful weapons
 - better armor
 - max health increases
@@ -23,6 +26,7 @@ player gets
 - stat increases
 
 30 levels
+
 - lvl 10 boss
 - lvl 20 boss
 - lvl 30 boss
@@ -30,6 +34,7 @@ player gets
 ### weapons
 
 melees
+
 - starting butter knife
 - fork
 - butcher knife
@@ -37,6 +42,7 @@ melees
 - laser sword
 
 ranged
+
 - jam gun (makes enemies slow)
 - sausage gun
 - musket
@@ -55,15 +61,18 @@ toasters and other funny kitchen appliances try to attack you
 ### bosses
 
 1. toasted bread
+
 - mostly big ramming boss, only ranged attack is a small flame breath attack
 
 2. big microwave
+
 - shoots lasers (a lot of them)
 - shoots homing rockets
 - fires large fireballs that explode into small fireballs
 - explodes on death
 
 3. human
+
 - pretty much infinite health
 - name is john
 - after 2 minutes of surviving human dies of heart failure
@@ -76,11 +85,13 @@ killing enemies gives player money
 money can be spent on new weapons and armors
 
 1. dinner table
+
 - fork and jam gun
 - t1 armor
 - powers?
 
 2. after 1st boss
+
 - t2 armor
 - butcher knife
 - sausage gun
@@ -88,6 +99,7 @@ money can be spent on new weapons and armors
 - musket
 
 3. after 2nd boss
+
 - t3 armor
 - the sun
 - laser sword
@@ -98,6 +110,6 @@ money can be spent on new weapons and armors
 - pixijs for rendering
 - typescript programming language
 
-
 ## art
+
 - pixel bread lying flat, armor and other items will stack on top of the flat bread

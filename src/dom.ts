@@ -1,7 +1,7 @@
 /**
  * A function mainly to take advantage of some code editors that
  * syntax highlight HTML inside JS templates
- * 
+ *
  * @example
  * ```ts
  * const button = html`<button id="button-id">button content</button>`
@@ -18,15 +18,15 @@ export const html = (string: TemplateStringsArray): string => string.join("");
  * const button = $("#button-id")
  * ```
  * @param selector The CSS selector
- * @returns 
+ * @returns
  */
 export function $<T extends HTMLElement>(selector: string): T {
   const element = document.querySelector(selector);
-  
+
   if (element instanceof HTMLElement) {
     // @ts-expect-error Cast the type of the element
     return element;
   } else {
-    throw new Error("Element not found!")
+    throw new Error("Element not found!");
   }
 }
