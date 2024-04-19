@@ -83,6 +83,7 @@ body {
 #main-frame {
   grid-area: main;
   position: relative;
+  cursor: crosshair;
 }
 
 #main-frame canvas {
