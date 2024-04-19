@@ -4,7 +4,7 @@
     font-family: "Silkscreen", sans-serif;
     font-weight: 400!important;
     font-style: normal;
-    
+    user-select: none;
 }
 
 html, body {
@@ -22,7 +22,6 @@ html, body {
 }
 
 .main-container div {
-    border: 4px solid white;
     background: transparent;
     margin: 10px;
 }
@@ -52,6 +51,7 @@ html, body {
 }
 
 #player-stats {
+    border: 4px solid white;
     grid-area: b;
     margin-bottom: 0;
     margin-top: 0;
@@ -60,6 +60,7 @@ html, body {
 #item-equip {
     grid-area: c;
     margin-bottom: 0;
+    border: 4px solid white;
 }
 
 .main-container #top {
@@ -83,10 +84,13 @@ html, body {
 #main-frame {
     grid-area: main;
     position: relative;
+    border: 4px solid white;
+    overflow: hidden;
 }
 
 #main-frame canvas {
     position: absolute;
+    overflow: hidden;
 }
 
 #fps-counter {
@@ -99,12 +103,14 @@ html, body {
 }
 
 #inventory {
+    border: 4px solid white;
     grid-area: inv;
 }
 
 #mini-map {
     grid-area: map;
     width: fill;
+    border: 4px solid white;
 }
 
 .main-container #bottom {
@@ -121,6 +127,7 @@ html, body {
 #item-equip {
     display: grid;
     grid-template-columns: 1fr 1.6fr;
+    border: 4px solid white;
 }
 
 #playerview {
@@ -138,6 +145,7 @@ html, body {
 }
 
 #box {
+    border: 4px solid white;
     height: 9em;
     width: 9em;
     padding: 4px;
