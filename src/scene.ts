@@ -33,16 +33,16 @@ export class GameScene {
     rescale();
     window.addEventListener("resize", rescale);
     window.addEventListener("keydown", (e) => {
-      if (!this.keysDown.find(k => k == e.key)) {
-        this.keysDown.push(e.key)
+      if (!this.keysDown.find((k) => k == e.key)) {
+        this.keysDown.push(e.key);
       }
-    })
+    });
     window.addEventListener("keyup", (e) => {
-      const index = this.keysDown.findIndex(k => k == e.key)
+      const index = this.keysDown.findIndex((k) => k == e.key);
       if (index !== -1) {
-        this.keysDown.splice(index, 1)
+        this.keysDown.splice(index, 1);
       }
-    })
+    });
   }
 
   addObject(object: GameObject) {
@@ -56,7 +56,7 @@ export class GameScene {
   }
 
   isKeyDown(key: string) {
-    return this.keysDown.find(k => k === key) !== undefined;
+    return this.keysDown.find((k) => k === key) !== undefined;
   }
 
   act(delta: number) {
@@ -64,8 +64,12 @@ export class GameScene {
       object.act(delta);
     }
 
-    this.application.stage.x = -(this.camera.position.x  * this.camera.zoom * this.camera.scale)+ this.camera.offset.x;
-    this.application.stage.y = -(this.camera.position.y  * this.camera.zoom * this.camera.scale)+ this.camera.offset.y;
+    this.application.stage.x =
+      -(this.camera.position.x * this.camera.zoom * this.camera.scale) +
+      this.camera.offset.x;
+    this.application.stage.y =
+      -(this.camera.position.y * this.camera.zoom * this.camera.scale) +
+      this.camera.offset.y;
     this.application.stage.scale = this.camera.zoom * this.camera.scale;
   }
 }
