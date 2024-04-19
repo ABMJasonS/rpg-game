@@ -60,12 +60,12 @@ export class GameScene {
   }
 
   act(delta: number) {
-    this.application.stage.x = -(this.camera.position.x  * this.camera.zoom * this.camera.scale)+ this.camera.offset.x;
-    this.application.stage.y = -(this.camera.position.y  * this.camera.zoom * this.camera.scale)+ this.camera.offset.y;
-    this.application.stage.scale = this.camera.zoom * this.camera.scale;
-
     for (const object of this.objects) {
       object.act(delta);
     }
+
+    this.application.stage.x = -(this.camera.position.x  * this.camera.zoom * this.camera.scale)+ this.camera.offset.x;
+    this.application.stage.y = -(this.camera.position.y  * this.camera.zoom * this.camera.scale)+ this.camera.offset.y;
+    this.application.stage.scale = this.camera.zoom * this.camera.scale;
   }
 }
