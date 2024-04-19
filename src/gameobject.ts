@@ -20,4 +20,10 @@ export class GameObject {
   act(delta: number) {
     console.log(`This method should be overwritten! Delta time is ${delta}`);
   }
+
+  updateGraphics() {
+    this.pixiContainer.x = this.position.x;
+    this.pixiContainer.y = this.position.y;
+    this.pixiContainer.rotation = this.rotation;
+  }
 }

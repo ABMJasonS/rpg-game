@@ -55,13 +55,23 @@ export class GameScene {
     this.application.stage.removeChild(object.pixiContainer);
   }
 
+  /**
+   * Checks if a key on the keyboard is down
+   * @param key The key string to check for
+   * @returns True if the key is down
+   */
   isKeyDown(key: string) {
     return this.keysDown.find((k) => k === key) !== undefined;
   }
 
+  /**
+   * The physics process of the scene
+   * @param delta Delta time
+   */
   act(delta: number) {
     for (const object of this.objects) {
       object.act(delta);
+      object.updateGraphics();
     }
 
     this.application.stage.x =

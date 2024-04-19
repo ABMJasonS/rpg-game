@@ -3,6 +3,7 @@ import { $ } from "./dom.js";
 import { GameScene } from "./scene.js";
 import { Player } from "./objects/player.js";
 import { TestObject } from "./objects/testobject.js";
+import { createVector } from "./vector.js";
 
 (async () => {
   const app = new Application();
@@ -18,7 +19,9 @@ import { TestObject } from "./objects/testobject.js";
 
   game.addObject(new Player(game));
 
-  game.addObject(new TestObject(game));
+  for (let i = 0; i < 10; i++) {
+    game.addObject(new TestObject(game, createVector(Math.random() * 10000, Math.random() * 10000)));
+  }
 
   let fps = "";
 

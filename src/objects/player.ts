@@ -14,15 +14,13 @@ export class Player extends GameObject {
   }
 
   override act(delta: number): void {
-    if (this.scene.isKeyDown("a")) this.velocity.x = delta * -this.speed;
-    if (this.scene.isKeyDown("d")) this.velocity.x = delta * this.speed;
-    if (this.scene.isKeyDown("w")) this.velocity.y = delta * -this.speed;
-    if (this.scene.isKeyDown("s")) this.velocity.y = delta * this.speed;
+    if (this.scene.isKeyDown("a") || this.scene.isKeyDown("ArrowLeft")) this.velocity.x = delta * -this.speed;
+    if (this.scene.isKeyDown("d") || this.scene.isKeyDown("ArrowRight")) this.velocity.x = delta * this.speed;
+    if (this.scene.isKeyDown("w") || this.scene.isKeyDown("ArrowUp")) this.velocity.y = delta * -this.speed;
+    if (this.scene.isKeyDown("s") || this.scene.isKeyDown("ArrowDown")) this.velocity.y = delta * this.speed;
     this.velocity.x *= 0.9;
     this.velocity.y *= 0.9;
     this.position = addVectors(this.position, this.velocity);
-    this.pixiContainer.x = this.position.x;
-    this.pixiContainer.y = this.position.y;
 
     this.scene.camera.position = this.position;
   }
