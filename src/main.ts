@@ -29,9 +29,10 @@ import { createVector } from "./vector.js";
     fps = ticker.FPS.toFixed(0);
   });
 
+  const TPS = 240;
   setInterval(() => {
-    game.act(1 / 240);
-  }, 1000 / 240);
+    game.act(1 / TPS);
+  }, 1000 / TPS);
 
   setInterval(() => {
     $("#fps-counter").innerText = `${fps} FPS`;
