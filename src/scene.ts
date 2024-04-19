@@ -19,6 +19,7 @@ export class GameScene {
     zoom: 1,
     scale: 0,
   };
+  keysDown: string[] = [];
 
   constructor(application: Application) {
     this.application = application;
@@ -31,6 +32,17 @@ export class GameScene {
     };
     rescale();
     window.addEventListener("resize", rescale);
+    window.addEventListener("keydown", (e) => {
+      if (!this.keysDown.find(k => k == e.key)) {
+        this.keysDown.push(e.key)
+      }
+    })
+    window.addEventListener("keyup", (e) => {
+      const index = this.keysDown.findIndex(k => k == e.key)
+      if (index !== -1) {
+        this.keysDown.splice(index, 1)
+      }
+    })
   }
 
   addObject(object: GameObject) {
@@ -41,6 +53,10 @@ export class GameScene {
   removeObject(object: GameObject) {
     this.objects.filter((obj) => obj != object);
     this.application.stage.removeChild(object.pixiContainer);
+  }
+
+  isKeyDown(key: string) {
+    return this.keysDown.find(k => k === key) !== undefined;
   }
 
   act(delta: number) {

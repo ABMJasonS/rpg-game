@@ -1,7 +1,7 @@
 import { Application, Graphics } from "pixi.js";
 import { $ } from "./dom.js";
 import { GameScene } from "./scene.js";
-import { GameObject } from "./gameobject.js";
+import { Player } from "./objects/player.js";
 
 (async () => {
   const app = new Application();
@@ -15,16 +15,7 @@ import { GameObject } from "./gameobject.js";
 
   const game = new GameScene(app);
 
-  const object = new GameObject({ x: 0, y: 0 }, 0, game);
-
-  object.pixiContainer.addChild(new Graphics().circle(0, 0, 100).fill());
-
-  object.act = (delta) => {
-    object.position.x += delta * 10;
-    object.pixiContainer.x = object.position.x;
-  };
-
-  game.addObject(object);
+  game.addObject(new Player(game));
 
   let fps = "";
 
