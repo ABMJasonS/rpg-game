@@ -8,7 +8,7 @@ export class Player extends GameObject {
     super({x: 0, y: 0}, 0, scene)
     const graphics = new Graphics()
     graphics
-      .rect(0, 0, 200, 200)
+      .rect(-100, -100, 200, 200)
       .fill(0xFF0000)
     this.pixiContainer.addChild(graphics)
   }
@@ -20,5 +20,7 @@ export class Player extends GameObject {
     if (this.scene.isKeyDown("s")) this.position.y += delta * this.speed;
     this.pixiContainer.x = this.position.x;
     this.pixiContainer.y = this.position.y;
+
+    this.scene.camera.position = this.position
   }
 }

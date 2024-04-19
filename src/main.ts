@@ -2,6 +2,7 @@ import { Application, Graphics } from "pixi.js";
 import { $ } from "./dom.js";
 import { GameScene } from "./scene.js";
 import { Player } from "./objects/player.js";
+import { TestObject } from "./objects/testobject.js";
 
 (async () => {
   const app = new Application();
@@ -16,6 +17,8 @@ import { Player } from "./objects/player.js";
   const game = new GameScene(app);
 
   game.addObject(new Player(game));
+
+  game.addObject(new TestObject(game));
 
   let fps = "";
 
