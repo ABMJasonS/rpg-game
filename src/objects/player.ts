@@ -1,11 +1,12 @@
 import { Graphics } from "pixi.js";
 import { GameObject } from "../gameobject";
 import { GameScene } from "../scene";
-import { Vector, addVectors, createVector } from "../vector";
+import { Vector, addVectors, createVector, scale, setLength } from "../vector";
 
 export class Player extends GameObject {
   speed = 1000;
   velocity: Vector = createVector(0, 0);
+  friction = 5;
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
     const graphics = new Graphics();
@@ -14,13 +15,14 @@ export class Player extends GameObject {
   }
 
   override act(delta: number): void {
-    if (this.scene.isKeyDown("a") || this.scene.isKeyDown("ArrowLeft")) this.velocity.x = -this.speed;
-    if (this.scene.isKeyDown("d") || this.scene.isKeyDown("ArrowRight")) this.velocity.x = this.speed;
-    if (this.scene.isKeyDown("w") || this.scene.isKeyDown("ArrowUp")) this.velocity.y = -this.speed;
-    if (this.scene.isKeyDown("s") || this.scene.isKeyDown("ArrowDown")) this.velocity.y = this.speed;
-    this.velocity.x *= 0.9;
-    this.velocity.y *= 0.9;
-    this.position = addVectors(this.position, {x: this.velocity.x * delta, y: this.velocity.y * delta});
+    let movement = createVector(0, 0)
+    if (this.scene.isKeyDown("a") || this.scene.isKeyDown("ArrowLeft")) movement.x -= 1;
+    if (this.scene.isKeyDown("d") || this.scene.isKeyDown("ArrowRight")) movement.x += 1;
+    if (this.scene.isKeyDown("w") || this.scene.isKeyDown("ArrowUp")) movement.y -= 1;
+    if (this.scene.isKeyDown("s") || this.scene.isKeyDown("ArrowDown")) movement.y += 1;
+    movement = setLength(movement, 1);
+
+    this.position = addVectors(this.position, scale(movement, delta * 1000));
 
     this.scene.camera.position = this.position;
   }

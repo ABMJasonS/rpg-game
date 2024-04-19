@@ -37,3 +37,19 @@ export function vectorLength(v: Vector): number {
 export function vectorAngle(v: Vector): Radians {
   return Math.atan2(v.y, v.x);
 }
+
+export function setLength(v: Vector, length: number): Vector {
+  if (v.x === 0 && v.y === 0) return v;
+  const len = vectorLength(v)
+  return {
+    x: v.x / len * length,
+    y: v.y / len * length
+  }
+}
+
+export function scale(v: Vector, scale: number): Vector {
+  return {
+    x: v.x * scale,
+    y: v.y * scale
+  }
+}

@@ -20,9 +20,22 @@ export class GameScene {
     scale: 0,
   };
   keysDown: string[] = [];
+  mouseInfo: {
+    position: Vector;
+    buttons: {
+      left: boolean
+    }
+  } = {
+    position: { x: 0, y: 0},
+    buttons: {
+      left: false
+    }
+  }
 
   constructor(application: Application) {
     this.application = application;
+    const mainFrame = $("#main-frame")
+
     const rescale = () => {
       const dimensions = $("#main-frame").getBoundingClientRect();
       this.camera.scale =
@@ -32,6 +45,7 @@ export class GameScene {
     };
     rescale();
     window.addEventListener("resize", rescale);
+
     window.addEventListener("keydown", (e) => {
       if (!this.keysDown.find((k) => k == e.key)) {
         this.keysDown.push(e.key);
@@ -43,6 +57,20 @@ export class GameScene {
         this.keysDown.splice(index, 1);
       }
     });
+
+    mainFrame.addEventListener("mousedown", (e) => {
+      if (e.button === 0) this.mouseInfo.buttons.left = true;
+    })
+    mainFrame.addEventListener("mouseup", (e) => {
+      if (e.button === 0) this.mouseInfo.buttons.left = false;
+    })
+
+    mainFrame.addEventListener("mousemove", (e) => {
+      this.mouseInfo.position = {
+        x: e.clientX,
+        y: e.clientY
+      }
+    })
   }
 
   addObject(object: GameObject) {
