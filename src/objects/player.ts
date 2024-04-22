@@ -25,5 +25,8 @@ export class Player extends GameObject {
     this.position = addVectors(this.position, scale(movement, delta * 1000));
 
     this.scene.camera.position = this.position;
+
+    if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta
+    if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta
   }
 }
