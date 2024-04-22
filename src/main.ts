@@ -35,6 +35,6 @@ import { createVector } from "./vector.js";
   }, 1000 / TPS);
 
   setInterval(() => {
-    $("#fps-counter").innerText = `${fps} FPS`;
+    $("#fps-counter").innerText = `${fps} FPS | ${TPS} TPS`;
   }, 1000);
 })();
