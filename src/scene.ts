@@ -67,9 +67,10 @@ export class GameScene {
 
     mainFrame.addEventListener("mousemove", (e) => {
       this.mouseInfo.position = {
-        x: e.clientX,
-        y: e.clientY
+        x: (e.offsetX - this.camera.offset.x) / this.camera.scale * this.camera.zoom + this.camera.position.x,
+        y: (e.offsetY - this.camera.offset.y) / this.camera.scale * this.camera.zoom + this.camera.position.y
       }
+      console.table(this.camera)
     })
   }
 
