@@ -1,7 +1,8 @@
 import { Graphics } from "pixi.js";
 import { GameObject } from "../gameobject";
 import { GameScene } from "../scene";
-import { Vector, addVectors, createVector, scale, setLength } from "../vector";
+import { Vector, addVectors, createVector, scale, setLength, subVectors, vectorAngle } from "../vector";
+import { Projectile } from "./projectile";
 
 export class Player extends GameObject {
   speed = 1000;
@@ -28,5 +29,11 @@ export class Player extends GameObject {
 
     if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta
     if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta
+
+    if (this.scene.isKeyDown(" ")) this.scene.addObject(new Projectile(this.scene, this.position, vectorAngle(subVectors(this.scene.mouseInfo.position, this.position)), {
+      velocity: 200,
+      life: 1,
+      image: new Graphics().circle(0, 0, 10).fill({color: 0x0000ff})
+    }))
   }
 }
