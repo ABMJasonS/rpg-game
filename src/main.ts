@@ -32,7 +32,7 @@ import { CursorTest } from "./objects/cursortest.js";
     fps = ticker.FPS.toFixed(0);
   });
 
-  const TPS = 240;
+  const TPS = 120;
   setInterval(() => {
     game.act(1 / TPS);
   }, 1000 / TPS);
