@@ -160,6 +160,13 @@ body {
 #name {
   margin: 20px;
   margin-top: 10px;
+  position: relative;
+}
+
+#level {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 #stats progress {
