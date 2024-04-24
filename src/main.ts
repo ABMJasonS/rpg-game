@@ -45,6 +45,7 @@ import { CursorTest } from "./objects/cursortest.js";
   }, 1000 / TPS);
 
   setInterval(() => {
-    $("#fps-counter").innerText = `${fps} FPS | ${TPS} TPS`;
+    $("#fps-counter").innerText =
+      `${fps} FPS | ${TPS} TPS | ${game._objects.length} Objects`;
   }, 1000);
 })();

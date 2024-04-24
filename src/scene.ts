@@ -104,7 +104,6 @@ export class GameScene {
       1,
     );
     this.application.stage.removeChild(object.pixiContainer);
-    console.log(this._objects);
   }
 
   /**
