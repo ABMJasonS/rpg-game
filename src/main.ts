@@ -1,4 +1,4 @@
-import { Application, Graphics } from "pixi.js";
+import { Application, Graphics, TextureStyle } from "pixi.js";
 import { $ } from "./dom.js";
 import { GameScene } from "./scene.js";
 import { Player } from "./objects/player.js";
@@ -7,6 +7,8 @@ import { createVector } from "./vector.js";
 import { CursorTest } from "./objects/cursortest.js";
 
 (async () => {
+  TextureStyle.defaultOptions.scaleMode = "nearest";
+
   const app = new Application();
 
   await app.init({
@@ -21,10 +23,15 @@ import { CursorTest } from "./objects/cursortest.js";
   game.addObject(new Player(game));
 
   for (let i = 0; i < 10; i++) {
-    game.addObject(new TestObject(game, createVector(Math.random() * 1000 - 500, Math.random() * 1000 - 500)));
+    game.addObject(
+      new TestObject(
+        game,
+        createVector(Math.random() * 1000 - 500, Math.random() * 1000 - 500),
+      ),
+    );
   }
 
-  game.addObject(new CursorTest(game))
+  game.addObject(new CursorTest(game));
 
   let fps = "";
 
