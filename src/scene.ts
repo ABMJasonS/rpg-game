@@ -5,21 +5,27 @@ import { $ } from "./dom";
 
 export class GameScene {
   application: Application;
-  objects: GameObject[] = [];
+  _objects: GameObject[] = [];
+  /**
+   * The current camera state of the scene
+   */
   camera: {
     position: Vector;
     offset: Vector;
     rotation: Radians;
     zoom: number;
-    scale: number;
+    _scale: number;
   } = {
     position: { x: 0, y: 0 },
     offset: { x: 0, y: 0 },
     rotation: 0,
     zoom: 1,
-    scale: 0,
+    _scale: 0,
   };
-  keysDown: string[] = [];
+  private _keysDown: string[] = [];
+  /**
+   * The current position and buttons pressed on the user's mouse
+   */
   mouseInfo: {
     position: Vector;
     buttons: {
@@ -32,13 +38,17 @@ export class GameScene {
     }
   }
 
+  /**
+   * Creates a scene
+   * @param application The Pixi.js Application class to use
+   */
   constructor(application: Application) {
     this.application = application;
     const mainFrame = $("#main-frame")
 
     const rescale = () => {
       const dimensions = $("#main-frame").getBoundingClientRect();
-      this.camera.scale =
+      this.camera._scale =
         (dimensions.width * dimensions.height) / (1000 * 1000);
       this.camera.offset.x = dimensions.width / 2;
       this.camera.offset.y = dimensions.height / 2;
@@ -47,14 +57,14 @@ export class GameScene {
     window.addEventListener("resize", rescale);
 
     window.addEventListener("keydown", (e) => {
-      if (!this.keysDown.find((k) => k == e.key)) {
-        this.keysDown.push(e.key);
+      if (!this._keysDown.find((k) => k == e.key)) {
+        this._keysDown.push(e.key);
       }
     });
     window.addEventListener("keyup", (e) => {
-      const index = this.keysDown.findIndex((k) => k == e.key);
+      const index = this._keysDown.findIndex((k) => k == e.key);
       if (index !== -1) {
-        this.keysDown.splice(index, 1);
+        this._keysDown.splice(index, 1);
       }
     });
 
@@ -67,21 +77,29 @@ export class GameScene {
 
     mainFrame.addEventListener("mousemove", (e) => {
       this.mouseInfo.position = {
-        x: (e.offsetX - this.camera.offset.x) / this.camera.scale * this.camera.zoom + this.camera.position.x,
-        y: (e.offsetY - this.camera.offset.y) / this.camera.scale * this.camera.zoom + this.camera.position.y
+        x: (e.offsetX - this.camera.offset.x) / this.camera._scale * this.camera.zoom + this.camera.position.x,
+        y: (e.offsetY - this.camera.offset.y) / this.camera._scale * this.camera.zoom + this.camera.position.y
       }
     })
   }
 
+  /**
+   * Adds a game object to the scene
+   * @param object The game object to add
+   */
   addObject(object: GameObject) {
-    this.objects.push(object);
+    this._objects.push(object);
     this.application.stage.addChild(object.pixiContainer);
   }
 
+  /**
+   * Removes a game object from the scene
+   * @param object The game object to remove
+   */
   removeObject(object: GameObject) {
-    this.objects.splice(this.objects.findIndex(obj => obj === object), 1)
+    this._objects.splice(this._objects.findIndex(obj => obj === object), 1)
     this.application.stage.removeChild(object.pixiContainer);
-    console.log(this.objects)
+    console.log(this._objects)
   }
 
   /**
@@ -90,7 +108,7 @@ export class GameScene {
    * @returns True if the key is down
    */
   isKeyDown(key: string) {
-    return this.keysDown.find((k) => k === key) !== undefined;
+    return this._keysDown.find((k) => k === key) !== undefined;
   }
 
   /**
@@ -98,17 +116,17 @@ export class GameScene {
    * @param delta Delta time
    */
   act(delta: number) {
-    for (const object of this.objects) {
+    for (const object of this._objects) {
       object.act(delta);
       object.updateGraphics();
     }
 
     this.application.stage.x =
-      -(this.camera.position.x * this.camera.zoom * this.camera.scale) +
+      -(this.camera.position.x * this.camera.zoom * this.camera._scale) +
       this.camera.offset.x;
     this.application.stage.y =
-      -(this.camera.position.y * this.camera.zoom * this.camera.scale) +
+      -(this.camera.position.y * this.camera.zoom * this.camera._scale) +
       this.camera.offset.y;
-    this.application.stage.scale = this.camera.zoom * this.camera.scale;
+    this.application.stage.scale = this.camera.zoom * this.camera._scale;
   }
 }
