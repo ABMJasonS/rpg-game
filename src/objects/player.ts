@@ -1,4 +1,4 @@
-import { Graphics } from "pixi.js";
+import { Assets, Graphics, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
 import { GameScene } from "../scene";
 import { Vector, addVectors, createVector, scale, setLength, subVectors, vectorAngle } from "../vector";
@@ -10,9 +10,12 @@ export class Player extends GameObject {
   friction = 5;
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
-    const graphics = new Graphics();
-    graphics.rect(-100, -100, 200, 200).fill(0xff0000);
-    this.pixiContainer.addChild(graphics);
+    Assets.load("./img/bread.png").then(asset => {
+      const sprite = Sprite.from(asset)
+      sprite.anchor.set(0.5)
+      sprite.scale.set(8)
+      this.pixiContainer.addChild(sprite)
+    })
   }
 
   override act(delta: number): void {
