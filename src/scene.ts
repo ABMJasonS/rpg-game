@@ -70,7 +70,6 @@ export class GameScene {
         x: (e.offsetX - this.camera.offset.x) / this.camera.scale * this.camera.zoom + this.camera.position.x,
         y: (e.offsetY - this.camera.offset.y) / this.camera.scale * this.camera.zoom + this.camera.position.y
       }
-      console.table(this.camera)
     })
   }
 
@@ -80,8 +79,9 @@ export class GameScene {
   }
 
   removeObject(object: GameObject) {
-    this.objects.filter((obj) => obj != object);
+    this.objects.splice(this.objects.findIndex(obj => obj === object), 1)
     this.application.stage.removeChild(object.pixiContainer);
+    console.log(this.objects)
   }
 
   /**
