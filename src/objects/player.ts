@@ -13,7 +13,9 @@ import {
 } from "../vector";
 import { Projectile } from "./projectile";
 import { Derived, Signal } from "../signals";
-import { sound } from "@pixi/sound";
+import { sound, filters } from "@pixi/sound";
+import { Weapon } from "./weapon";
+import { Weapons } from "../definitions/weapons";
 
 export class Player extends GameObject {
   speed = 1000;
@@ -51,6 +53,9 @@ export class Player extends GameObject {
       movement.y += 1;
     movement = setLength(movement, 1);
 
+    if (movement.x < 0) this.pixiContainer.scale.x = 1;
+    if (movement.x > 0) this.pixiContainer.scale.x = -1;
+
     this.position = addVectors(this.position, scale(movement, delta * 1000));
 
     this.scene.camera.position = this.position;
@@ -60,21 +65,20 @@ export class Player extends GameObject {
 
     if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
 
-    if (this.scene.isKeyDown(" ") && this.fireCount > 0.2) {
+    if (
+      (this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left) &&
+      this.fireCount > 1
+    ) {
       this.fireCount = 0;
-      sound.play("fire");
+      sound.play("fire", {
+        filters: [new filters.ReverbFilter(1)],
+      });
       this.scene.addObject(
-        new Projectile(
-          this.scene,
+        new Weapon(
           this.position,
           vectorAngle(subVectors(this.scene.mouseInfo.position, this.position)),
-          {
-            velocity: 2000,
-            life: 1,
-            image: new Graphics()
-              .rect(0, -5, 100, 10)
-              .fill({ color: 0x0000ff }),
-          },
+          this.scene,
+          Weapons.butter_knife,
         ),
       );
     }
