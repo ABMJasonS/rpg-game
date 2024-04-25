@@ -85,13 +85,13 @@ export class GameScene {
 				y: e.offsetY,
 			};
 		});
-		this.noisefilter = new NoiseFilter({ noise: 0.2 });
+		this.noisefilter = new NoiseFilter({ noise: 0.5 });
 		this.application.stage.filters = [
 			this.noisefilter,
 			new BulgePinchFilter({
 				center: createVector(0.5, 0.5),
 				radius: this.application.canvas.width,
-				strength: 0.5,
+				strength: .8,
 			}),
 		];
 	}
