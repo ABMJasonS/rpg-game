@@ -36,7 +36,7 @@ import { Enemy } from "./objects/enemy.js";
 
   game.addObject(new Background(game))
 
-  game.addObject(new Enemy({x: 0, y: 0}, game))
+  game.addObject(new Enemy({x: 3000, y: 0}, game))
 
   let fps = "";
 
