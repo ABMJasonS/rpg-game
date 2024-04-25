@@ -31,7 +31,6 @@ export class Weapon extends GameObject {
       this.pixiContainer.addChild(sprite);
     });
     if (this.definition.useSound) {
-      sound.add(this.definition.useSound, `./sfx/${definition.useSound}`);
       sound.play(this.definition.useSound, {});
     }
   }

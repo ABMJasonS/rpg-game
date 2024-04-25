@@ -5,6 +5,8 @@ import { Player } from "./objects/player.js";
 import { TestObject } from "./objects/testobject.js";
 import { createVector } from "./vector.js";
 import { CursorTest } from "./objects/cursortest.js";
+import { Weapons } from "./definitions/weapons.js";
+import { sound } from "@pixi/sound";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -15,6 +17,12 @@ import { CursorTest } from "./objects/cursortest.js";
     resizeTo: $("#main-frame"),
     background: 0x000000,
   });
+
+  for (const [_, weapon] of Object.entries(Weapons)) {
+    if (!weapon.useSound) return;
+    sound.add(weapon.useSound, `./sfx/${weapon.useSound}`);
+  }
+  console.info("Sounds are loaded!");
 
   $("#main-frame").appendChild(app.canvas);
 
