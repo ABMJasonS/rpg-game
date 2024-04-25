@@ -5,9 +5,12 @@ import { GameScene } from "../scene";
 export class Background extends GameObject {
   constructor(scene: GameScene) {
     super({ x: -10000, y: -10000 }, 0, scene);
-    Assets.load("./img/test-image.jpg").then(asset => {
-      this.pixiContainer.addChild(new TilingSprite({texture: asset, width: 20000, height: 20000}))
+    Assets.load("./img/tiles.png").then(asset => {
+      this.pixiContainer.addChild(new TilingSprite({texture: asset, width: 20000, height: 20000, scale: 32}))
       this.pixiContainer.zIndex = -9999
     })
+  }
+  override act(delta: number): void {
+    
   }
 }
