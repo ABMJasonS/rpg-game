@@ -91,7 +91,7 @@ export class GameScene {
 			new BulgePinchFilter({
 				center: createVector(0.5, 0.5),
 				radius: this.application.canvas.width,
-				strength: 0.2,
+				strength: 0.5,
 			}),
 		];
 	}
