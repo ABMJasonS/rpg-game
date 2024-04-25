@@ -8,6 +8,9 @@ dependencies:
   '@pixi/sound':
     specifier: ^6.0.0
     version: 6.0.0(pixi.js@8.1.0)
+  pixi-filters:
+    specifier: ^6.0.3
+    version: 6.0.3(pixi.js@8.1.0)
   pixi.js:
     specifier: ^8.1.0
     version: 8.1.0
@@ -340,6 +343,10 @@ packages:
     resolution: {integrity: sha512-qp3m9PPz4gULB9MhjGID7wpo3gJ4bTGXm7ltNDsmOvsPduTeHp8wSW9YckBj3mljeOh4F0m2z/0JKAALRKbmLQ==}
     dev: false
 
+  /@types/gradient-parser@0.1.5:
+    resolution: {integrity: sha512-r7K3NkJz3A95WkVVmjs0NcchhHstC2C/VIYNX4JC6tieviUNo774FFeOHjThr3Vw/WCeMP9kAT77MKbIRlO/4w==}
+    dev: false
+
   /@webgpu/types@0.1.40:
     resolution: {integrity: sha512-/BBkHLS6/eQjyWhY2H7Dx5DHcVrS2ICj9owvSRdgtQT6KcafLZA86tPze0xAOsd4FbsYKCUBUQyNi87q7gV7kw==}
     dev: false
@@ -394,6 +401,15 @@ packages:
 
   /parse-svg-path@0.1.2:
     resolution: {integrity: sha512-JyPSBnkTJ0AI8GGJLfMXvKq42cj5c006fnLz6fXy6zfoVjJizi8BNTpu8on8ziI1cKy9d9DGNuY17Ce7wuejpQ==}
+    dev: false
+
+  /pixi-filters@6.0.3(pixi.js@8.1.0):
+    resolution: {integrity: sha512-dywEQ68HbHJbU0KPOBhntI76GzJDXSCSiqkEOmSeT6n8BdgKzV3dwl7J8vR07PsF+uYKHJE2ehayKhSiWRxw/w==}
+    peerDependencies:
+      pixi.js: '>=8.0.0-0'
+    dependencies:
+      '@types/gradient-parser': 0.1.5
+      pixi.js: 8.1.0
     dev: false
 
   /pixi.js@8.1.0:
