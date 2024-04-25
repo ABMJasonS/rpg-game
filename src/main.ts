@@ -8,6 +8,7 @@ import { CursorTest } from "./objects/cursortest.js";
 import { Weapons } from "./definitions/weapons.js";
 import { sound } from "@pixi/sound";
 import { Background } from "./objects/background.js";
+import { Enemy } from "./objects/enemy.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -34,6 +35,8 @@ import { Background } from "./objects/background.js";
   // game.addObject(new CursorTest(game));
 
   game.addObject(new Background(game))
+
+  game.addObject(new Enemy({x: 0, y: 0}, game))
 
   let fps = "";
 
