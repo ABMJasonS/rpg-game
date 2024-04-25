@@ -28,15 +28,17 @@ export class GameScene {
    */
   mouseInfo: {
     position: Vector;
+    _offset: Vector;
     buttons: {
-      left: boolean
-    }
+      left: boolean;
+    };
   } = {
-    position: { x: 0, y: 0},
+    position: { x: 0, y: 0 },
+    _offset: { x: 0, y: 0 },
     buttons: {
-      left: false
-    }
-  }
+      left: false,
+    },
+  };
 
   /**
    * Creates a scene
@@ -44,7 +46,7 @@ export class GameScene {
    */
   constructor(application: Application) {
     this.application = application;
-    const mainFrame = $("#main-frame")
+    const mainFrame = $("#main-frame");
 
     const rescale = () => {
       const dimensions = $("#main-frame").getBoundingClientRect();
@@ -68,19 +70,19 @@ export class GameScene {
       }
     });
 
-    mainFrame.addEventListener("mousedown", (e) => {
+    mainFrame.addEventListener("pointerdown", (e) => {
       if (e.button === 0) this.mouseInfo.buttons.left = true;
-    })
-    mainFrame.addEventListener("mouseup", (e) => {
+    });
+    mainFrame.addEventListener("pointerup", (e) => {
       if (e.button === 0) this.mouseInfo.buttons.left = false;
-    })
+    });
 
-    mainFrame.addEventListener("mousemove", (e) => {
-      this.mouseInfo.position = {
-        x: (e.offsetX - this.camera.offset.x) / this.camera._scale * this.camera.zoom + this.camera.position.x,
-        y: (e.offsetY - this.camera.offset.y) / this.camera._scale * this.camera.zoom + this.camera.position.y
-      }
-    })
+    mainFrame.addEventListener("pointermove", (e) => {
+      this.mouseInfo._offset = {
+        x: e.offsetX,
+        y: e.offsetY,
+      };
+    });
   }
 
   /**
@@ -97,9 +99,11 @@ export class GameScene {
    * @param object The game object to remove
    */
   removeObject(object: GameObject) {
-    this._objects.splice(this._objects.findIndex(obj => obj === object), 1)
+    this._objects.splice(
+      this._objects.findIndex((obj) => obj === object),
+      1,
+    );
     this.application.stage.removeChild(object.pixiContainer);
-    console.log(this._objects)
   }
 
   /**
@@ -128,5 +132,18 @@ export class GameScene {
       -(this.camera.position.y * this.camera.zoom * this.camera._scale) +
       this.camera.offset.y;
     this.application.stage.scale = this.camera.zoom * this.camera._scale;
+
+    this.mouseInfo.position = {
+      x:
+        ((this.mouseInfo._offset.x - this.camera.offset.x) /
+          this.camera._scale) *
+          this.camera.zoom +
+        this.camera.position.x,
+      y:
+        ((this.mouseInfo._offset.y - this.camera.offset.y) /
+          this.camera._scale) *
+          this.camera.zoom +
+        this.camera.position.y,
+    };
   }
 }
