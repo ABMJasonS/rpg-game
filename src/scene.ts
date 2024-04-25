@@ -117,6 +117,11 @@ export class GameScene {
 		this.application.stage.removeChild(object.pixiContainer);
 	}
 
+  findObjects<T>(object: any): T[] {
+    // @ts-expect-error aaaa
+    return this._objects.filter((obj) => obj instanceof object)
+  }
+
 	/**
 	 * Checks if a key on the keyboard is down
 	 * @param key The key string to check for
