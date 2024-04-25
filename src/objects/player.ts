@@ -51,8 +51,8 @@ export class Player extends GameObject {
       movement.y += 1;
     movement = setLength(movement, 1);
 
-    if (movement.x < 0) this.pixiContainer.scale.x = 1;
-    if (movement.x > 0) this.pixiContainer.scale.x = -1;
+    this.pixiContainer.scale.x =
+      this.scene.mouseInfo.position.x - this.position.x > 0 ? -1 : 1;
 
     this.position = addVectors(this.position, scale(movement, delta * 1000));
 
