@@ -11,8 +11,13 @@
       href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
   <body>
+    <audio controls preload="auto" id="beep-two">
+      <source src="sfx/sel.mp3" controls></source>
+      Your browser isn't invited for super fun audio time.
+    </audio>
     <div class="main-container" id="game">
       <div id="top">
         <div id="title">
@@ -47,5 +52,13 @@
       </div>
     </div>
     <script src="./main.js"></script>
+    <script>
+      // var beepOne = $("#beep-two")[0];
+      // $("#box")
+      //   .mouseenter(function() {
+      //     beepOne.play();
+      //   }); 
+      // code to play sound on hover
+    </script>
   </body>
 </html>
