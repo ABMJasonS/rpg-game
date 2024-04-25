@@ -7,6 +7,7 @@ import { createVector } from "./vector.js";
 import { CursorTest } from "./objects/cursortest.js";
 import { Weapons } from "./definitions/weapons.js";
 import { sound } from "@pixi/sound";
+import { Background } from "./objects/background.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -30,16 +31,9 @@ import { sound } from "@pixi/sound";
 
   game.addObject(new Player(game));
 
-  for (let i = 0; i < 10; i++) {
-    game.addObject(
-      new TestObject(
-        game,
-        createVector(Math.random() * 1000 - 500, Math.random() * 1000 - 500),
-      ),
-    );
-  }
-
   // game.addObject(new CursorTest(game));
+
+  game.addObject(new Background(game))
 
   let fps = "";
 

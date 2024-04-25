@@ -51,7 +51,7 @@ export class GameScene {
     const rescale = () => {
       const dimensions = $("#main-frame").getBoundingClientRect();
       this.camera._scale =
-        (dimensions.width * dimensions.height) / (1000 * 1000);
+        (dimensions.width * dimensions.height) / (1500 * 1500);
       this.camera.offset.x = dimensions.width / 2;
       this.camera.offset.y = dimensions.height / 2;
     };
@@ -59,12 +59,12 @@ export class GameScene {
     window.addEventListener("resize", rescale);
 
     window.addEventListener("keydown", (e) => {
-      if (!this._keysDown.find((k) => k == e.key)) {
+      if (!this._keysDown.find((k) => k === e.key)) {
         this._keysDown.push(e.key);
       }
     });
     window.addEventListener("keyup", (e) => {
-      const index = this._keysDown.findIndex((k) => k == e.key);
+      const index = this._keysDown.findIndex((k) => k === e.key);
       if (index !== -1) {
         this._keysDown.splice(index, 1);
       }
