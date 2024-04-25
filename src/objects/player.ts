@@ -11,11 +11,9 @@ import {
   subVectors,
   vectorAngle,
 } from "../vector";
-import { Projectile } from "./projectile";
 import { Derived, Signal } from "../signals";
-import { sound, filters } from "@pixi/sound";
 import { Weapon } from "./weapon";
-import { Weapons } from "../definitions/weapons";
+import { WeaponSchema, Weapons } from "../definitions/weapons";
 
 export class Player extends GameObject {
   speed = 1000;
@@ -23,6 +21,7 @@ export class Player extends GameObject {
   fireCount = 0;
   velocity: Vector = createVector(0, 0);
   friction = 5;
+  currentWeapon: WeaponSchema = Weapons.butterknife;
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
     Assets.load("./img/bread.png").then((asset) => {
@@ -31,7 +30,6 @@ export class Player extends GameObject {
       sprite.scale.set(8);
       this.pixiContainer.addChild(sprite);
     });
-    sound.add("fire", "./sfx/metal_pipe.wav");
     new Derived(
       () => {
         $<HTMLProgressElement>("#hp").value = this.health.get();
@@ -67,18 +65,16 @@ export class Player extends GameObject {
 
     if (
       (this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left) &&
-      this.fireCount > 1
+      this.fireCount > this.currentWeapon.useTime
     ) {
       this.fireCount = 0;
-      sound.play("fire", {
-        filters: [new filters.ReverbFilter(1)],
-      });
       this.scene.addObject(
         new Weapon(
           this.position,
           vectorAngle(subVectors(this.scene.mouseInfo.position, this.position)),
           this.scene,
-          Weapons.butter_knife,
+          this,
+          this.currentWeapon,
         ),
       );
     }

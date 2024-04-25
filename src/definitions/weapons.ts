@@ -1,5 +1,6 @@
 import { ProjectileProperties } from "../objects/projectile";
 import { Seconds } from "../units";
+import { Radians } from "../vector";
 
 export type WeaponSchema = {
   spriteFile: string;
@@ -7,15 +8,18 @@ export type WeaponSchema = {
   animation: "swing" | "fire" | "use" | "none";
   useTime: Seconds;
   animationTime: Seconds;
+  useSound?: string;
+  swingAngle?: Radians;
   projectile?: ProjectileProperties;
 };
 
 export const Weapons: Record<string, WeaponSchema> = {
-  butter_knife: {
-    spriteFile: "butter_knife",
+  butterknife: {
+    spriteFile: "butterknife.png",
     name: "Butter Knife",
     useTime: 0.5,
     animationTime: 0.3,
+    useSound: "whoosh.mp3",
     animation: "swing",
   },
 };
