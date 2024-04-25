@@ -17,7 +17,7 @@ export const Weapons: Record<string, WeaponSchema> = {
   butterknife: {
     spriteFile: "butterknife.png",
     name: "Butter Knife",
-    useTime: 0.5,
+    useTime: 0.2,
     animationTime: 0.3,
     useSound: "whoosh.mp3",
     animation: "swing",

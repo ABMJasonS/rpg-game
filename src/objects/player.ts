@@ -27,7 +27,7 @@ export class Player extends GameObject {
     Assets.load("./img/bread.png").then((asset) => {
       const sprite = Sprite.from(asset);
       sprite.anchor.set(0.5);
-      sprite.scale.set(8);
+      sprite.scale.set(10);
       this.pixiContainer.addChild(sprite);
     });
     new Derived(

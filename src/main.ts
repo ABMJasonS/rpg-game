@@ -31,7 +31,7 @@ import { CursorTest } from "./objects/cursortest.js";
     );
   }
 
-  game.addObject(new CursorTest(game));
+  // game.addObject(new CursorTest(game));
 
   let fps = "";
 
