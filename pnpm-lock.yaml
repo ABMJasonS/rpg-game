@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@pixi/sound':
+    specifier: ^6.0.0
+    version: 6.0.0(pixi.js@8.1.0)
   pixi.js:
     specifier: ^8.1.0
     version: 8.1.0
@@ -319,6 +322,14 @@ packages:
 
   /@pixi/colord@2.9.6:
     resolution: {integrity: sha512-nezytU2pw587fQstUu1AsJZDVEynjskwOL+kibwcdxsMBFqPsFFNA7xl0ii/gXuDi6M0xj3mfRJj8pBSc2jCfA==}
+    dev: false
+
+  /@pixi/sound@6.0.0(pixi.js@8.1.0):
+    resolution: {integrity: sha512-fEaCs2JmyYT1qqouFS3DydSccI35dyYD0pKK2hEbIGVDKUTvl224x0p4qme2YU9l465WRtM7gspLzP5fFf1mxQ==}
+    peerDependencies:
+      pixi.js: ^8.0.0
+    dependencies:
+      pixi.js: 8.1.0
     dev: false
 
   /@types/css-font-loading-module@0.0.12:

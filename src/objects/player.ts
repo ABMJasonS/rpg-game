@@ -13,6 +13,7 @@ import {
 } from "../vector";
 import { Projectile } from "./projectile";
 import { Derived, Signal } from "../signals";
+import { sound } from "@pixi/sound";
 
 export class Player extends GameObject {
   speed = 1000;
@@ -28,6 +29,7 @@ export class Player extends GameObject {
       sprite.scale.set(8);
       this.pixiContainer.addChild(sprite);
     });
+    sound.add("fire", "./sfx/metal_pipe.wav");
     new Derived(
       () => {
         $<HTMLProgressElement>("#hp").value = this.health.get();
@@ -60,6 +62,7 @@ export class Player extends GameObject {
 
     if (this.scene.isKeyDown(" ") && this.fireCount > 0.2) {
       this.fireCount = 0;
+      sound.play("fire");
       this.scene.addObject(
         new Projectile(
           this.scene,
