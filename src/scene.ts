@@ -53,7 +53,7 @@ export class GameScene {
 		const rescale = () => {
 			const dimensions = $("#main-frame").getBoundingClientRect();
 			this.camera._scale =
-				(dimensions.width * dimensions.height) / (1500 * 1500);
+				(dimensions.width * dimensions.height) / (2000 * 2000);
 			this.camera.offset.x = dimensions.width / 2;
 			this.camera.offset.y = dimensions.height / 2;
 		};
