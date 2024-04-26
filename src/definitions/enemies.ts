@@ -54,9 +54,9 @@ export const Enemies: Record<string, EnemySchema> = {
 		spawnTime: 2,
 		enemyToSpawn: "toast",
 		damage: 1,
-		health: 1,
+		health: 10,
 		sfx: {
-			hit: "metal_pipe.wav"
+			hit: "toasterhit.mp3"
 		}
 	},
 };
