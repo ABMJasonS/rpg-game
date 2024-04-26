@@ -3,7 +3,7 @@ import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import type { Seconds } from "../units";
-import { addVectors, subVectors, type Radians, type Vector, createVector } from "../vector";
+import { addVectors, subVectors, type Radians, type Vector, createVector, setLength } from "../vector";
 import type { Player } from "./player";
 import { filters, sound } from "@pixi/sound";
 import { Enemy } from "./enemy";
@@ -45,8 +45,8 @@ export class Weapon extends GameObject {
       case "swing":
         this.rotation =
           this.animationProgress *
-            (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) *
-            (this.definition.swingAngle ?? 10) +
+          (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) *
+          (this.definition.swingAngle ?? 10) +
           this.initialRotation;
     }
     const enemies = this.scene.findObjects<Enemy>(Enemy)
@@ -59,7 +59,7 @@ export class Weapon extends GameObject {
       for (const enemy of enemies) {
         if (piercing >= this.definition.melee.pierce) break;
         if (enemy.collider.collide(hitbox)) {
-          enemy.hit(this.definition.melee.damage)
+          enemy.hit(this.definition.melee.damage, setLength(subVectors(enemy.position, this.position), this.definition.melee.knockback))
           piercing++
         }
       }

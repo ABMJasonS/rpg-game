@@ -60,13 +60,14 @@ export class Enemy extends GameObject {
 		}
 	}
 
-	hit(damage: number) {
+	hit(damage: number, knockback: Vector) {
 		if (this.immunity === 0) {
 			sound.play(this.definition.sfx.hit, {
 				speed: Math.random() * 0.4 + 0.8
 			})
 			this.health -= damage;
 			this.immunity = 0.5;
+			this.position = addVectors(this.position, knockback)
 		}
 	}
 }
