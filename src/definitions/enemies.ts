@@ -45,7 +45,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		}
 	},
 	toaster: {
-		hitbox: createVector(10, 10),
+		hitbox: createVector(80, 80),
 		name: "Toaster",
 		image: "toaster.png",
 		ai: "moveAndSpawn",
