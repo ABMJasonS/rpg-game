@@ -13,9 +13,10 @@ import { Player } from "./player";
 export class Enemy extends GameObject {
 	constructor(position: Vector, scene: GameScene) {
 		super(position, 0, scene);
-		Assets.load("./img/test-image.jpg").then((asset) => {
+		Assets.load("./img/toaster.png").then((asset) => {
 			const sprite = new Sprite(asset);
 			sprite.anchor.set(0.5);
+			sprite.scale.set(1.5);
 			this.pixiContainer.addChild(sprite);
 		});
 	}
