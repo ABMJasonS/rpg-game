@@ -89,7 +89,7 @@ export class GameScene {
 		this.application.stage.filters = [
 			this.noisefilter,
 			new CRTFilter({
-				vignetting: 0.5,
+				vignetting: 0.6,
 				vignettingBlur: 0.5
 			}),
 			new BulgePinchFilter({
