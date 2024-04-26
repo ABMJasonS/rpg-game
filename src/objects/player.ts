@@ -1,7 +1,7 @@
 import { Assets, Graphics, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
-import { $ } from "../dom";
+import { $, html } from "../dom";
 import {
   type Vector,
   addVectors,
@@ -21,7 +21,7 @@ export class Player extends GameObject {
   fireCount = 0;
   velocity: Vector = createVector(0, 0);
   friction = 5;
-  currentWeapon: WeaponSchema = Weapons.butterknife;
+  currentWeapon: Signal<WeaponSchema> = new Signal(Weapons.butterknife);
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
     Assets.load("./img/bread.png").then((asset) => {
@@ -37,6 +37,15 @@ export class Player extends GameObject {
       undefined,
       [this.health],
     );
+    new Derived(
+      () => {
+        $("#box").innerHTML = `
+          <img src="./img/${this.currentWeapon.get().spriteFile}"  />
+        `
+      },
+      undefined,
+      [this.currentWeapon]
+    )
   }
 
   override act(delta: number): void {
@@ -65,7 +74,7 @@ export class Player extends GameObject {
 
     if (
       (this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left) &&
-      this.fireCount > this.currentWeapon.useTime
+      this.fireCount > this.currentWeapon.get().useTime
     ) {
       this.fireCount = 0;
       this.scene.addObject(
@@ -74,7 +83,7 @@ export class Player extends GameObject {
           vectorAngle(subVectors(this.scene.mouseInfo.position, this.position)),
           this.scene,
           this,
-          this.currentWeapon,
+          this.currentWeapon.get(),
         ),
       );
     }
