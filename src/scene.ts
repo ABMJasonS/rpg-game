@@ -1,6 +1,6 @@
-import { Application, NoiseFilter } from "pixi.js";
-import { GameObject } from "./gameobject";
-import { Radians, Vector, createVector } from "./vector";
+import { type Application, NoiseFilter } from "pixi.js";
+import type { GameObject } from "./gameobject";
+import { type Radians, type Vector, createVector } from "./vector";
 import { $ } from "./dom";
 import { BulgePinchFilter } from "pixi-filters";
 

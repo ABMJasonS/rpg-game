@@ -1,6 +1,6 @@
-import { ProjectileProperties } from "../objects/projectile";
-import { Seconds } from "../units";
-import { Radians } from "../vector";
+import type { ProjectileProperties } from "../objects/projectile";
+import type { Seconds } from "../units";
+import type { Radians } from "../vector";
 
 export type WeaponSchema = {
   spriteFile: string;

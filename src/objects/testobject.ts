@@ -1,7 +1,7 @@
 import { Assets, Graphics, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
-import { Vector, createVector } from "../vector";
+import type { GameScene } from "../scene";
+import { type Vector, createVector } from "../vector";
 
 export class TestObject extends GameObject {
   sprite: Sprite

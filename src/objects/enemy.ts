@@ -1,8 +1,8 @@
 import { Assets, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
+import type { GameScene } from "../scene";
 import {
-	Vector,
+	type Vector,
 	addVectors,
 	createPolar,
 	subVectors,
@@ -16,7 +16,7 @@ export class Enemy extends GameObject {
 		Assets.load("./img/toaster.png").then((asset) => {
 			const sprite = new Sprite(asset);
 			sprite.anchor.set(0.5);
-			sprite.scale.set(1.5);
+			sprite.scale.set(1);
 			this.pixiContainer.addChild(sprite);
 		});
 	}

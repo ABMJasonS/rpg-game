@@ -1,4 +1,4 @@
-import { Seconds } from "../units";
+import type { Seconds } from "../units";
 
 export type EnemySchema = {
   name: string;

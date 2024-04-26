@@ -1,7 +1,7 @@
-import { Container } from "pixi.js"
+import type { Container } from "pixi.js"
 import {GameObject} from "../gameobject"
-import { GameScene } from "../scene"
-import { Radians, Vector, addVectors, createPolar } from "../vector"
+import type { GameScene } from "../scene"
+import { type Radians, type Vector, addVectors, createPolar } from "../vector"
 
 export type ProjectileProperties = {
   velocity: number
