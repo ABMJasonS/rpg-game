@@ -31,8 +31,8 @@ export class Enemy extends GameObject {
 			this.pixiContainer.addChild(sprite);
 		});
 	}
-	override act(delta: number): void {
 
+	override act(delta: number): void {
 		if (this.immunity > 0) {
 			this.immunity -= delta * 2
 		} else {
@@ -46,10 +46,14 @@ export class Enemy extends GameObject {
 
 			const direction = vectorAngle(subVectors(player.position, this.position));
 
+			this.move(createPolar(delta * this.definition.speed, direction))
+
+			/*
 			this.position = addVectors(
 				this.position,
 				createPolar(delta * 500, direction),
 			);
+			*/
 		}
 
 		// this.pixiContainer.alpha = 1 - this.immunity
@@ -69,6 +73,40 @@ export class Enemy extends GameObject {
 			this.health -= damage;
 			this.immunity = 1;
 			this.position = addVectors(this.position, knockback)
+		}
+	}
+
+	move(movement: Vector) {
+		const xDirection = movement.x < 0 ? -1 : 1
+		const others = this.scene.findObjects<Enemy>(Enemy).filter(obj => obj !== this)
+		for (let x = 0; x < movement.x * xDirection; x++) {
+			this.position.x += xDirection
+			this.collider.min.x += xDirection
+			this.collider.max.x += xDirection
+			let isCollidingX = false
+			for (const other of others) {
+				if (this.collider.collide(other.collider)) isCollidingX = true
+			}
+			if (isCollidingX) {
+				this.position.x -= xDirection
+				this.collider.min.x -= xDirection
+				this.collider.max.x -= xDirection
+			}
+		}
+		const yDirection = movement.y < 0 ? -1 : 1
+		for (let y = 0; y < movement.y * yDirection; y++) {
+			this.position.y += yDirection
+			this.collider.min.y += yDirection
+			this.collider.max.y += yDirection
+			let isCollidingY = false
+			for (const other of others) {
+				if (this.collider.collide(other.collider)) isCollidingY = true
+			}
+			if (isCollidingY) {
+				this.position.y -= yDirection
+				this.collider.min.y -= yDirection
+				this.collider.max.y -= yDirection
+			}
 		}
 	}
 }
