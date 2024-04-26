@@ -25,6 +25,7 @@ export class Player extends GameObject {
 	currentWeapon: Signal<WeaponSchema> = new Signal(Weapons.butterknife);
 	collider = new Rectangle(createVector(0, 0), createVector(0, 0));
 	hitbox = createVector(10, 10);
+
 	constructor(scene: GameScene) {
 		super({ x: 0, y: 0 }, 0, scene);
 		Assets.load("./img/bread.png").then((asset) => {
@@ -52,6 +53,24 @@ export class Player extends GameObject {
 	}
 
 	override act(delta: number): void {
+		this.movement(delta)
+
+		this.scene.camera.position = this.position;
+
+		this.collider.min = subVectors(this.position, this.hitbox);
+		this.collider.max = addVectors(this.position, this.hitbox);
+
+		if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta;
+		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta;
+
+		if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
+
+		this.attack(delta)
+
+		this.fireCount += delta;
+	}
+
+	movement(delta: number) {
 		let movement = createVector(0, 0);
 		if (this.scene.isKeyDown("a") || this.scene.isKeyDown("ArrowLeft"))
 			movement.x -= 1;
@@ -67,17 +86,9 @@ export class Player extends GameObject {
 			this.scene.mouseInfo.position.x - this.position.x > 0 ? -1 : 1;
 
 		this.position = addVectors(this.position, scale(movement, delta * 1000));
+	}
 
-		this.scene.camera.position = this.position;
-
-		this.collider.min = subVectors(this.position, this.hitbox);
-		this.collider.max = addVectors(this.position, this.hitbox);
-
-		if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta;
-		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta;
-
-		if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
-
+	attack(delta: number) {
 		if (
 			(this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left) &&
 			this.fireCount > this.currentWeapon.get().useTime
@@ -93,7 +104,5 @@ export class Player extends GameObject {
 				),
 			);
 		}
-
-		this.fireCount += delta;
 	}
 }
