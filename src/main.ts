@@ -79,6 +79,16 @@ import { Enemies } from "./definitions/enemies.js";
   $("#game").style.visibility = ""
 })();
 
-window.addEventListener("beforeunload", (e) => {
-  e.preventDefault()
-})
+// @ts-expect-error esbuild define
+if (!window.DEV) {
+  window.addEventListener("beforeunload", (e) => {
+    e.preventDefault()
+  })
+}
+
+// @ts-expect-error esbuild define
+if (window.DEV) {
+  new EventSource("/esbuild").addEventListener("change", () => {
+    window.location.reload()
+  })
+}
