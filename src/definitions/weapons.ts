@@ -28,7 +28,7 @@ export const Weapons: Record<string, WeaponSchema> = {
     animation: "swing",
     melee: {
       range: 240,
-      damage: 0.5
+      damage: 1
     }
   },
 };
