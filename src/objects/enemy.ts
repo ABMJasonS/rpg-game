@@ -47,13 +47,6 @@ export class Enemy extends GameObject {
 			const direction = vectorAngle(subVectors(player.position, this.position));
 
 			this.move(createPolar(delta * this.definition.speed, direction))
-
-			/*
-			this.position = addVectors(
-				this.position,
-				createPolar(delta * 500, direction),
-			);
-			*/
 		}
 
 		// this.pixiContainer.alpha = 1 - this.immunity

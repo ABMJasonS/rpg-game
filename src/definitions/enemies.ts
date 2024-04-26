@@ -49,7 +49,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		name: "Toaster",
 		image: "toaster.png",
 		ai: "moveAndSpawn",
-		speed: 3,
+		speed: 1000,
 		moveTime: 2,
 		spawnAmount: 2,
 		spawnStagger: 0.2,

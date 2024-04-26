@@ -37,18 +37,7 @@ export class Weapon extends GameObject {
         speed: Math.random() * 0.6 + 0.7
       });
     }
-  }
-  override act(delta: number): void {
-    this.animationProgress += delta;
-    this.position = this.player.position;
-    switch (this.definition.animation) {
-      case "swing":
-        this.rotation =
-          this.animationProgress *
-          (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) *
-          (this.definition.swingAngle ?? 10) +
-          this.initialRotation;
-    }
+
     const enemies = this.scene.findObjects<Enemy>(Enemy)
 
     if (this.definition.melee) {
@@ -60,9 +49,20 @@ export class Weapon extends GameObject {
         if (piercing >= this.definition.melee.pierce) break;
         if (enemy.collider.collide(hitbox) && enemy.immunity === 0) {
           enemy.hit(this.definition.melee.damage, setLength(subVectors(enemy.position, this.position), this.definition.melee.knockback))
-          piercing++
         }
       }
+    }
+  }
+  override act(delta: number): void {
+    this.animationProgress += delta;
+    this.position = this.player.position;
+    switch (this.definition.animation) {
+      case "swing":
+        this.rotation =
+          this.animationProgress *
+          (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) *
+          (this.definition.swingAngle ?? 10) +
+          this.initialRotation;
     }
 
     if (this.animationProgress > this.definition.animationTime)
