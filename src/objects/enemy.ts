@@ -55,6 +55,7 @@ export class Enemy extends GameObject {
 		this.pixiContainer.alpha = 1 - this.immunity
 
 		if (this.health <= 0) {
+			sound.play(this.definition.sfx.death)
 			this.scene.removeObject(this)
 		}
 	}

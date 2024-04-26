@@ -10,6 +10,7 @@ export type EnemySchema = {
 	health: number;
 	sfx: {
 		hit: string
+		death: string
 	}
 } & (
 	| {
@@ -39,7 +40,8 @@ export const Enemies: Record<string, EnemySchema> = {
 		damage: 1,
 		health: 1,
 		sfx: {
-			hit: "metal_pipe.wav"
+			hit: "metal_pipe.wav",
+			death: "ondeath.wav"
 		}
 	},
 	toaster: {
@@ -56,7 +58,8 @@ export const Enemies: Record<string, EnemySchema> = {
 		damage: 1,
 		health: 10,
 		sfx: {
-			hit: "toasterhit.mp3"
+			hit: "toasterhit.mp3",
+			death: "ondeath.wav"
 		}
 	},
 };

@@ -27,6 +27,7 @@ import { Enemies } from "./definitions/enemies.js";
   }
   for (const [_, enemy] of Object.entries(Enemies)) {
     sound.add(enemy.sfx.hit, `./sfx/${enemy.sfx.hit}`);
+    sound.add(enemy.sfx.death, `./sfx/${enemy.sfx.death}`);
   }
   console.info("Sounds are loaded!");
 
