@@ -2,7 +2,7 @@ import { type Application, NoiseFilter } from "pixi.js";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
 import { $ } from "./dom";
-import { BulgePinchFilter } from "pixi-filters";
+import { BulgePinchFilter, CRTFilter } from "pixi-filters";
 
 export class GameScene {
 	application: Application;
@@ -88,6 +88,10 @@ export class GameScene {
 		this.noisefilter = new NoiseFilter({ noise: 0.5 });
 		this.application.stage.filters = [
 			this.noisefilter,
+			new CRTFilter({
+				vignetting: 0.5,
+				vignettingBlur: 0.5
+			}),
 			new BulgePinchFilter({
 				center: createVector(0.5, 0.5),
 				radius: this.application.canvas.width,
