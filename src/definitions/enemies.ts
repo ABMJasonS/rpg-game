@@ -37,15 +37,15 @@ export const Enemies: Record<string, EnemySchema> = {
 		image: "toast.png",
 		ai: "following",
 		speed: 3,
-		damage: 1,
-		health: 1,
+		damage: 10,
+		health: 30,
 		sfx: {
 			hit: "metal_pipe.wav",
 			death: "ondeath.wav"
 		}
 	},
 	toaster: {
-		hitbox: createVector(80, 80),
+		hitbox: createVector(200, 140),
 		name: "Toaster",
 		image: "toaster.png",
 		ai: "moveAndSpawn",
@@ -55,8 +55,8 @@ export const Enemies: Record<string, EnemySchema> = {
 		spawnStagger: 0.2,
 		spawnTime: 2,
 		enemyToSpawn: "toast",
-		damage: 1,
-		health: 10,
+		damage: 20,
+		health: 100,
 		sfx: {
 			hit: "toasterhit.mp3",
 			death: "ondeath.wav"

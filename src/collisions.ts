@@ -1,4 +1,4 @@
-import type { Vector } from "./vector";
+import { addVectors, type Vector } from "./vector";
 
 export class Hitbox {
 	collide(other: Hitbox) {
@@ -9,37 +9,48 @@ export class Hitbox {
 				return this.circle(other);
 			case other instanceof Point:
 				return this.point(other);
-      default: return false
+			default:
+				return false;
 		}
 	}
 	rectangle(other: Rectangle): boolean {
-    return false;
-  }
+		return false;
+	}
 	circle(other: Circle): boolean {
-    return false
-  }
+		return false;
+	}
 	point(other: Point): boolean {
-    return false
-  }
-  clone(): Hitbox {
-    return this
-  }
+		return false;
+	}
+	clone(): Hitbox {
+		return this;
+	}
+	translate(translation: Vector): void {}
 }
 
 export class Rectangle extends Hitbox {
-  min: Vector;
-  max: Vector;
-  constructor(min: Vector, max: Vector) {
-    super()
-    this.min = min
-    this.max = max
-  }
-  override rectangle(other: Rectangle): boolean {
-    return this.max.x >= other.min.x && this.min.x <= other.max.x && this.max.y >= other.min.y && this.min.y < other.max.y
-  }
-  override clone(): Hitbox {
-      return new Rectangle(this.min, this.max)
-  }
+	min: Vector;
+	max: Vector;
+	constructor(min: Vector, max: Vector) {
+		super();
+		this.min = min;
+		this.max = max;
+	}
+	override rectangle(other: Rectangle): boolean {
+		return (
+			this.max.x >= other.min.x &&
+			this.min.x <= other.max.x &&
+			this.max.y >= other.min.y &&
+			this.min.y < other.max.y
+		);
+	}
+	override clone(): Hitbox {
+		return new Rectangle(this.min, this.max);
+	}
+	override translate(translation: Vector) {
+		this.min = addVectors(this.min, translation);
+		this.max = addVectors(this.max, translation);
+	}
 }
 export class Circle extends Hitbox {}
 export class Point extends Hitbox {}
