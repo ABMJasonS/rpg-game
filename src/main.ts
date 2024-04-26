@@ -9,6 +9,7 @@ import { Weapons } from "./definitions/weapons.js";
 import { sound } from "@pixi/sound";
 import { Background } from "./objects/background.js";
 import { Enemy } from "./objects/enemy.js";
+import { Enemies } from "./definitions/enemies.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -36,7 +37,7 @@ import { Enemy } from "./objects/enemy.js";
 
   game.addObject(new Background(game))
 
-  game.addObject(new Enemy({x: 3000, y: 0}, game))
+  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster))
 
   let fps = "";
 

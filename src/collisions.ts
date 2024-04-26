@@ -9,6 +9,7 @@ export class Hitbox {
 				return this.circle(other);
 			case other instanceof Point:
 				return this.point(other);
+      default: return false
 		}
 	}
 	rectangle(other: Rectangle): boolean {
@@ -19,6 +20,9 @@ export class Hitbox {
   }
 	point(other: Point): boolean {
     return false
+  }
+  clone(): Hitbox {
+    return this
   }
 }
 
@@ -32,6 +36,9 @@ export class Rectangle extends Hitbox {
   }
   override rectangle(other: Rectangle): boolean {
     return this.max.x >= other.min.x && this.min.x <= other.max.x && this.max.y >= other.min.y && this.min.y < other.max.y
+  }
+  override clone(): Hitbox {
+      return new Rectangle(this.min, this.max)
   }
 }
 export class Circle extends Hitbox {}
