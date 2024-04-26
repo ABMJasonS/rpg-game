@@ -1,8 +1,8 @@
 import { Assets, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
+import type { GameScene } from "../scene";
 import {
-	Vector,
+	type Vector,
 	addVectors,
 	createPolar,
 	subVectors,

@@ -1,6 +1,6 @@
 import { Assets, TilingSprite } from "pixi.js";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
+import type { GameScene } from "../scene";
 
 export class Background extends GameObject {
   constructor(scene: GameScene) {

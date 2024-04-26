@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
-import { Radians, Vector } from "./vector";
-import { GameScene } from "./scene";
+import type { Radians, Vector } from "./vector";
+import type { GameScene } from "./scene";
 
 export class GameObject {
   pixiContainer: Container;

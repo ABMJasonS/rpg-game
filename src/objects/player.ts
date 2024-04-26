@@ -1,9 +1,9 @@
 import { Assets, Graphics, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
+import type { GameScene } from "../scene";
 import { $ } from "../dom";
 import {
-  Vector,
+  type Vector,
   addVectors,
   createVector,
   scale,
@@ -13,7 +13,7 @@ import {
 } from "../vector";
 import { Derived, Signal } from "../signals";
 import { Weapon } from "./weapon";
-import { WeaponSchema, Weapons } from "../definitions/weapons";
+import { type WeaponSchema, Weapons } from "../definitions/weapons";
 
 export class Player extends GameObject {
   speed = 1000;

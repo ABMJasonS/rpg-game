@@ -1,10 +1,10 @@
 import { Assets, Sprite } from "pixi.js";
-import { WeaponSchema } from "../definitions/weapons";
+import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
-import { Seconds } from "../units";
-import { Radians, Vector } from "../vector";
-import { Player } from "./player";
+import type { GameScene } from "../scene";
+import type { Seconds } from "../units";
+import type { Radians, Vector } from "../vector";
+import type { Player } from "./player";
 import { filters, sound } from "@pixi/sound";
 
 export class Weapon extends GameObject {

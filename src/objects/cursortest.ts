@@ -1,6 +1,6 @@
 import { Graphics } from "pixi.js";
 import { GameObject } from "../gameobject";
-import { GameScene } from "../scene";
+import type { GameScene } from "../scene";
 import { createVector } from "../vector";
 
 export class CursorTest extends GameObject {
