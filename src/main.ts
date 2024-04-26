@@ -25,6 +25,9 @@ import { Enemies } from "./definitions/enemies.js";
     if (!weapon.useSound) return;
     sound.add(weapon.useSound, `./sfx/${weapon.useSound}`);
   }
+  for (const [_, enemy] of Object.entries(Enemies)) {
+    sound.add(enemy.sfx.hit, `./sfx/${enemy.sfx.hit}`);
+  }
   console.info("Sounds are loaded!");
 
   $("#main-frame").appendChild(app.canvas);

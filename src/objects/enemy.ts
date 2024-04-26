@@ -12,6 +12,7 @@ import {
 import { Player } from "./player";
 import type { EnemySchema } from "../definitions/enemies";
 import { Rectangle } from "../collisions";
+import { sound } from "@pixi/sound";
 
 export class Enemy extends GameObject {
 	definition: EnemySchema;
@@ -60,6 +61,9 @@ export class Enemy extends GameObject {
 
 	hit(damage: number) {
 		if (this.immunity === 0) {
+			sound.play(this.definition.sfx.hit, {
+				speed: Math.random() * 0.4 + 0.8
+			})
 			this.health -= damage;
 			this.immunity = 0.5;
 		}

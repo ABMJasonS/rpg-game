@@ -8,6 +8,9 @@ export type EnemySchema = {
 	damage: number;
 	hitbox: Vector;
 	health: number;
+	sfx: {
+		hit: string
+	}
 } & (
 	| {
 			ai: "following";
@@ -34,7 +37,10 @@ export const Enemies: Record<string, EnemySchema> = {
 		ai: "following",
 		speed: 3,
 		damage: 1,
-		health: 1
+		health: 1,
+		sfx: {
+			hit: "metal_pipe.wav"
+		}
 	},
 	toaster: {
 		hitbox: createVector(10, 10),
@@ -48,6 +54,9 @@ export const Enemies: Record<string, EnemySchema> = {
 		spawnTime: 2,
 		enemyToSpawn: "toast",
 		damage: 1,
-		health: 1
+		health: 1,
+		sfx: {
+			hit: "metal_pipe.wav"
+		}
 	},
 };
