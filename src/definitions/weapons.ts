@@ -13,7 +13,8 @@ export type WeaponSchema = {
   melee?: {
     range: number
     damage: number
-  } 
+    pierce: number
+  }
   projectile?: ProjectileProperties;
 };
 
@@ -28,7 +29,8 @@ export const Weapons: Record<string, WeaponSchema> = {
     animation: "swing",
     melee: {
       range: 240,
-      damage: 1
+      damage: 1,
+      pierce: 1
     }
   },
 };

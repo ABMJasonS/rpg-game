@@ -55,8 +55,13 @@ export class Weapon extends GameObject {
       const a = createVector(this.definition.melee.range, this.definition.melee.range)
       const hitbox = new Rectangle(subVectors(this.position, a), addVectors(this.position, a))
 
+      let piercing = 0;
       for (const enemy of enemies) {
-        if (enemy.collider.collide(hitbox)) enemy.hit(this.definition.melee.damage)
+        if (piercing >= this.definition.melee.pierce) break;
+        if (enemy.collider.collide(hitbox)) {
+          enemy.hit(this.definition.melee.damage)
+          piercing++
+        }
       }
     }
 
