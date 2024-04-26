@@ -23,7 +23,7 @@ export class Enemy extends GameObject {
 		Assets.load("./img/toaster.png").then((asset) => {
 			const sprite = new Sprite(asset);
 			sprite.anchor.set(0.5);
-			sprite.scale.set(1);
+			sprite.scale.set(1.2);
 			this.pixiContainer.addChild(sprite);
 		});
 	}
