@@ -3,9 +3,11 @@ import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import type { Seconds } from "../units";
-import type { Radians, Vector } from "../vector";
+import { addVectors, subVectors, type Radians, type Vector, createVector } from "../vector";
 import type { Player } from "./player";
 import { filters, sound } from "@pixi/sound";
+import { Enemy } from "./enemy";
+import { Rectangle } from "../collisions";
 
 export class Weapon extends GameObject {
   animationProgress: Seconds = 0;
@@ -47,6 +49,17 @@ export class Weapon extends GameObject {
             (this.definition.swingAngle ?? 10) +
           this.initialRotation;
     }
+    const enemies = this.scene.findObjects<Enemy>(Enemy)
+
+    if (this.definition.melee) {
+      const a = createVector(this.definition.melee.range, this.definition.melee.range)
+      const hitbox = new Rectangle(subVectors(this.position, a), addVectors(this.position, a))
+
+      for (const enemy of enemies) {
+        if (enemy.collider.collide(hitbox)) console.log("bam")
+      }
+    }
+
     if (this.animationProgress > this.definition.animationTime)
       this.scene.removeObject(this);
   }
