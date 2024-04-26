@@ -66,4 +66,11 @@ import { Enemies } from "./definitions/enemies.js";
     autoPlay: true,
     loop: true
   })
+
+  sound.add('cameraclick1.wav', './sfx/cameraclick1.wav');
+  sound.add('cameraclick2.wav', './sfx/cameraclick2.wav');
+
+  setInterval(() => {
+    sound.play(`cameraclick${Math.round(Math.random() + 1)}.wav`)
+  }, (Math.floor(Math.random() * (10 - 5 + 1)) + 10)*1000)
 })();
