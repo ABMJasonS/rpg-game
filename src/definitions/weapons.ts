@@ -12,6 +12,7 @@ export type WeaponSchema = {
   swingAngle?: Radians;
   melee?: {
     range: number
+    damage: number
   } 
   projectile?: ProjectileProperties;
 };
@@ -26,7 +27,8 @@ export const Weapons: Record<string, WeaponSchema> = {
     useSound: "whoosh.mp3",
     animation: "swing",
     melee: {
-      range: 240
+      range: 240,
+      damage: 0.5
     }
   },
 };

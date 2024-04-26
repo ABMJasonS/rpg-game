@@ -56,7 +56,7 @@ export class Weapon extends GameObject {
       const hitbox = new Rectangle(subVectors(this.position, a), addVectors(this.position, a))
 
       for (const enemy of enemies) {
-        if (enemy.collider.collide(hitbox)) console.log("bam")
+        if (enemy.collider.collide(hitbox)) enemy.hit(this.definition.melee.damage)
       }
     }
 
