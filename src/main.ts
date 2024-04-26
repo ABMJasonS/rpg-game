@@ -78,3 +78,7 @@ import { Enemies } from "./definitions/enemies.js";
   $("#loading").style.display = "none"
   $("#game").style.visibility = ""
 })();
+
+window.addEventListener("beforeunload", (e) => {
+  e.preventDefault()
+})
