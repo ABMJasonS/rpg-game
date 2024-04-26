@@ -72,7 +72,7 @@ export class Enemy extends GameObject {
 			})
 			this.health -= damage;
 			this.immunity = 1;
-			this.position = addVectors(this.position, knockback)
+			this.move(knockback)
 		}
 	}
 
