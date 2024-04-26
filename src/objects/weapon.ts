@@ -31,7 +31,9 @@ export class Weapon extends GameObject {
       this.pixiContainer.addChild(sprite);
     });
     if (this.definition.useSound) {
-      sound.play(this.definition.useSound, {});
+      sound.play(this.definition.useSound, {
+        speed: Math.random() * 0.6 + 0.7
+      });
     }
   }
   override act(delta: number): void {
