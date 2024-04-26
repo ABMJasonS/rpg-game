@@ -18,7 +18,7 @@ export class Enemy extends GameObject {
 	definition: EnemySchema;
 	collider: Rectangle;
 	health: number
-	immunity: number = 0;
+	immunity = 0;
 	constructor(position: Vector, scene: GameScene, definition: EnemySchema) {
 		super(position, 0, scene);
 		this.definition = definition;

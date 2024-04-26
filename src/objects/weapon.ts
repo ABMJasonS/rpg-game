@@ -49,6 +49,7 @@ export class Weapon extends GameObject {
         if (piercing >= this.definition.melee.pierce) break;
         if (enemy.collider.collide(hitbox) && enemy.immunity === 0) {
           enemy.hit(this.definition.melee.damage, setLength(subVectors(enemy.position, this.position), this.definition.melee.knockback))
+          piercing++
         }
       }
     }
