@@ -25,6 +25,7 @@ import { Enemies } from "./definitions/enemies.js";
     if (!weapon.useSound) return;
     sound.add(weapon.useSound, `./sfx/${weapon.useSound}`);
   }
+
   for (const [_, enemy] of Object.entries(Enemies)) {
     sound.add(enemy.sfx.hit, `./sfx/${enemy.sfx.hit}`);
     sound.add(enemy.sfx.death, `./sfx/${enemy.sfx.death}`);
@@ -73,4 +74,7 @@ import { Enemies } from "./definitions/enemies.js";
   setInterval(() => {
     sound.play(`cameraclick${Math.round(Math.random() + 1)}.wav`)
   }, (Math.floor(Math.random() * (10 - 5 + 1)) + 10)*1000)
+  
+  $("#loading").style.display = "none"
+  $("#game").style.visibility = ""
 })();
