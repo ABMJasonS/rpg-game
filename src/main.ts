@@ -60,4 +60,10 @@ import { Enemies } from "./definitions/enemies.js";
     $("#fps-counter").innerText =
       `${fps} FPS | ${TPS} TPS | ${game._objects.length} Objects`;
   }, 1000);
+
+  sound.add("bg-noise", {
+    url: "./sfx/bgnoise.mp3",
+    autoPlay: true,
+    loop: true
+  })
 })();
