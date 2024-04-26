@@ -74,7 +74,7 @@ export class GameScene {
 
 		mainFrame.addEventListener("pointerdown", (e) => {
 			if (e.button === 0) this.mouseInfo.buttons.left = true;
-		});
+		});this
 		mainFrame.addEventListener("pointerup", (e) => {
 			if (e.button === 0) this.mouseInfo.buttons.left = false;
 		});

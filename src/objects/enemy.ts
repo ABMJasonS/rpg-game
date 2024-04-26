@@ -1,4 +1,4 @@
-import { Assets, Sprite } from "pixi.js";
+import { Assets, Color, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import {
@@ -34,7 +34,7 @@ export class Enemy extends GameObject {
 	override act(delta: number): void {
 
 		if (this.immunity > 0) {
-			this.immunity -= delta
+			this.immunity -= delta * 2
 		} else {
 			this.immunity = 0
 			this.collider.min = subVectors(this.position, this.definition.hitbox)
@@ -52,7 +52,8 @@ export class Enemy extends GameObject {
 			);
 		}
 
-		this.pixiContainer.alpha = 1 - this.immunity
+		// this.pixiContainer.alpha = 1 - this.immunity
+		this.pixiContainer.tint = new Color({r: 255, g: (1 - this.immunity) * 255, b: (1 - this.immunity) * 255})
 
 		if (this.health <= 0) {
 			sound.play(this.definition.sfx.death)
@@ -66,7 +67,7 @@ export class Enemy extends GameObject {
 				speed: Math.random() * 0.4 + 0.8
 			})
 			this.health -= damage;
-			this.immunity = 0.5;
+			this.immunity = 1;
 			this.position = addVectors(this.position, knockback)
 		}
 	}
