@@ -10,6 +10,9 @@ export type WeaponSchema = {
   animationTime: Seconds;
   useSound?: string;
   swingAngle?: Radians;
+  melee?: {
+    range: number
+  } 
   projectile?: ProjectileProperties;
 };
 
@@ -22,5 +25,8 @@ export const Weapons: Record<string, WeaponSchema> = {
     swingAngle: 16,
     useSound: "whoosh.mp3",
     animation: "swing",
+    melee: {
+      range: 240
+    }
   },
 };
