@@ -26,7 +26,6 @@ export type EnemySchema = {
 			moveTime: Seconds;
 			spawnTime: Seconds;
 			spawnAmount: number;
-			spawnStagger: Seconds;
 			enemyToSpawn: string;
 	  }
 );
@@ -53,7 +52,6 @@ export const Enemies: Record<string, EnemySchema> = {
 		speed: 500,
 		moveTime: 2,
 		spawnAmount: 2,
-		spawnStagger: 0.2,
 		spawnTime: 2,
 		enemyToSpawn: "toast",
 		damage: 20,

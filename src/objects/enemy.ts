@@ -13,7 +13,7 @@ import {
 	cloneVector,
 } from "../vector";
 import { Player } from "./player";
-import type { EnemySchema } from "../definitions/enemies";
+import { Enemies, type EnemySchema } from "../definitions/enemies";
 import { Rectangle } from "../collisions";
 import { sound } from "@pixi/sound";
 
@@ -21,6 +21,14 @@ export class Enemy extends GameObject {
 	definition: EnemySchema;
 	health: number;
 	immunity = 0;
+
+	fireDelayCount = 0;
+	moveTimeCount = 0;
+	fireTimeCount = 0;
+	spawnDelayCount = 0;
+
+	state: "moving" | "firing" = "moving";
+
 	constructor(position: Vector, scene: GameScene, definition: EnemySchema) {
 		super(position, 0, scene);
 		this.definition = definition;
@@ -37,32 +45,74 @@ export class Enemy extends GameObject {
 	}
 
 	override act(delta: number): void {
+		if (this.spawnDelayCount < 1) {
+			this.pixiContainer.alpha = this.spawnDelayCount
+			this.spawnDelayCount += delta;
+			return;
+		}
 		if (this.immunity > 0) {
 			this.immunity -= delta * 2;
-		} else {
-			this.immunity = 0;
-			const player: Player = this.scene.findObjects<Player>(Player)[0];
-
-			// @ts-expect-error It should not be undefined
-			if (this.collider?.collide(player.collider))
-				player.hit(this.definition.damage);
-
-			const direction = vectorAngle(subVectors(player.position, this.position));
-
-			this.move(createPolar(delta * this.definition.speed, direction));
+			return;
 		}
-
-		// this.pixiContainer.alpha = 1 - this.immunity
+		this.immunity = 0
 		this.pixiContainer.tint = new Color({
 			r: 255,
 			g: (1 - this.immunity) * 255,
 			b: (1 - this.immunity) * 255,
 		});
 
+		switch (this.definition.ai) {
+			case "following":
+				this.followPlayer(delta);
+				break;
+			case "moveAndSpawn":
+				if (this.state === "moving") {
+					if (this.moveTimeCount >= this.definition.moveTime) {
+						this.moveTimeCount = 0
+						this.state = "firing"
+						break;
+					}
+					this.followPlayer(delta);
+					this.moveTimeCount += delta;
+				}
+				if (this.state === "firing") {
+					if (this.fireTimeCount >= this.definition.spawnTime) {
+						this.fireTimeCount = 0
+						this.state = "moving"
+						break;
+					}
+					if (this.fireDelayCount >= this.definition.spawnTime / this.definition.spawnAmount) {
+						this.fireDelayCount = 0;
+						this.scene.addObject(
+							new Enemy(
+								this.position,
+								this.scene,
+								Enemies[this.definition.enemyToSpawn],
+							),
+						);
+					}
+					this.fireDelayCount += delta;
+					this.fireTimeCount += delta;
+				}
+				break;
+		}
+
 		if (this.health <= 0) {
 			sound.play(this.definition.sfx.death);
 			this.scene.removeObject(this);
 		}
+	}
+
+	followPlayer(delta: number) {
+		const player: Player = this.scene.findObjects<Player>(Player)[0];
+
+		// @ts-expect-error It should not be undefined
+		if (this.collider?.collide(player.collider))
+			player.hit(this.definition.damage);
+
+		const direction = vectorAngle(subVectors(player.position, this.position));
+
+		this.move(createPolar(delta * this.definition.speed, direction));
 	}
 
 	hit(damage: number, knockback: Vector) {
