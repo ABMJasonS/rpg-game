@@ -125,8 +125,8 @@ export class GameScene {
 		this.application.stage.removeChild(object.pixiContainer);
 	}
 
-  findObjects<T>(object: any): T[] {
-    // @ts-expect-error aaaa
+  findObjects<T extends GameObject>(object: unknown): T[] {
+		// @ts-expect-error the most hacky typescript shit ever
     return this._objects.filter((obj) => obj instanceof object)
   }
 
