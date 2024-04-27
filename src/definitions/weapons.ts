@@ -14,6 +14,7 @@ export type WeaponSchema = {
     range: number
     damage: number
     pierce: number
+    knockback: number
   }
   projectile?: ProjectileProperties;
 };
@@ -22,15 +23,16 @@ export const Weapons: Record<string, WeaponSchema> = {
   butterknife: {
     spriteFile: "butterknife.png",
     name: "Butter Knife",
-    useTime: 0.15,
-    animationTime: 0.15,
-    swingAngle: 16,
+    useTime: 0.2,
+    animationTime: 0.2,
+    swingAngle: 14,
     useSound: "whoosh.mp3",
     animation: "swing",
     melee: {
       range: 240,
-      damage: 1,
-      pierce: 1
+      damage: 10,
+      pierce: 1,
+      knockback: 50
     }
   },
 };

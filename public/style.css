@@ -1,9 +1,11 @@
 * {
   margin: 0;
   padding: 0;
+  min-width: none;
   font-family: "Silkscreen", sans-serif;
   font-weight: 400 !important;
   font-style: normal;
+  user-select: none;
 }
 
 html,
@@ -181,9 +183,8 @@ body {
 }
 
 #stats {
-  display: grid;
-  grid-template-columns: 0.2fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   border: none;
   gap: 2em;
   margin: 20px;
@@ -201,6 +202,40 @@ body {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+.stat {
+  width: 100%;
+  height: 1.5rem;
+  gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  border-width: 0px !important;
+
+  .stat-label {
+    margin-top: auto;
+    margin-bottom: auto;
+    min-width: 15ch;
+  }
+
+  .stat-bar {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    .stat-bar-inner {
+      transition-property: width;
+      transition-duration: 1s;
+      background-color: white;
+      border: none;
+      height: 100%;
+      display: flex;
+      padding: 0;
+      margin: 0;
+    }
+  }
 }
 
 #stats progress {

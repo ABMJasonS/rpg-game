@@ -1,4 +1,4 @@
-import { Assets, Sprite } from "pixi.js";
+import { Assets, Color, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import {
@@ -8,6 +8,9 @@ import {
 	subVectors,
 	vectorAngle,
 	createVector,
+	scale,
+	type Radians,
+	cloneVector,
 } from "../vector";
 import { Player } from "./player";
 import type { EnemySchema } from "../definitions/enemies";
@@ -16,57 +19,132 @@ import { sound } from "@pixi/sound";
 
 export class Enemy extends GameObject {
 	definition: EnemySchema;
-	collider: Rectangle;
-	health: number
-	immunity: number = 0;
+	health: number;
+	immunity = 0;
 	constructor(position: Vector, scene: GameScene, definition: EnemySchema) {
 		super(position, 0, scene);
 		this.definition = definition;
-		this.collider = new Rectangle(createVector(0, 0), createVector(0, 0))
-		this.health = this.definition.health
-		Assets.load("./img/toaster.png").then((asset) => {
+		this.health = this.definition.health;
+		this.hitbox = this.definition.hitbox.clone();
+		Assets.load(`./img/${definition.image}`).then((asset) => {
 			const sprite = new Sprite(asset);
 			sprite.anchor.set(0.5);
-			sprite.scale.set(1.2);
+			sprite.scale.set(8);
 			this.pixiContainer.addChild(sprite);
 		});
+		this.updateHitbox();
+		this.resolveSpawnLocation(10000, 100, 628);
 	}
+
 	override act(delta: number): void {
-
 		if (this.immunity > 0) {
-			this.immunity -= delta
+			this.immunity -= delta * 2;
 		} else {
-			this.immunity = 0
-			this.collider.min = subVectors(this.position, this.definition.hitbox)
-			this.collider.max = addVectors(this.position, this.definition.hitbox)
+			this.immunity = 0;
+			const player: Player = this.scene.findObjects<Player>(Player)[0];
 
-			const player = this.scene.findObjects<Player>(Player)[0];
-
-			if (this.collider.collide(player.collider)) console.log("hit!")
+			// @ts-expect-error It should not be undefined
+			if (this.collider?.collide(player.collider))
+				player.hit(this.definition.damage);
 
 			const direction = vectorAngle(subVectors(player.position, this.position));
 
-			this.position = addVectors(
-				this.position,
-				createPolar(delta * 500, direction),
-			);
+			this.move(createPolar(delta * this.definition.speed, direction));
 		}
 
-		this.pixiContainer.alpha = 1 - this.immunity
+		// this.pixiContainer.alpha = 1 - this.immunity
+		this.pixiContainer.tint = new Color({
+			r: 255,
+			g: (1 - this.immunity) * 255,
+			b: (1 - this.immunity) * 255,
+		});
 
 		if (this.health <= 0) {
-			sound.play(this.definition.sfx.death)
-			this.scene.removeObject(this)
+			sound.play(this.definition.sfx.death);
+			this.scene.removeObject(this);
 		}
 	}
 
-	hit(damage: number) {
+	hit(damage: number, knockback: Vector) {
 		if (this.immunity === 0) {
 			sound.play(this.definition.sfx.hit, {
-				speed: Math.random() * 0.4 + 0.8
-			})
+				speed: Math.random() * 0.4 + 0.8,
+			});
 			this.health -= damage;
-			this.immunity = 0.5;
+			this.immunity = 1;
+			this.move(knockback);
 		}
+	}
+
+	move(movement: Vector) {
+		const xDirection = movement.x < 0 ? -1 : 1;
+		const others = this.scene
+			.findObjects<Enemy>(Enemy)
+			.filter((obj) => obj !== this);
+		for (let x = 0; x < movement.x * xDirection; x++) {
+			this.position.x += xDirection;
+			this.updateHitbox();
+			let isCollidingX = false;
+			for (const other of others) {
+				if (!other.collider) continue;
+				if (this.collider?.collide(other.collider)) isCollidingX = true;
+			}
+			if (isCollidingX) {
+				this.position.x -= xDirection;
+				this.updateHitbox();
+			}
+		}
+		const yDirection = movement.y < 0 ? -1 : 1;
+		for (let y = 0; y < movement.y * yDirection; y++) {
+			this.position.y += yDirection;
+			this.updateHitbox();
+			let isCollidingY = false;
+			for (const other of others) {
+				if (!other.collider) continue;
+				if (this.collider?.collide(other.collider)) isCollidingY = true;
+			}
+			if (isCollidingY) {
+				this.position.y -= yDirection;
+				this.updateHitbox();
+			}
+		}
+	}
+
+	resolveSpawnLocation(
+		maxDistance: number,
+		distanceIncrements: number,
+		angleTries: Radians,
+	) {
+		if (!this.collider) return;
+
+		const initialPosition = cloneVector(this.position);
+
+		const others = this.scene
+			.findObjects<Enemy>(Enemy)
+			.filter((obj) => obj !== this);
+
+		for (
+			let distance = 0;
+			distance < maxDistance;
+			distance += maxDistance / distanceIncrements
+		) {
+			for (let tryNumber = 0; tryNumber < angleTries; tryNumber++) {
+				this.position = addVectors(
+					initialPosition,
+					createPolar(distance, Math.random() * Math.PI * 2),
+				);
+				this.updateHitbox();
+				let colliding = false;
+				for (const other of others) {
+					if (!other.collider) continue;
+					if (this.collider.collide(other.collider)) {
+						colliding = true;
+					}
+				}
+				if (!colliding) return;
+			}
+		}
+		console.warn("Position not found!");
+		this.position = initialPosition;
 	}
 }

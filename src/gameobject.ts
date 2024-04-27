@@ -1,12 +1,15 @@
 import { Container } from "pixi.js";
 import type { Radians, Vector } from "./vector";
 import type { GameScene } from "./scene";
+import { Hitbox } from "./collisions";
 
 export class GameObject {
   pixiContainer: Container;
   position: Vector;
   rotation: Radians;
   scene: GameScene;
+  collider: Hitbox | undefined = undefined;
+  hitbox: Hitbox  | undefined = undefined;
   constructor(position: Vector, rotation: Radians, scene: GameScene) {
     this.pixiContainer = new Container();
     this.position = position;
@@ -19,6 +22,12 @@ export class GameObject {
    */
   act(delta: number) {
     console.log(`This method should be overwritten! Delta time is ${delta}`);
+  }
+
+  updateHitbox() {
+    if (!this.hitbox) return
+    this.collider = this.hitbox.clone()
+    this.collider.translate(this.position)
   }
 
   updateGraphics() {

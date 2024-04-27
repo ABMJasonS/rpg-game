@@ -1,4 +1,4 @@
-import { Assets, Graphics, Sprite } from "pixi.js";
+import { Assets, Color, Graphics, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import { $, html } from "../dom";
@@ -15,6 +15,8 @@ import { Derived, Signal } from "../signals";
 import { Weapon } from "./weapon";
 import { type WeaponSchema, Weapons } from "../definitions/weapons";
 import { Rectangle } from "../collisions";
+import { Enemy } from "./enemy";
+import { Enemies } from "../definitions/enemies";
 
 export class Player extends GameObject {
 	speed = 1000;
@@ -23,8 +25,8 @@ export class Player extends GameObject {
 	velocity: Vector = createVector(0, 0);
 	friction = 5;
 	currentWeapon: Signal<WeaponSchema> = new Signal(Weapons.butterknife);
-	collider = new Rectangle(createVector(0, 0), createVector(0, 0));
-	hitbox = createVector(10, 10);
+	override hitbox: Rectangle = new Rectangle(createVector(-100, -100), createVector(100, 100));
+  immunity = 0;
 
 	constructor(scene: GameScene) {
 		super({ x: 0, y: 0 }, 0, scene);
@@ -36,7 +38,8 @@ export class Player extends GameObject {
 		});
 		new Derived(
 			() => {
-				$<HTMLProgressElement>("#hp").value = this.health.get();
+				$("#hp-bar-inner").style.width = `${this.health.get()}%`;
+        $("#hp-value").innerText = this.health.get().toFixed(0)
 			},
 			undefined,
 			[this.health],
@@ -53,17 +56,22 @@ export class Player extends GameObject {
 	}
 
 	override act(delta: number): void {
+    if (this.immunity < 0) {
+      this.immunity = 0
+    } else {
+      this.immunity -= delta
+      this.pixiContainer.tint = new Color({r: 255, g: (1 - this.immunity) * 255, b: (1 - this.immunity) * 255})
+    }
+
 		this.movement(delta)
 
 		this.scene.camera.position = this.position;
-
-		this.collider.min = subVectors(this.position, this.hitbox);
-		this.collider.max = addVectors(this.position, this.hitbox);
 
 		if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta;
 		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta;
 
 		if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
+		if (this.scene.isKeyDown("e")) this.scene.addObject(new Enemy(addVectors(this.position, createVector(300, 0)), this.scene, Enemies.toast));
 
 		this.attack(delta)
 
@@ -105,4 +113,10 @@ export class Player extends GameObject {
 			);
 		}
 	}
+
+  hit(damage: number) {
+    if (this.immunity > 0) return;
+    this.health.change(old => old - damage)
+    this.immunity = 1
+  }
 }
