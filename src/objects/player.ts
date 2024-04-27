@@ -36,7 +36,7 @@ export class Player extends GameObject {
 		});
 		new Derived(
 			() => {
-				$<HTMLProgressElement>("#hp").value = this.health.get();
+				$("#hp-bar-inner").style.width = `${this.health.get()}%`;
 			},
 			undefined,
 			[this.health],
