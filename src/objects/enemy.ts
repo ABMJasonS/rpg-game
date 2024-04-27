@@ -9,6 +9,8 @@ import {
 	vectorAngle,
 	createVector,
 	scale,
+	type Radians,
+	cloneVector,
 } from "../vector";
 import { Player } from "./player";
 import type { EnemySchema } from "../definitions/enemies";
@@ -27,12 +29,14 @@ export class Enemy extends GameObject {
 			scale(this.definition.hitbox, -0.5),
 			scale(this.definition.hitbox, 0.5),
 		);
-		Assets.load("./img/toaster.png").then((asset) => {
+		Assets.load(`./img/${definition.image}`).then((asset) => {
 			const sprite = new Sprite(asset);
 			sprite.anchor.set(0.5);
-			sprite.scale.set(1.2);
+			sprite.scale.set(8);
 			this.pixiContainer.addChild(sprite);
 		});
+		this.updateHitbox()
+		this.resolveSpawnLocation(10000, 10000, 628);
 	}
 
 	override act(delta: number): void {
@@ -43,7 +47,8 @@ export class Enemy extends GameObject {
 			const player: Player = this.scene.findObjects<Player>(Player)[0];
 
 			// @ts-expect-error It should not be undefined
-			if (this.collider?.collide(player.collider)) player.hit(this.definition.damage);
+			if (this.collider?.collide(player.collider))
+				player.hit(this.definition.damage);
 
 			const direction = vectorAngle(subVectors(player.position, this.position));
 
@@ -106,5 +111,40 @@ export class Enemy extends GameObject {
 				this.updateHitbox();
 			}
 		}
+	}
+
+	resolveSpawnLocation(
+		maxDistance: number,
+		distanceIncrements: number,
+		angleIncrements: Radians,
+	) {
+		if (!this.collider) return;
+
+		const initialPosition = cloneVector(this.position);
+
+		const others = this.scene.findObjects<Enemy>(Enemy).filter(obj => obj !== this);
+
+		for (
+			let distance = 0;
+			distance < maxDistance;
+			distance += maxDistance / distanceIncrements
+		) {
+			for (
+				let angle = 0;
+				angle < Math.PI * 2;
+				angle += Math.PI / (angleIncrements / 2)
+			) {
+				this.position = addVectors(
+					initialPosition,
+					createPolar(distance, angle),
+				);
+				this.updateHitbox();
+				for (const other of others) {
+					if (!other.collider) continue;
+					if (!this.collider.collide(other.collider)) return;
+				}
+			}
+		}
+		this.position = initialPosition
 	}
 }

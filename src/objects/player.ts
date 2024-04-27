@@ -15,6 +15,8 @@ import { Derived, Signal } from "../signals";
 import { Weapon } from "./weapon";
 import { type WeaponSchema, Weapons } from "../definitions/weapons";
 import { Rectangle } from "../collisions";
+import { Enemy } from "./enemy";
+import { Enemies } from "../definitions/enemies";
 
 export class Player extends GameObject {
 	speed = 1000;
@@ -69,6 +71,7 @@ export class Player extends GameObject {
 		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta;
 
 		if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
+		if (this.scene.isKeyDown("e")) this.scene.addObject(new Enemy(addVectors(this.position, createVector(300, 0)), this.scene, Enemies.toast));
 
 		this.attack(delta)
 

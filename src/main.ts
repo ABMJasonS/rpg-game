@@ -43,7 +43,7 @@ import { Enemies } from "./definitions/enemies.js";
   game.addObject(new Background(game))
 
   for (let index = 0; index < 20; index++) {
-    game.addObject(new Enemy({x: 3000, y: index * 1000}, game, Enemies.toaster));
+    game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
   }
 
   let fps = "";

@@ -111,3 +111,12 @@ export function scale(v: Vector, scale: number): Vector {
     y: v.y * scale
   }
 }
+
+/**
+ * Clones a vector (because JS does pass by reference)
+ * @param v Vector to clone
+ * @returns Cloned vector
+ */
+export function cloneVector(v: Vector): Vector {
+  return { x: v.x, y: v.y }
+}
