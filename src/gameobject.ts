@@ -1,7 +1,7 @@
 import { Container } from "pixi.js";
-import type { Radians, Vector } from "./vector";
+import type { Hitbox } from "./collisions";
 import type { GameScene } from "./scene";
-import { Hitbox } from "./collisions";
+import type { Radians, Vector } from "./vector";
 
 export class GameObject {
   pixiContainer: Container;
@@ -9,7 +9,7 @@ export class GameObject {
   rotation: Radians;
   scene: GameScene;
   collider: Hitbox | undefined = undefined;
-  hitbox: Hitbox  | undefined = undefined;
+  hitbox: Hitbox | undefined = undefined;
   constructor(position: Vector, rotation: Radians, scene: GameScene) {
     this.pixiContainer = new Container();
     this.position = position;
@@ -25,9 +25,9 @@ export class GameObject {
   }
 
   updateHitbox() {
-    if (!this.hitbox) return
-    this.collider = this.hitbox.clone()
-    this.collider.translate(this.position)
+    if (!this.hitbox) return;
+    this.collider = this.hitbox.clone();
+    this.collider.translate(this.position);
   }
 
   updateGraphics() {

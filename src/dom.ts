@@ -26,7 +26,6 @@ export function $<T extends HTMLElement>(selector: string): T {
   if (element instanceof HTMLElement) {
     // @ts-expect-error Cast the type of the element
     return element;
-  } else {
-    throw new Error("Element not found!");
   }
+  throw new Error("Element not found!");
 }

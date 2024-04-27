@@ -92,11 +92,11 @@ export function vectorAngle(v: Vector): Radians {
  */
 export function setLength(v: Vector, length: number): Vector {
   if (v.x === 0 && v.y === 0) return v;
-  const len = vectorLength(v)
+  const len = vectorLength(v);
   return {
-    x: v.x / len * length,
-    y: v.y / len * length
-  }
+    x: (v.x / len) * length,
+    y: (v.y / len) * length,
+  };
 }
 
 /**
@@ -108,8 +108,8 @@ export function setLength(v: Vector, length: number): Vector {
 export function scale(v: Vector, scale: number): Vector {
   return {
     x: v.x * scale,
-    y: v.y * scale
-  }
+    y: v.y * scale,
+  };
 }
 
 /**
@@ -118,5 +118,5 @@ export function scale(v: Vector, scale: number): Vector {
  * @returns Cloned vector
  */
 export function cloneVector(v: Vector): Vector {
-  return { x: v.x, y: v.y }
+  return { x: v.x, y: v.y };
 }

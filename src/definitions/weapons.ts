@@ -1,9 +1,9 @@
 import { Graphics } from "pixi.js";
 import { Rectangle } from "../collisions";
+import { Enemy } from "../objects/enemy";
 import type { ProjectileProperties } from "../objects/projectile";
 import type { Seconds } from "../units";
 import type { Radians } from "../vector";
-import { Enemy } from "../objects/enemy";
 
 export type WeaponSchema = {
   spriteFile: string;
@@ -15,11 +15,11 @@ export type WeaponSchema = {
   swingAngle?: Radians;
   length?: number;
   melee?: {
-    range: number
-    damage: number
-    pierce: number
-    knockback: number
-  }
+    range: number;
+    damage: number;
+    pierce: number;
+    knockback: number;
+  };
   projectile?: ProjectileProperties;
 };
 
@@ -36,8 +36,8 @@ export const Weapons: Record<string, WeaponSchema> = {
       range: 240,
       damage: 10,
       pierce: 1,
-      knockback: 50
-    }
+      knockback: 50,
+    },
   },
   test_gun: {
     spriteFile: "m1_garand.png",
@@ -48,18 +48,20 @@ export const Weapons: Record<string, WeaponSchema> = {
     useSound: "cameraclick1.wav",
     length: 320,
     projectile: {
-      hitbox: Rectangle.create({x: 10, y: 10}),
+      hitbox: Rectangle.create({ x: 10, y: 10 }),
       velocity: 2000,
       life: 2,
-      texture: (projectile) => projectile.scene.generateTexture(new Graphics().rect(0, 0, 100, 10).fill({color: 0xff0000})),
-      collisions: [{
-        type: Enemy,
-        pierce: 1,
-        onHit(projectile, object) {
-          if (!(object instanceof Enemy)) return;
-          object.hit(100, {x: 0, y: 0})
+      texture: (projectile) => projectile.scene.generateTexture(new Graphics().rect(0, 0, 100, 10).fill({ color: 0xff0000 })),
+      collisions: [
+        {
+          type: Enemy,
+          pierce: 1,
+          onHit(projectile, object) {
+            if (!(object instanceof Enemy)) return;
+            object.hit(100, { x: 0, y: 0 });
+          },
         },
-      }]
-    }
-  }
+      ],
+    },
+  },
 };

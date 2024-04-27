@@ -1,13 +1,13 @@
+import { filters, sound } from "@pixi/sound";
 import { Assets, Sprite } from "pixi.js";
+import { Rectangle } from "../collisions";
 import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import type { Seconds } from "../units";
-import { addVectors, subVectors, type Radians, type Vector, createVector, setLength, createPolar } from "../vector";
-import type { Player } from "./player";
-import { filters, sound } from "@pixi/sound";
+import { type Radians, type Vector, addVectors, createPolar, createVector, setLength, subVectors } from "../vector";
 import { Enemy } from "./enemy";
-import { Rectangle } from "../collisions";
+import type { Player } from "./player";
 import { Projectile } from "./projectile";
 
 export class Weapon extends GameObject {
@@ -15,13 +15,7 @@ export class Weapon extends GameObject {
   initialRotation: Radians;
   definition: WeaponSchema;
   player: Player;
-  constructor(
-    position: Vector,
-    rotation: Radians,
-    scene: GameScene,
-    player: Player,
-    definition: WeaponSchema,
-  ) {
+  constructor(position: Vector, rotation: Radians, scene: GameScene, player: Player, definition: WeaponSchema) {
     super(position, rotation, scene);
     this.definition = definition;
     this.player = player;
@@ -35,27 +29,27 @@ export class Weapon extends GameObject {
     });
     if (this.definition.useSound) {
       sound.play(this.definition.useSound, {
-        speed: Math.random() * 0.6 + 0.7
+        speed: Math.random() * 0.6 + 0.7,
       });
     }
 
-    const enemies = this.scene.findObjects<Enemy>(Enemy)
+    const enemies = this.scene.findObjects<Enemy>(Enemy);
 
     if (this.definition.melee) {
-      const a = createVector(this.definition.melee.range, this.definition.melee.range)
-      const hitbox = new Rectangle(subVectors(this.position, a), addVectors(this.position, a))
+      const a = createVector(this.definition.melee.range, this.definition.melee.range);
+      const hitbox = new Rectangle(subVectors(this.position, a), addVectors(this.position, a));
 
       let piercing = 0;
       for (const enemy of enemies) {
         if (piercing >= this.definition.melee.pierce) break;
         if (enemy.collider?.collide(hitbox) && enemy.immunity === 0) {
-          enemy.hit(this.definition.melee.damage, setLength(subVectors(enemy.position, this.position), this.definition.melee.knockback))
-          piercing++
+          enemy.hit(this.definition.melee.damage, setLength(subVectors(enemy.position, this.position), this.definition.melee.knockback));
+          piercing++;
         }
       }
     }
     if (this.definition.projectile) {
-      this.scene.addObject(new Projectile(this.scene, addVectors(this.position, createPolar(this.definition.length ?? 0, this.rotation)), this.rotation, this.definition.projectile))
+      this.scene.addObject(new Projectile(this.scene, addVectors(this.position, createPolar(this.definition.length ?? 0, this.rotation)), this.rotation, this.definition.projectile));
     }
   }
   override act(delta: number): void {
@@ -63,14 +57,9 @@ export class Weapon extends GameObject {
     this.position = this.player.position;
     switch (this.definition.animation) {
       case "swing":
-        this.rotation =
-          this.animationProgress *
-          (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) *
-          (this.definition.swingAngle ?? 10) +
-          this.initialRotation;
+        this.rotation = this.animationProgress * (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) * (this.definition.swingAngle ?? 10) + this.initialRotation;
     }
 
-    if (this.animationProgress > this.definition.animationTime)
-      this.scene.removeObject(this);
+    if (this.animationProgress > this.definition.animationTime) this.scene.removeObject(this);
   }
 }

@@ -65,11 +65,7 @@ export class Derived<T> {
    * @param destructor The destructor of the derived value
    * @param dependencies The dependencies of the derived value
    */
-  constructor(
-    derivedFunction: () => T,
-    destructor: (() => void) | undefined,
-    dependencies: Signal<unknown>[],
-  ) {
+  constructor(derivedFunction: () => T, destructor: (() => void) | undefined, dependencies: Signal<unknown>[]) {
     this.derivedFunction = derivedFunction;
     this.destructor = destructor;
     this.dependencies = dependencies;

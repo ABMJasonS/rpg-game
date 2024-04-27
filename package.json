@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "esbuild src/main.ts --define:window.DEV=true --sourcemap --outdir=public --bundle --watch --servedir=public",
-    "lint": "eslint . --fix"
+    "lint": "biome check . --apply",
+    "ci": "biome ci ."
   },
   "keywords": [],
   "author": "",
