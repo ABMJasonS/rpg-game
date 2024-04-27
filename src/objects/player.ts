@@ -37,6 +37,7 @@ export class Player extends GameObject {
 		new Derived(
 			() => {
 				$("#hp-bar-inner").style.width = `${this.health.get()}%`;
+        $("#hp-value").innerText = this.health.get().toFixed(0)
 			},
 			undefined,
 			[this.health],
