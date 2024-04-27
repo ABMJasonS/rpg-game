@@ -67,8 +67,8 @@ export class Player extends GameObject {
 
 		this.scene.camera.position = this.position;
 
-		if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta;
-		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta;
+		if (this.scene.isKeyDown("+")) this.scene.camera.zoom += delta * 0.001;
+		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta * 0.001;
 
 		if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
 		if (this.scene.isKeyDown("e")) this.scene.addObject(new Enemy(addVectors(this.position, createVector(300, 0)), this.scene, Enemies.toast));

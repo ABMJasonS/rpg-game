@@ -1,4 +1,4 @@
-import { Application, Graphics, TextureStyle } from "pixi.js";
+import { Application, Assets, Graphics, TextureStyle } from "pixi.js";
 import { $ } from "./dom.js";
 import { GameScene } from "./scene.js";
 import { Player } from "./objects/player.js";
@@ -22,11 +22,13 @@ import { Enemies } from "./definitions/enemies.js";
   });
 
   for (const [_, weapon] of Object.entries(Weapons)) {
+    await Assets.load(`./img/${weapon.spriteFile}`)
     if (!weapon.useSound) return;
     sound.add(weapon.useSound, `./sfx/${weapon.useSound}`);
   }
 
   for (const [_, enemy] of Object.entries(Enemies)) {
+    await Assets.load(`./img/${enemy.images.normal}`)
     sound.add(enemy.sfx.hit, `./sfx/${enemy.sfx.hit}`);
     sound.add(enemy.sfx.death, `./sfx/${enemy.sfx.death}`);
   }
