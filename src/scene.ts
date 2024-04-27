@@ -107,6 +107,8 @@ export class GameScene {
 	 * @param object The game object to add
 	 */
 	addObject(object: GameObject) {
+		object.updateGraphics()
+		object.updateHitbox()
 		this._objects.push(object);
 		this.application.stage.addChild(object.pixiContainer);
 	}
