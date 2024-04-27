@@ -8,6 +8,7 @@ export type EnemySchema = {
 	damage: number;
 	hitbox: Hitbox;
 	health: number;
+  immunityMultipler: number;
 	sfx: {
 		hit: string;
 		death: string;
@@ -42,6 +43,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		speed: 1000,
 		damage: 10,
 		health: 10,
+    immunityMultipler: 3,
 		sfx: {
 			hit: "toasthit.mp3",
 			death: "ondeath.wav",
@@ -59,6 +61,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		enemyToSpawn: "toast",
 		damage: 20,
 		health: 50,
+    immunityMultipler: 10,
 		sfx: {
 			hit: "toasterhit.mp3",
 			death: "ondeath.wav",

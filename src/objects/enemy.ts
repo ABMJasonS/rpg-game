@@ -30,11 +30,11 @@ export class Enemy extends GameObject {
 	state: "moving" | "firing" = "moving";
 
 	sprites: {
-		normal: Sprite;
-		damaged: Sprite;
+		normal: Sprite | undefined;
+		damaged: Sprite | undefined;
 	} = {
-		normal: undefined,
-		damaged: undefined,
+		normal: Sprite.from(""),
+		damaged: Sprite.from(""),
 	};
 
 	constructor(position: Vector, scene: GameScene, definition: EnemySchema) {
@@ -81,7 +81,7 @@ export class Enemy extends GameObject {
 			this.sprites.damaged.visible = true;
 		}
 		if (this.immunity > 0) {
-			this.immunity -= delta * 2;
+			this.immunity -= delta * this.definition.immunityMultipler;
 			this.pixiContainer.tint = new Color({
 				r: 255,
 				g: (1 - this.immunity) * 255,
