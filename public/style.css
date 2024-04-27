@@ -15,18 +15,36 @@ body {
   color: white;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
 .main-container {
   background-color: black;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: 3fr 7fr;
 }
 
 .main-container div {
   border: 4px solid white;
   background: transparent;
   margin: 10px;
+}
+
+#top-stats {
+  border: 0px;
+  margin: 0;
+  width: 100%;
+
+  #title {
+    width: 100%
+  }
 }
 
 #title {
@@ -64,24 +82,6 @@ body {
   margin-bottom: 0;
 }
 
-.main-container #top {
-  margin-top: 10px;
-  border: none;
-  display: grid;
-  grid-template-areas:
-    "a a a a a a c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c"
-    "b b b b b b c c c c";
-}
-
 #main-frame {
   grid-area: main;
   position: relative;
@@ -114,12 +114,9 @@ body {
 .main-container #bottom {
   margin-top: 0;
   margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
   border: none;
-  display: grid;
-  grid-template-areas:
-    "main main main main main main main inv inv inv"
-    "main main main main main main main map map map"
-    "main main main main main main main map map map";
 }
 
 #item-equip {
@@ -185,7 +182,7 @@ body {
 #stats {
   display: flex;
   flex-direction: column;
-  border: none;
+  border: 0px solid none;
   gap: 2em;
   margin: 20px;
   margin-bottom: 30px;

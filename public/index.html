@@ -21,35 +21,37 @@
     <div class="main-container" id="loading">
       Loading...
     </div>
-    <div class="main-container" id="game" style="visibility: hidden">
-      <div id="top">
-        <div id="title">
-          <span id="gametitle">Kitchen Nightmare</span>
-          <span id="location">( Location Placeholder )</span>
-        </div>
-        <div id="player-stats">
-          <h1 id="name">
-            <span id="nnn">Name (Race)</span><span id="level">LVL. 1</span>
-          </h1>
-          <div id="stats">
-            <div class="stat" id="hp-stat">
-              <span class="stat-label">Health: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="hp-bar-inner" style="background-color: red;">
-                  <span id="hp-value"></span>
+    <div class="main-container column" id="game" style="visibility: hidden">
+      <div id="top" class="row">
+        <div id="top-stats" class="column">
+          <div id="title">
+            <span id="gametitle">Kitchen Nightmare</span>
+            <span id="location">( Location Placeholder )</span>
+          </div>
+          <div id="player-stats">
+            <h1 id="name">
+              <span id="nnn">Name (Race)</span><span id="level">LVL. 1</span>
+            </h1>
+            <div id="stats">
+              <div class="stat" id="hp-stat">
+                <span class="stat-label">Health: </span>
+                <div class="stat-bar">
+                  <div class="stat-bar-inner" id="hp-bar-inner" style="background-color: red;">
+                    <span id="hp-value"></span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="stat" id="mana-stat">
-              <span class="stat-label">Mana: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="mana-bar-inner" style="background-color: red;"></div>
+              <div class="stat" id="mana-stat">
+                <span class="stat-label">Mana: </span>
+                <div class="stat-bar">
+                  <div class="stat-bar-inner" id="mana-bar-inner" style="background-color: red;"></div>
+                </div>
               </div>
-            </div>
-            <div class="stat" id="stamina-stat">
-              <span class="stat-label">Stamina: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="stamina-bar-inner" style="background-color: red;"></div>
+              <div class="stat" id="stamina-stat">
+                <span class="stat-label">Stamina: </span>
+                <div class="stat-bar">
+                  <div class="stat-bar-inner" id="stamina-bar-inner" style="background-color: red;"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -62,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div id="bottom">
+      <div id="bottom" class="row">
         <div id="main-frame">
           <span id="fps-counter">-- fps</span>
         </div>
