@@ -42,7 +42,7 @@ export class Enemy extends GameObject {
 		this.definition = definition;
 		this.health = this.definition.health;
 		this.hitbox = this.definition.hitbox.clone();
-		this.fireDelayCount = Number.POSITIVE_INFINITY
+		this.fireDelayCount = Number.POSITIVE_INFINITY;
 		Assets.load(`./img/${definition.images.normal}`).then((asset) => {
 			this.sprites.normal = new Sprite(asset);
 			this.sprites.normal.anchor.set(0.5);
@@ -96,37 +96,7 @@ export class Enemy extends GameObject {
 				this.followPlayer(delta);
 				break;
 			case "moveAndSpawn":
-				if (this.state === "moving") {
-					if (this.moveTimeCount >= this.definition.moveTime) {
-						this.moveTimeCount = 0;
-						this.state = "firing";
-						break;
-					}
-					this.followPlayer(delta);
-					this.moveTimeCount += delta;
-				}
-				if (this.state === "firing") {
-					if (this.fireTimeCount >= this.definition.spawnTime) {
-						this.fireTimeCount = 0;
-						this.state = "moving";
-						break;
-					}
-					if (
-						this.fireDelayCount >=
-						this.definition.spawnTime / this.definition.spawnAmount
-					) {
-						this.fireDelayCount = 0;
-						this.scene.addObject(
-							new Enemy(
-								this.position,
-								this.scene,
-								Enemies[this.definition.enemyToSpawn],
-							),
-						);
-					}
-					this.fireDelayCount += delta;
-					this.fireTimeCount += delta;
-				}
+				this.moveAndSpawn(delta);
 				break;
 		}
 	}
@@ -141,6 +111,15 @@ export class Enemy extends GameObject {
 		const direction = vectorAngle(subVectors(player.position, this.position));
 
 		this.move(createPolar(delta * this.definition.speed, direction));
+
+		switch (this.definition.images.rotationMode) {
+			case "flip":
+				this.pixiContainer.scale.x = Math.abs(direction) > Math.PI / 2 ? -1 : 1;
+				break;
+			case "rotate":
+				this.rotation = direction;
+				break;
+		}
 	}
 
 	hit(damage: number, knockback: Vector) {
@@ -185,6 +164,41 @@ export class Enemy extends GameObject {
 				this.position.y -= yDirection;
 				this.updateHitbox();
 			}
+		}
+	}
+
+	moveAndSpawn(delta: number) {
+		if (this.definition.ai !== "moveAndSpawn") return;
+		if (this.state === "moving") {
+			if (this.moveTimeCount >= this.definition.moveTime) {
+				this.moveTimeCount = 0;
+				this.state = "firing";
+				return;
+			}
+			this.followPlayer(delta);
+			this.moveTimeCount += delta;
+		}
+		if (this.state === "firing") {
+			if (this.fireTimeCount >= this.definition.spawnTime) {
+				this.fireTimeCount = 0;
+				this.state = "moving";
+				return;
+			}
+			if (
+				this.fireDelayCount >=
+				this.definition.spawnTime / this.definition.spawnAmount
+			) {
+				this.fireDelayCount = 0;
+				this.scene.addObject(
+					new Enemy(
+						this.position,
+						this.scene,
+						Enemies[this.definition.enemyToSpawn],
+					),
+				);
+			}
+			this.fireDelayCount += delta;
+			this.fireTimeCount += delta;
 		}
 	}
 
