@@ -40,7 +40,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		damage: 10,
 		health: 30,
 		sfx: {
-			hit: "metal_pipe.wav",
+			hit: "ondeath.wav",
 			death: "ondeath.wav"
 		}
 	},

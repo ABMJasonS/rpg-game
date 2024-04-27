@@ -41,7 +41,7 @@ export class Enemy extends GameObject {
 			this.pixiContainer.addChild(sprite);
 		});
 		this.updateHitbox();
-		this.resolveSpawnLocation(10000, 100, 628);
+		this.resolveSpawnLocation(10000, 100, 120);
 	}
 
 	override act(delta: number): void {
@@ -52,14 +52,14 @@ export class Enemy extends GameObject {
 		}
 		if (this.immunity > 0) {
 			this.immunity -= delta * 2;
+			this.pixiContainer.tint = new Color({
+				r: 255,
+				g: (1 - this.immunity) * 255,
+				b: (1 - this.immunity) * 255,
+			});
 			return;
 		}
 		this.immunity = 0
-		this.pixiContainer.tint = new Color({
-			r: 255,
-			g: (1 - this.immunity) * 255,
-			b: (1 - this.immunity) * 255,
-		});
 
 		switch (this.definition.ai) {
 			case "following":
