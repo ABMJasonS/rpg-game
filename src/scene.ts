@@ -42,6 +42,8 @@ export class GameScene {
 	};
 	noisefilter: NoiseFilter;
 
+	gameSpeed = 1;
+
 	/**
 	 * Creates a scene
 	 * @param application The Pixi.js Application class to use
@@ -142,7 +144,7 @@ export class GameScene {
 	act(delta: number) {
 		this.noisefilter.seed = Math.random();
 		for (const object of this._objects) {
-			object.act(delta);
+			object.act(delta * this.gameSpeed);
 			object.updateHitbox()
 			object.updateGraphics();
 		}

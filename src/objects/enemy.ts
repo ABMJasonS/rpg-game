@@ -63,6 +63,10 @@ export class Enemy extends GameObject {
 	}
 
 	override act(delta: number): void {
+		if (this.health <= 0) {
+			sound.play(this.definition.sfx.death);
+			this.scene.removeObject(this);
+		}
 		if (this.spawnDelayCount < 1) {
 			this.pixiContainer.alpha = this.spawnDelayCount;
 			this.spawnDelayCount += delta;
@@ -123,11 +127,6 @@ export class Enemy extends GameObject {
 					this.fireTimeCount += delta;
 				}
 				break;
-		}
-
-		if (this.health <= 0) {
-			sound.play(this.definition.sfx.death);
-			this.scene.removeObject(this);
 		}
 	}
 

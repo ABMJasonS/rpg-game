@@ -42,19 +42,20 @@ import { Enemies } from "./definitions/enemies.js";
 
   game.addObject(new Background(game))
 
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
-  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toast));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
+  //game.addObject(new Enemy({x: 3000, y: 0}, game, Enemies.toaster));
 
   let fps = "";
 
