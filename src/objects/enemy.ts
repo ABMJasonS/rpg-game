@@ -29,26 +29,51 @@ export class Enemy extends GameObject {
 
 	state: "moving" | "firing" = "moving";
 
+	sprites: {
+		normal: Sprite;
+		damaged: Sprite;
+	} = {
+		normal: undefined,
+		damaged: undefined,
+	};
+
 	constructor(position: Vector, scene: GameScene, definition: EnemySchema) {
 		super(position, 0, scene);
 		this.definition = definition;
 		this.health = this.definition.health;
 		this.hitbox = this.definition.hitbox.clone();
-		Assets.load(`./img/${definition.image}`).then((asset) => {
-			const sprite = new Sprite(asset);
-			sprite.anchor.set(0.5);
-			sprite.scale.set(8);
-			this.pixiContainer.addChild(sprite);
+		Assets.load(`./img/${definition.images.normal}`).then((asset) => {
+			this.sprites.normal = new Sprite(asset);
+			this.sprites.normal.anchor.set(0.5);
+			this.sprites.normal.scale.set(8);
+			this.sprites.normal.visible = true;
+			this.pixiContainer.addChild(this.sprites.normal);
 		});
+		if (definition.images.damaged) {
+			Assets.load(`./img/${definition.images.damaged}`).then((asset) => {
+				this.sprites.damaged = new Sprite(asset);
+				this.sprites.damaged.anchor.set(0.5);
+				this.sprites.damaged.scale.set(8);
+				this.sprites.damaged.visible = false;
+				this.pixiContainer.addChild(this.sprites.damaged);
+			});
+		}
 		this.updateHitbox();
 		this.resolveSpawnLocation(10000, 100, 120);
 	}
 
 	override act(delta: number): void {
 		if (this.spawnDelayCount < 1) {
-			this.pixiContainer.alpha = this.spawnDelayCount
+			this.pixiContainer.alpha = this.spawnDelayCount;
 			this.spawnDelayCount += delta;
 			return;
+		}
+		if (
+			this.definition.images.damaged &&
+			this.health / this.definition.health <= 0.5
+		) {
+			this.sprites.normal.visible = false;
+			this.sprites.damaged.visible = true;
 		}
 		if (this.immunity > 0) {
 			this.immunity -= delta * 2;
@@ -59,7 +84,7 @@ export class Enemy extends GameObject {
 			});
 			return;
 		}
-		this.immunity = 0
+		this.immunity = 0;
 
 		switch (this.definition.ai) {
 			case "following":
@@ -68,8 +93,8 @@ export class Enemy extends GameObject {
 			case "moveAndSpawn":
 				if (this.state === "moving") {
 					if (this.moveTimeCount >= this.definition.moveTime) {
-						this.moveTimeCount = 0
-						this.state = "firing"
+						this.moveTimeCount = 0;
+						this.state = "firing";
 						break;
 					}
 					this.followPlayer(delta);
@@ -77,11 +102,14 @@ export class Enemy extends GameObject {
 				}
 				if (this.state === "firing") {
 					if (this.fireTimeCount >= this.definition.spawnTime) {
-						this.fireTimeCount = 0
-						this.state = "moving"
+						this.fireTimeCount = 0;
+						this.state = "moving";
 						break;
 					}
-					if (this.fireDelayCount >= this.definition.spawnTime / this.definition.spawnAmount) {
+					if (
+						this.fireDelayCount >=
+						this.definition.spawnTime / this.definition.spawnAmount
+					) {
 						this.fireDelayCount = 0;
 						this.scene.addObject(
 							new Enemy(
