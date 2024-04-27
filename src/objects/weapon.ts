@@ -3,7 +3,7 @@ import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import type { Seconds } from "../units";
-import { addVectors, subVectors, type Radians, type Vector, createVector, setLength } from "../vector";
+import { addVectors, subVectors, type Radians, type Vector, createVector, setLength, createPolar } from "../vector";
 import type { Player } from "./player";
 import { filters, sound } from "@pixi/sound";
 import { Enemy } from "./enemy";
@@ -55,7 +55,7 @@ export class Weapon extends GameObject {
       }
     }
     if (this.definition.projectile) {
-      this.scene.addObject(new Projectile(this.scene, this.position, this.rotation, this.definition.projectile))
+      this.scene.addObject(new Projectile(this.scene, addVectors(this.position, createPolar(this.definition.length ?? 0, this.rotation)), this.rotation, this.definition.projectile))
     }
   }
   override act(delta: number): void {

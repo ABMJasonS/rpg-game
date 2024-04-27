@@ -13,6 +13,7 @@ export type WeaponSchema = {
   animationTime: Seconds;
   useSound?: string;
   swingAngle?: Radians;
+  length?: number;
   melee?: {
     range: number
     damage: number
@@ -41,10 +42,11 @@ export const Weapons: Record<string, WeaponSchema> = {
   test_gun: {
     spriteFile: "m1_garand.png",
     name: "Test Gun",
-    useTime: 0.1,
-    animationTime: 0.1,
+    useTime: 0.01,
+    animationTime: 0.02,
     animation: "fire",
     useSound: "cameraclick1.wav",
+    length: 320,
     projectile: {
       hitbox: Rectangle.create({x: 10, y: 10}),
       velocity: 2000,
