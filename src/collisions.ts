@@ -1,6 +1,11 @@
 import { addVectors, scale, subVectors, type Vector } from "./vector";
 
 export class Hitbox {
+  /**
+   * Checks if two hitboxes are colliding
+   * @param other Other hitbox to collide with
+   * @returns True if colliding
+   */
 	collide(other: Hitbox) {
 		switch (true) {
 			case other instanceof Rectangle:

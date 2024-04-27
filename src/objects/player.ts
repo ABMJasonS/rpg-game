@@ -53,7 +53,7 @@ export class Player extends GameObject {
 				$("#inventory").innerHTML = this.weapons
 					.get()
 					.map(
-						(weapon, i) => `
+						(weapon, i) => html`
           <img ${i === this.currentWeapon.get() ? `style="background-color: white"` : ""} src="./img/${Weapons[weapon].spriteFile}"  />
         `,
 					)

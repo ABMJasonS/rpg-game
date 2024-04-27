@@ -9,7 +9,7 @@
  * @param string The string to use
  * @returns The same string inputted
  */
-export const html = (string: TemplateStringsArray): string => string.join("");
+export const html = (string: TemplateStringsArray, ...values: unknown[]): string => string.join("") + values.join("");
 
 /**
  * Selects an element from the DOM. Poor man's jQuery.

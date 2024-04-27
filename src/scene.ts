@@ -40,7 +40,7 @@ export class GameScene {
 			left: false,
 		},
 	};
-	noisefilter: NoiseFilter;
+	_noisefilter: NoiseFilter;
 
 	gameSpeed = 1;
 
@@ -87,9 +87,9 @@ export class GameScene {
 				y: e.offsetY,
 			};
 		});
-		this.noisefilter = new NoiseFilter({ noise: 0.5 });
+		this._noisefilter = new NoiseFilter({ noise: 0.5 });
 		this.application.stage.filters = [
-			this.noisefilter,
+			this._noisefilter,
 			new CRTFilter({
 				vignetting: 0.6,
 				vignettingBlur: 0.5
@@ -125,6 +125,11 @@ export class GameScene {
 		this.application.stage.removeChild(object.pixiContainer);
 	}
 
+	 /**
+		* Finds game objects based on type
+		* @param object Type of game object to find
+		* @returns The game objects
+		*/
   findObjects<T extends GameObject>(object: unknown): T[] {
 		// @ts-expect-error the most hacky typescript shit ever
     return this._objects.filter((obj) => obj instanceof object)
@@ -151,7 +156,7 @@ export class GameScene {
 	 * @param delta Delta time
 	 */
 	act(delta: number) {
-		this.noisefilter.seed = Math.random();
+		this._noisefilter.seed = Math.random();
 		for (const object of this._objects) {
 			object.act(delta * this.gameSpeed);
 			object.updateHitbox()
