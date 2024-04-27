@@ -24,9 +24,13 @@ export class Player extends GameObject {
 	fireCount = 0;
 	velocity: Vector = createVector(0, 0);
 	friction = 5;
-	currentWeapon: Signal<WeaponSchema> = new Signal(Weapons.test_gun);
-	override hitbox: Rectangle = new Rectangle(createVector(-100, -100), createVector(100, 100));
-  immunity = 0;
+	weapons: Signal<string[]> = new Signal(["butterknife", "test_gun"]);
+	currentWeapon: Signal<number> = new Signal(0);
+	override hitbox: Rectangle = new Rectangle(
+		createVector(-100, -100),
+		createVector(100, 100),
+	);
+	immunity = 0;
 
 	constructor(scene: GameScene) {
 		super({ x: 0, y: 0 }, 0, scene);
@@ -39,31 +43,40 @@ export class Player extends GameObject {
 		new Derived(
 			() => {
 				$("#hp-bar-inner").style.width = `${this.health.get()}%`;
-        $("#hp-value").innerText = this.health.get().toFixed(0)
+				$("#hp-value").innerText = this.health.get().toFixed(0);
 			},
 			undefined,
 			[this.health],
 		);
 		new Derived(
 			() => {
-				$("#box").innerHTML = `
-          <img src="./img/${this.currentWeapon.get().spriteFile}"  />
-        `;
+				$("#inventory").innerHTML = this.weapons
+					.get()
+					.map(
+						(weapon, i) => `
+          <img ${i === this.currentWeapon.get() ? `style="background-color: white"` : ""} src="./img/${Weapons[weapon].spriteFile}"  />
+        `,
+					)
+					.join("");
 			},
 			undefined,
-			[this.currentWeapon],
+			[this.weapons, this.currentWeapon],
 		);
 	}
 
 	override act(delta: number): void {
-    if (this.immunity < 0) {
-      this.immunity = 0
-    } else {
-      this.immunity -= delta
-      this.pixiContainer.tint = new Color({r: 255, g: (1 - this.immunity) * 255, b: (1 - this.immunity) * 255})
-    }
+		if (this.immunity < 0) {
+			this.immunity = 0;
+		} else {
+			this.immunity -= delta;
+			this.pixiContainer.tint = new Color({
+				r: 255,
+				g: (1 - this.immunity) * 255,
+				b: (1 - this.immunity) * 255,
+			});
+		}
 
-		this.movement(delta)
+		this.movement(delta);
 
 		this.scene.camera.position = this.position;
 
@@ -71,9 +84,18 @@ export class Player extends GameObject {
 		if (this.scene.isKeyDown("-")) this.scene.camera.zoom -= delta * 0.001;
 
 		if (this.scene.isKeyDown("q")) this.health.change((hp) => hp - delta);
-		if (this.scene.isKeyDown("e")) this.scene.addObject(new Enemy(addVectors(this.position, createVector(300, 0)), this.scene, Enemies.toast));
+		if (this.scene.isKeyDown("e"))
+			this.scene.addObject(
+				new Enemy(
+					addVectors(this.position, createVector(300, 0)),
+					this.scene,
+					Enemies.toast,
+				),
+			);
+    
+    this.weaponSwitching()
 
-		this.attack(delta)
+		this.attack(delta);
 
 		this.fireCount += delta;
 	}
@@ -97,9 +119,10 @@ export class Player extends GameObject {
 	}
 
 	attack(delta: number) {
+		const usingWeapon = Weapons[this.weapons.get()[this.currentWeapon.get()]];
 		if (
 			(this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left) &&
-			this.fireCount > this.currentWeapon.get().useTime
+			this.fireCount > usingWeapon.useTime
 		) {
 			this.fireCount = 0;
 			this.scene.addObject(
@@ -108,15 +131,21 @@ export class Player extends GameObject {
 					vectorAngle(subVectors(this.scene.mouseInfo.position, this.position)),
 					this.scene,
 					this,
-					this.currentWeapon.get(),
+					usingWeapon,
 				),
 			);
 		}
 	}
 
-  hit(damage: number) {
-    if (this.immunity > 0) return;
-    this.health.change(old => old - damage)
-    this.immunity = 1
+	hit(damage: number) {
+		if (this.immunity > 0) return;
+		this.health.change((old) => old - damage);
+		this.immunity = 1;
+	}
+
+  weaponSwitching() {
+    for (const key of [1,2,3,4,5,6,7,8]) {
+      if (this.scene.isKeyDown(key.toString())) this.currentWeapon.set(key - 1)
+    }
   }
 }
