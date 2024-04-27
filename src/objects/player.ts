@@ -28,10 +28,10 @@ export class Player extends GameObject {
 
 	constructor(scene: GameScene) {
 		super({ x: 0, y: 0 }, 0, scene);
-		Assets.load("./img/bread.png").then((asset) => {
+		Assets.load("./img/bread-big.png").then((asset) => {
 			const sprite = Sprite.from(asset);
 			sprite.anchor.set(0.5);
-			sprite.scale.set(10);
+			sprite.scale.set(1);
 			this.pixiContainer.addChild(sprite);
 		});
 		new Derived(
