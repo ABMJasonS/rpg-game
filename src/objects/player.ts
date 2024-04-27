@@ -53,9 +53,12 @@ export class Player extends GameObject {
 				$("#inventory").innerHTML = this.weapons
 					.get()
 					.map(
-						(weapon, i) => html`
-          <img ${i === this.currentWeapon.get() ? `style="background-color: white"` : ""} src="./img/${Weapons[weapon].spriteFile}"  />
-        `,
+						(weapon, i) => `
+              <img style="${
+								i === this.currentWeapon.get() ? "background-color: white" : ""
+							}"
+                src="./img/${Weapons[weapon].spriteFile}"
+              />`,
 					)
 					.join("");
 			},
@@ -92,8 +95,8 @@ export class Player extends GameObject {
 					Enemies.toast,
 				),
 			);
-    
-    this.weaponSwitching()
+
+		this.weaponSwitching();
 
 		this.attack(delta);
 
@@ -143,9 +146,9 @@ export class Player extends GameObject {
 		this.immunity = 1;
 	}
 
-  weaponSwitching() {
-    for (const key of [1,2,3,4,5,6,7,8]) {
-      if (this.scene.isKeyDown(key.toString())) this.currentWeapon.set(key - 1)
-    }
-  }
+	weaponSwitching() {
+		for (const key of [1, 2, 3, 4, 5, 6, 7, 8]) {
+			if (this.scene.isKeyDown(key.toString())) this.currentWeapon.set(key - 1);
+		}
+	}
 }
