@@ -54,7 +54,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		ai: "moveAndSpawn",
 		speed: 500,
 		moveTime: 10,
-		spawnAmount: 1,
+		spawnAmount: 2,
 		spawnTime: 1,
 		enemyToSpawn: "toast",
 		damage: 20,

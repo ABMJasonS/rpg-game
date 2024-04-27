@@ -42,6 +42,7 @@ export class Enemy extends GameObject {
 		this.definition = definition;
 		this.health = this.definition.health;
 		this.hitbox = this.definition.hitbox.clone();
+		this.fireDelayCount = Number.POSITIVE_INFINITY
 		Assets.load(`./img/${definition.images.normal}`).then((asset) => {
 			this.sprites.normal = new Sprite(asset);
 			this.sprites.normal.anchor.set(0.5);
