@@ -1,4 +1,4 @@
-import { addVectors, type Vector } from "./vector";
+import { addVectors, scale, subVectors, type Vector } from "./vector";
 
 export class Hitbox {
 	collide(other: Hitbox) {
@@ -51,6 +51,10 @@ export class Rectangle extends Hitbox {
 		this.min = addVectors(this.min, translation);
 		this.max = addVectors(this.max, translation);
 	}
+
+  static create(size: Vector) {
+    return new Rectangle(scale(size, -0.5), scale(size, 0.5))
+  }
 }
 export class Circle extends Hitbox {}
 export class Point extends Hitbox {}

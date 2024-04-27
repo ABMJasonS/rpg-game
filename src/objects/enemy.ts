@@ -25,10 +25,7 @@ export class Enemy extends GameObject {
 		super(position, 0, scene);
 		this.definition = definition;
 		this.health = this.definition.health;
-		this.hitbox = new Rectangle(
-			scale(this.definition.hitbox, -0.5),
-			scale(this.definition.hitbox, 0.5),
-		);
+		this.hitbox = this.definition.hitbox.clone();
 		Assets.load(`./img/${definition.image}`).then((asset) => {
 			const sprite = new Sprite(asset);
 			sprite.anchor.set(0.5);
@@ -36,7 +33,7 @@ export class Enemy extends GameObject {
 			this.pixiContainer.addChild(sprite);
 		});
 		this.updateHitbox();
-		this.resolveSpawnLocation(10000, 10000, 628);
+		this.resolveSpawnLocation(10000, 100, 628);
 	}
 
 	override act(delta: number): void {
@@ -119,7 +116,7 @@ export class Enemy extends GameObject {
 		angleTries: Radians,
 	) {
 		if (!this.collider) return;
-		
+
 		const initialPosition = cloneVector(this.position);
 
 		const others = this.scene
@@ -141,13 +138,13 @@ export class Enemy extends GameObject {
 				for (const other of others) {
 					if (!other.collider) continue;
 					if (this.collider.collide(other.collider)) {
-						colliding = true
+						colliding = true;
 					}
 				}
 				if (!colliding) return;
 			}
 		}
-		console.warn("Position not found!")
+		console.warn("Position not found!");
 		this.position = initialPosition;
 	}
 }

@@ -1,3 +1,4 @@
+import { Hitbox, Rectangle } from "../collisions";
 import type { Seconds } from "../units";
 import { type Vector, createVector } from "../vector";
 
@@ -6,7 +7,7 @@ export type EnemySchema = {
 	image: string;
 	speed: number;
 	damage: number;
-	hitbox: Vector;
+	hitbox: Hitbox;
 	health: number;
 	sfx: {
 		hit: string
@@ -32,7 +33,7 @@ export type EnemySchema = {
 
 export const Enemies: Record<string, EnemySchema> = {
 	toast: {
-		hitbox: createVector(10, 10),
+    hitbox: Rectangle.create(createVector(200, 200)),
 		name: "Toast",
 		image: "toast.png",
 		ai: "following",
@@ -45,7 +46,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		}
 	},
 	toaster: {
-		hitbox: createVector(320, 200),
+    hitbox: Rectangle.create(createVector(320, 200)),
 		name: "Toaster",
 		image: "toaster.png",
 		ai: "moveAndSpawn",
