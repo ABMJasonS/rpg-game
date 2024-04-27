@@ -36,7 +36,7 @@ export const Enemies: Record<string, EnemySchema> = {
 		name: "Toast",
 		image: "toast.png",
 		ai: "following",
-		speed: 3,
+		speed: 1000,
 		damage: 10,
 		health: 30,
 		sfx: {
@@ -45,11 +45,11 @@ export const Enemies: Record<string, EnemySchema> = {
 		}
 	},
 	toaster: {
-		hitbox: createVector(200, 140),
+		hitbox: createVector(320, 200),
 		name: "Toaster",
 		image: "toaster.png",
 		ai: "moveAndSpawn",
-		speed: 1000,
+		speed: 500,
 		moveTime: 2,
 		spawnAmount: 2,
 		spawnStagger: 0.2,

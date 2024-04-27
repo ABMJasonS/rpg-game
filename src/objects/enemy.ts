@@ -35,7 +35,7 @@ export class Enemy extends GameObject {
 			sprite.scale.set(8);
 			this.pixiContainer.addChild(sprite);
 		});
-		this.updateHitbox()
+		this.updateHitbox();
 		this.resolveSpawnLocation(10000, 10000, 628);
 	}
 
@@ -116,35 +116,38 @@ export class Enemy extends GameObject {
 	resolveSpawnLocation(
 		maxDistance: number,
 		distanceIncrements: number,
-		angleIncrements: Radians,
+		angleTries: Radians,
 	) {
 		if (!this.collider) return;
-
+		
 		const initialPosition = cloneVector(this.position);
 
-		const others = this.scene.findObjects<Enemy>(Enemy).filter(obj => obj !== this);
+		const others = this.scene
+			.findObjects<Enemy>(Enemy)
+			.filter((obj) => obj !== this);
 
 		for (
 			let distance = 0;
 			distance < maxDistance;
 			distance += maxDistance / distanceIncrements
 		) {
-			for (
-				let angle = 0;
-				angle < Math.PI * 2;
-				angle += Math.PI / (angleIncrements / 2)
-			) {
+			for (let tryNumber = 0; tryNumber < angleTries; tryNumber++) {
 				this.position = addVectors(
 					initialPosition,
-					createPolar(distance, angle),
+					createPolar(distance, Math.random() * Math.PI * 2),
 				);
 				this.updateHitbox();
+				let colliding = false;
 				for (const other of others) {
 					if (!other.collider) continue;
-					if (!this.collider.collide(other.collider)) return;
+					if (this.collider.collide(other.collider)) {
+						colliding = true
+					}
 				}
+				if (!colliding) return;
 			}
 		}
-		this.position = initialPosition
+		console.warn("Position not found!")
+		this.position = initialPosition;
 	}
 }
