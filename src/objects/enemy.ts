@@ -30,8 +30,8 @@ export class Enemy extends GameObject {
 	state: "moving" | "firing" = "moving";
 
 	sprites: {
-		normal: Sprite | undefined;
-		damaged: Sprite | undefined;
+		normal: Sprite;
+		damaged: Sprite;
 	} = {
 		normal: Sprite.from(""),
 		damaged: Sprite.from(""),
@@ -64,7 +64,7 @@ export class Enemy extends GameObject {
 		this.scene.addObject(new Particle({
 			position: this.position,
 			rotation: 0,
-			period: 1,
+			period: 3,
 			texture: this.scene.generateTexture(new Graphics().circle(0, 0, 500).fill({color: 0x00ffee})),
 			act(particle, progress, sprite) {
 				sprite.anchor.set(0.5)
@@ -79,8 +79,8 @@ export class Enemy extends GameObject {
 			sound.play(this.definition.sfx.death);
 			this.scene.removeObject(this);
 		}
-		if (this.spawnDelayCount < 1) {
-			this.pixiContainer.alpha = this.spawnDelayCount;
+		if (this.spawnDelayCount < 3) {
+			this.pixiContainer.alpha = this.spawnDelayCount / 3;
 			this.spawnDelayCount += delta;
 			return;
 		}

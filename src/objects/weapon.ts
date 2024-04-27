@@ -8,6 +8,7 @@ import type { Player } from "./player";
 import { filters, sound } from "@pixi/sound";
 import { Enemy } from "./enemy";
 import { Rectangle } from "../collisions";
+import { Projectile } from "./projectile";
 
 export class Weapon extends GameObject {
   animationProgress: Seconds = 0;
@@ -52,6 +53,9 @@ export class Weapon extends GameObject {
           piercing++
         }
       }
+    }
+    if (this.definition.projectile) {
+      this.scene.addObject(new Projectile(this.scene, this.position, this.rotation, this.definition.projectile))
     }
   }
   override act(delta: number): void {

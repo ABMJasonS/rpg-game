@@ -24,7 +24,7 @@ export class Player extends GameObject {
 	fireCount = 0;
 	velocity: Vector = createVector(0, 0);
 	friction = 5;
-	currentWeapon: Signal<WeaponSchema> = new Signal(Weapons.butterknife);
+	currentWeapon: Signal<WeaponSchema> = new Signal(Weapons.test_gun);
 	override hitbox: Rectangle = new Rectangle(createVector(-100, -100), createVector(100, 100));
   immunity = 0;
 
