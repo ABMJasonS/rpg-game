@@ -1,4 +1,4 @@
-import { Assets, Color, Sprite } from "pixi.js";
+import { Assets, Color, Graphics, Sprite } from "pixi.js";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import {
@@ -14,8 +14,8 @@ import {
 } from "../vector";
 import { Player } from "./player";
 import { Enemies, type EnemySchema } from "../definitions/enemies";
-import { Rectangle } from "../collisions";
 import { sound } from "@pixi/sound";
+import { Particle } from "./particle";
 
 export class Enemy extends GameObject {
 	definition: EnemySchema;
@@ -61,6 +61,17 @@ export class Enemy extends GameObject {
 		}
 		this.updateHitbox();
 		this.resolveSpawnLocation(10000, 100, 120);
+		this.scene.addObject(new Particle({
+			position: this.position,
+			rotation: 0,
+			period: 1,
+			texture: this.scene.generateTexture(new Graphics().circle(0, 0, 500).fill({color: 0xff0000})),
+			act(particle, progress, sprite) {
+				sprite.anchor.set(0.5)
+				particle.pixiContainer.scale = progress
+				particle.pixiContainer.alpha = 1 - progress
+			},
+		}, this.scene))
 	}
 
 	override act(delta: number): void {

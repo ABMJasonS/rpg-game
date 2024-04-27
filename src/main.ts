@@ -19,6 +19,7 @@ import { Enemies } from "./definitions/enemies.js";
   await app.init({
     resizeTo: $("#main-frame"),
     background: 0x000000,
+    preference: "webgpu"
   });
 
   for (const [_, weapon] of Object.entries(Weapons)) {

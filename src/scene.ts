@@ -1,4 +1,4 @@
-import { type Application, NoiseFilter } from "pixi.js";
+import { type Application, NoiseFilter, GenerateTextureOptions, Container, Texture } from "pixi.js";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
 import { $ } from "./dom";
@@ -135,6 +135,13 @@ export class GameScene {
 	 */
 	isKeyDown(key: string) {
 		return this._keysDown.find((k) => k === key) !== undefined;
+	}
+
+	/**
+	 * Generates a Pixi.js texture
+	 */
+	generateTexture(thing: GenerateTextureOptions | Container): Texture {
+		return this.application.renderer.textureGenerator.generateTexture(thing)
 	}
 
 	/**
