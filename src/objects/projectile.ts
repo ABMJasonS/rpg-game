@@ -1,4 +1,4 @@
-import { Container, Sprite, type Texture } from "pixi.js";
+import { Assets, Container, Sprite, SpriteTexture, type Texture } from "pixi.js";
 import type { Hitbox } from "../collisions";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
@@ -7,7 +7,7 @@ import { Enemy } from "./enemy";
 
 export type ProjectileProperties = {
   velocity: number;
-  texture: Texture | ((projectile: Projectile) => Texture);
+  texture: Texture | ((projectile: Projectile) => Texture) | string;
   hitbox: Hitbox;
   life?: number;
   special?: (projectile: Projectile) => void;
@@ -22,13 +22,21 @@ export type ProjectileProperties = {
 export class Projectile extends GameObject {
   health: number;
   properties: ProjectileProperties;
-  sprite: Sprite;
+  sprite: Sprite = Sprite.from("");
   pierces = 0;
   constructor(scene: GameScene, position: Vector, rotation: Radians, properties: ProjectileProperties) {
     super(position, rotation, scene);
     this.properties = properties;
-    this.sprite = Sprite.from(typeof properties.texture === "function" ? properties.texture(this) : properties.texture);
+    if (typeof properties.texture === "string") {
+      Assets.load(`./img/${properties.texture}`).then((asset) => {
+        this.sprite = asset;
+      });
+			console.log(this.sprite)
+    } else {
+      this.sprite = Sprite.from(typeof properties.texture === "function" ? properties.texture(this) : properties.texture);
+    }
     this.pixiContainer.addChild(this.sprite);
+    this.pixiContainer.scale.set(8);
     this.health = properties.life ?? 50;
     this.hitbox = properties.hitbox;
     this.updateHitbox();

@@ -46,16 +46,12 @@ export const Weapons: Record<string, WeaponSchema> = {
     animationTime: 0.25,
     animation: "fire",
     useSound: "cameraclick2.wav",
-    length: 300,
+    length: 0,
     projectile: {
-      hitbox: Rectangle.create({x: 10, y: 10}),
+      hitbox: Rectangle.create({ x: 10, y: 10 }),
       velocity: 2000,
       life: 2,
-      texture: () => {
-        let texture: unknown;
-        Assets.load("./img/sausage.png").then(asset => {texture = asset})
-        return texture;
-      },
+      texture: "sausage.png",
       collisions: [
         {
           type: Enemy,
@@ -64,9 +60,9 @@ export const Weapons: Record<string, WeaponSchema> = {
             if (!(object instanceof Enemy)) return;
             object.hit(10, { x: 0, y: 0 });
           },
-        }
-      ]
-    }
+        },
+      ],
+    },
   },
   test_gun: {
     spriteFile: "m1_garand.png",
@@ -80,7 +76,7 @@ export const Weapons: Record<string, WeaponSchema> = {
       hitbox: Rectangle.create({ x: 10, y: 10 }),
       velocity: 2000,
       life: 2,
-      texture: (projectile) => projectile.scene.generateTexture(new Graphics().rect(0, 0, 100, 10).fill({ color: 0xff0000 })),
+      texture: (projectile) => projectile.scene.generateTexture(new Graphics().rect(0, 0, 10, 1).fill({ color: 0xff0000 })),
       collisions: [
         {
           type: Enemy,
