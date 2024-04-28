@@ -62,15 +62,11 @@ import { createVector } from "./vector.js";
 
   app.ticker.add((ticker) => {
     fps = ticker.FPS.toFixed(0);
+    game.act(1 / ticker.FPS)
   });
 
-  const TPS = 120;
   setInterval(() => {
-    game.act(1 / TPS);
-  }, 1000 / TPS);
-
-  setInterval(() => {
-    $("#fps-counter").innerText = `${fps} FPS | ${TPS} TPS | ${game._objects.length} Objects`;
+    $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects`;
   }, 1000);
 
   sound.add("bg-noise", {
