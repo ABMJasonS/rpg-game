@@ -1,11 +1,13 @@
 import { BulgePinchFilter, CRTFilter } from "pixi-filters";
-import { type Application, type Container, type GenerateTextureOptions, NoiseFilter, type Texture } from "pixi.js";
+import { type Application, Assets, type Container, type GenerateTextureOptions, NoiseFilter, type Texture } from "pixi.js";
 import { $ } from "./dom";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
 
 export class GameScene {
   application: Application;
+  // @ts-expect-error No it fucking doesn't
+  _image_assets: [{ path: string; texture: Texture }] = [];
   _objects: GameObject[] = [];
   /**
    * The current camera state of the scene
@@ -154,6 +156,17 @@ export class GameScene {
    */
   generateTexture(thing: GenerateTextureOptions | Container): Texture {
     return this.application.renderer.textureGenerator.generateTexture(thing);
+  }
+
+  async addImageAsset(path: string, extension: string) {
+    const texture = await Assets.load(`./img/${path}.${extension}`);
+    this._image_assets.push({ path, texture });
+  }
+
+  getImageAsset(path: string) {
+    const foundAsset = this._image_assets.find((asset) => asset.path === path);
+    if (foundAsset === undefined) throw new Error("Asset not found!");
+    return foundAsset.texture;
   }
 
   /**

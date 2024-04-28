@@ -31,7 +31,7 @@ export class Projectile extends GameObject {
       Assets.load(`./img/${properties.texture}`).then((asset) => {
         this.sprite = asset;
       });
-			console.log(this.sprite)
+      console.log(this.sprite);
     } else {
       this.sprite = Sprite.from(typeof properties.texture === "function" ? properties.texture(this) : properties.texture);
     }

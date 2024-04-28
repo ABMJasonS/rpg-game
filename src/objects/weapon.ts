@@ -20,15 +20,15 @@ export class Weapon extends GameObject {
     this.definition = definition;
     this.player = player;
     this.initialRotation = rotation;
-    Assets.load(`./img/${definition.spriteFile}`).then((asset) => {
-      const sprite = new Sprite(asset);
-      sprite.anchor.set(0, 0.5);
-      sprite.scale.set(8);
-      sprite.scale.y *= Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1;
-      this.pixiContainer.addChild(sprite);
-    });
+
+    const sprite = new Sprite(this.scene.getImageAsset(`weapons/${definition.spriteFile}`));
+    sprite.anchor.set(0, 0.5);
+    sprite.scale.set(8);
+    sprite.scale.y *= Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1;
+    this.pixiContainer.addChild(sprite);
+
     if (this.definition.useSound) {
-      sound.play(this.definition.useSound, {
+      sound.play(`weapons/${definition.useSound}`, {
         speed: Math.random() * 0.6 + 0.7,
       });
     }

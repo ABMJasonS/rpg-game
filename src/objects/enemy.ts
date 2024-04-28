@@ -34,21 +34,19 @@ export class Enemy extends GameObject {
     this.health = this.definition.health;
     this.hitbox = this.definition.hitbox.clone();
     this.fireDelayCount = Number.POSITIVE_INFINITY;
-    Assets.load(`./img/${definition.images.normal}`).then((asset) => {
-      this.sprites.normal = new Sprite(asset);
-      this.sprites.normal.anchor.set(0.5);
-      this.sprites.normal.scale.set(8);
-      this.sprites.normal.visible = true;
-      this.pixiContainer.addChild(this.sprites.normal);
-    });
+
+    this.sprites.normal = new Sprite(this.scene.getImageAsset(`enemies/${this.definition.images.normal}`));
+    this.sprites.normal.anchor.set(0.5);
+    this.sprites.normal.scale.set(8);
+    this.sprites.normal.visible = true;
+    this.pixiContainer.addChild(this.sprites.normal);
+
     if (definition.images.damaged) {
-      Assets.load(`./img/${definition.images.damaged}`).then((asset) => {
-        this.sprites.damaged = new Sprite(asset);
-        this.sprites.damaged.anchor.set(0.5);
-        this.sprites.damaged.scale.set(8);
-        this.sprites.damaged.visible = false;
-        this.pixiContainer.addChild(this.sprites.damaged);
-      });
+      this.sprites.damaged = new Sprite(this.scene.getImageAsset(`enemies/${this.definition.images.damaged}`));
+      this.sprites.damaged.anchor.set(0.5);
+      this.sprites.damaged.scale.set(8);
+      this.sprites.damaged.visible = false;
+      this.pixiContainer.addChild(this.sprites.damaged);
     }
     this.updateHitbox();
     this.resolveSpawnLocation(10000, 100, 120);
@@ -72,7 +70,7 @@ export class Enemy extends GameObject {
 
   override act(delta: number): void {
     if (this.health <= 0) {
-      sound.play(this.definition.sfx.death);
+      sound.play(`enemies/${this.definition.sfx.death}`);
       this.scene.removeObject(this);
     }
     if (this.spawnDelayCount < 3) {
@@ -127,7 +125,7 @@ export class Enemy extends GameObject {
 
   hit(damage: number, knockback: Vector) {
     if (this.immunity === 0) {
-      sound.play(this.definition.sfx.hit, {
+      sound.play(`enemies/${this.definition.sfx.hit}`, {
         speed: Math.random() * 0.4 + 0.8,
       });
       this.health -= damage;

@@ -39,23 +39,23 @@ export const Enemies: Record<string, EnemySchema> = {
   toast: {
     hitbox: Rectangle.create(createVector(200, 200)),
     name: "Toast",
-    images: { normal: "toast.png", rotationMode: "none" },
+    images: { normal: "toast", rotationMode: "none" },
     ai: "following",
     speed: 1000,
     damage: 10,
     health: 10,
     immunityMultipler: 3,
     sfx: {
-      hit: "toasthit.mp3",
-      death: "ondeath.wav",
+      hit: "toasthit",
+      death: "ondeath",
     },
   },
   toaster: {
     hitbox: Rectangle.create(createVector(320, 200)),
     name: "Toaster",
     images: {
-      normal: "toaster.png",
-      damaged: "toasterhit.png",
+      normal: "toaster",
+      damaged: "toasterhit",
       rotationMode: "flip",
     },
     ai: "moveAndSpawn",
@@ -68,8 +68,8 @@ export const Enemies: Record<string, EnemySchema> = {
     health: 50,
     immunityMultipler: 10,
     sfx: {
-      hit: "toasterhit.mp3",
-      death: "ondeath.wav",
+      hit: "toasterhit",
+      death: "ondeath",
     },
   },
 };

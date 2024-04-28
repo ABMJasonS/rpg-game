@@ -23,12 +23,12 @@ export class Player extends GameObject {
 
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
-    Assets.load("./img/bread.png").then((asset) => {
-      const sprite = Sprite.from(asset);
-      sprite.anchor.set(0.5);
-      sprite.scale.set(10);
-      this.pixiContainer.addChild(sprite);
-    });
+
+    const sprite = Sprite.from(this.scene.getImageAsset("misc/bread"));
+    sprite.anchor.set(0.5);
+    sprite.scale.set(10);
+    this.pixiContainer.addChild(sprite);
+
     new Derived(
       () => {
         $("#hp-bar-inner").style.width = `${this.health.get()}%`;
@@ -44,7 +44,7 @@ export class Player extends GameObject {
           .map(
             (weapon, i) => `
               <img style="${i === this.currentWeapon.get() ? "background-color: white" : ""}"
-                src="./img/${Weapons[weapon].spriteFile}"
+                src="./img/weapons/${Weapons[weapon].spriteFile}.png"
               />`,
           )
           .join("");

@@ -1,5 +1,6 @@
 import { sound } from "@pixi/sound";
 import { Application, Assets, Graphics, TextureStyle } from "pixi.js";
+import { GameAssets } from "./definitions/assets.js";
 import { Enemies } from "./definitions/enemies.js";
 import { Weapons } from "./definitions/weapons.js";
 import { $ } from "./dom.js";
@@ -20,24 +21,25 @@ import { createVector } from "./vector.js";
     resizeTo: $("#main-frame"),
     background: 0x000000,
     preference: "webgpu",
+    hello: true
   });
 
-  for (const [_, weapon] of Object.entries(Weapons)) {
-    await Assets.load(`./img/${weapon.spriteFile}`);
-    if (!weapon.useSound) return;
-    sound.add(weapon.useSound, `./sfx/${weapon.useSound}`);
-  }
-
-  for (const [_, enemy] of Object.entries(Enemies)) {
-    await Assets.load(`./img/${enemy.images.normal}`);
-    sound.add(enemy.sfx.hit, `./sfx/${enemy.sfx.hit}`);
-    sound.add(enemy.sfx.death, `./sfx/${enemy.sfx.death}`);
-  }
-  console.info("Sounds are loaded!");
-
-  $("#main-frame").appendChild(app.canvas);
 
   const game = new GameScene(app);
+
+  for (const directory of ["enemies", "weapons", "misc"]) {
+    // @ts-expect-error Typescript being shit again
+    for (const [name, extension] of Object.entries(GameAssets.images[directory])) {
+      // @ts-expect-error Typescript type inference is so good wow
+      await game.addImageAsset(`${directory}/${name}`, extension);
+    }
+    // @ts-expect-error Typescript being shit again
+    for (const [name, extension] of Object.entries(GameAssets.sounds[directory])) {
+      sound.add(`${directory}/${name}`, `./sfx/${directory}/${name}.${extension}`)
+    }
+  }
+  console.info("Assets are loaded!");
+  console.log(game._image_assets)
 
   game.addObject(new Player(game));
 
@@ -62,29 +64,25 @@ import { createVector } from "./vector.js";
 
   app.ticker.add((ticker) => {
     fps = ticker.FPS.toFixed(0);
-    game.act(1 / ticker.FPS)
+    game.act(1 / ticker.FPS);
   });
 
   setInterval(() => {
     $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects`;
   }, 1000);
 
-  sound.add("bg-noise", {
-    url: "./sfx/bgnoise.mp3",
-    autoPlay: true,
-    loop: true,
-  });
-
-  sound.add("cameraclick1.wav", "./sfx/cameraclick1.wav");
-  sound.add("cameraclick2.wav", "./sfx/cameraclick2.wav");
+  sound.play("misc/bgnoise", {
+    loop: true
+  })
 
   setInterval(
     () => {
-      sound.play(`cameraclick${Math.round(Math.random() + 1)}.wav`);
+      sound.play(`misc/cameraclick${Math.round(Math.random() + 1)}`);
     },
     (Math.floor(Math.random() * (10 - 5 + 1)) + 10) * 1000,
   );
 
+  $("#main-frame").appendChild(app.canvas);
   $("#loading").style.display = "none";
   $("#game").style.visibility = "";
 

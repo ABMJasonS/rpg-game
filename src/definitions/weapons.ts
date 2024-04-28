@@ -25,12 +25,12 @@ export type WeaponSchema = {
 
 export const Weapons: Record<string, WeaponSchema> = {
   butterknife: {
-    spriteFile: "butterknife.png",
+    spriteFile: "butterknife",
     name: "Butter Knife",
     useTime: 0.2,
     animationTime: 0.2,
     swingAngle: 14,
-    useSound: "whoosh.mp3",
+    useSound: "whoosh",
     animation: "swing",
     melee: {
       range: 240,
@@ -40,18 +40,18 @@ export const Weapons: Record<string, WeaponSchema> = {
     },
   },
   sausage_gun: {
-    spriteFile: "sausage_gun.png",
+    spriteFile: "sausage_gun",
     name: "Sausage Gun",
     useTime: 0.25,
     animationTime: 0.25,
     animation: "fire",
-    useSound: "cameraclick2.wav",
+    useSound: "cameraclick2",
     length: 0,
     projectile: {
       hitbox: Rectangle.create({ x: 10, y: 10 }),
       velocity: 2000,
       life: 2,
-      texture: "sausage.png",
+      texture: "sausage",
       collisions: [
         {
           type: Enemy,
@@ -65,12 +65,12 @@ export const Weapons: Record<string, WeaponSchema> = {
     },
   },
   test_gun: {
-    spriteFile: "m1_garand.png",
+    spriteFile: "m1_garand",
     name: "Test Gun",
     useTime: 0.01,
     animationTime: 0.02,
     animation: "fire",
-    useSound: "cameraclick1.wav",
+    useSound: "cameraclick1",
     length: 320,
     projectile: {
       hitbox: Rectangle.create({ x: 10, y: 10 }),
