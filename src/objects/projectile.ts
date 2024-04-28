@@ -1,4 +1,4 @@
-import { Assets, Container, Sprite, SpriteTexture, type Texture } from "pixi.js";
+import { Assets, Container, Sprite } from "pixi.js";
 import type { Hitbox } from "../collisions";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
@@ -7,15 +7,14 @@ import { Enemy } from "./enemy";
 
 export type ProjectileProperties = {
   velocity: number;
-  texture: Texture | ((projectile: Projectile) => Texture) | string;
+  texture: string;
   hitbox: Hitbox;
   life?: number;
   special?: (projectile: Projectile) => void;
-  // TODO: work on collision detection
   collisions?: {
-    type: unknown;
+		type: unknown;
     pierce: number;
-    onHit: (projectile: Projectile, object: GameObject) => void;
+    onHit: (projectile: Projectile, object: GameObject) => boolean;
   }[];
 };
 
@@ -27,14 +26,7 @@ export class Projectile extends GameObject {
   constructor(scene: GameScene, position: Vector, rotation: Radians, properties: ProjectileProperties) {
     super(position, rotation, scene);
     this.properties = properties;
-    if (typeof properties.texture === "string") {
-      Assets.load(`./img/${properties.texture}`).then((asset) => {
-        this.sprite = asset;
-      });
-      console.log(this.sprite);
-    } else {
-      this.sprite = Sprite.from(typeof properties.texture === "function" ? properties.texture(this) : properties.texture);
-    }
+		this.sprite = Sprite.from(this.scene.getImageAsset(`weapons/${properties.texture}`))
     this.pixiContainer.addChild(this.sprite);
     this.pixiContainer.scale.set(8);
     this.health = properties.life ?? 50;
@@ -55,10 +47,9 @@ export class Projectile extends GameObject {
   checkCollisions(collisions: typeof this.properties.collisions) {
     if (!collisions) return;
     for (const collision of collisions) {
-      const hits = this.scene.findObjects<GameObject>(collision.type).filter((obj) => obj.collider && this.collider?.collide(obj.collider));
+      const hits = this.scene.findObjects<GameObject>(GameObject).filter((obj) => obj.collider && this.collider?.collide(obj.collider));
       for (const hit of hits) {
-        collision.onHit(this, hit);
-        this.pierces++;
+				if (collision.onHit(this, hit)) this.pierces++
         if (this.pierces >= collision.pierce) {
           this.scene.removeObject(this);
           return;

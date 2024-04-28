@@ -16,7 +16,7 @@ export class Player extends GameObject {
   fireCount = 0;
   velocity: Vector = createVector(0, 0);
   friction = 5;
-  weapons: Signal<string[]> = new Signal(["butterknife", "test_gun", "sausage_gun"]);
+  weapons: Signal<string[]> = new Signal(["butterknife", "jam_gun"]);
   currentWeapon: Signal<number> = new Signal(0);
   override hitbox: Rectangle = new Rectangle(createVector(-100, -100), createVector(100, 100));
   immunity = 0;
@@ -36,21 +36,6 @@ export class Player extends GameObject {
       },
       undefined,
       [this.health],
-    );
-    new Derived(
-      () => {
-        $("#inventory").innerHTML = this.weapons
-          .get()
-          .map(
-            (weapon, i) => `
-              <img style="${i === this.currentWeapon.get() ? "background-color: white" : ""}"
-                src="./img/weapons/${Weapons[weapon].spriteFile}.png"
-              />`,
-          )
-          .join("");
-      },
-      undefined,
-      [this.weapons, this.currentWeapon],
     );
   }
 

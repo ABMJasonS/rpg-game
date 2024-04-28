@@ -6,8 +6,12 @@ import { type Radians, type Vector, createVector } from "./vector";
 
 export class GameScene {
   application: Application;
+
   // @ts-expect-error No it fucking doesn't
   _image_assets: [{ path: string; texture: Texture }] = [];
+
+  _null_asset: Texture;
+
   _objects: GameObject[] = [];
   /**
    * The current camera state of the scene
@@ -102,6 +106,10 @@ export class GameScene {
         vignettingBlur: 0.5,
       }),
     ];
+
+    Assets.load("./img/nullptr.png").then((asset) => {
+      this._null_asset = asset;
+    });
   }
 
   /**
@@ -165,7 +173,10 @@ export class GameScene {
 
   getImageAsset(path: string) {
     const foundAsset = this._image_assets.find((asset) => asset.path === path);
-    if (foundAsset === undefined) throw new Error("Asset not found!");
+    if (foundAsset === undefined) {
+      console.error(`Asset ${path} doesn't exist`);
+      return this._null_asset;
+    }
     return foundAsset.texture;
   }
 

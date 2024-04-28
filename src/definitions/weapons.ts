@@ -39,51 +39,28 @@ export const Weapons: Record<string, WeaponSchema> = {
       knockback: 50,
     },
   },
-  sausage_gun: {
-    spriteFile: "sausage_gun",
-    name: "Sausage Gun",
+  jam_gun: {
+    spriteFile: "jam_gun",
+    name: "Jam Gun",
     useTime: 0.25,
     animationTime: 0.25,
     animation: "fire",
-    useSound: "cameraclick2",
-    length: 0,
-    projectile: {
-      hitbox: Rectangle.create({ x: 10, y: 10 }),
-      velocity: 2000,
-      life: 2,
-      texture: "sausage",
-      collisions: [
-        {
-          type: Enemy,
-          pierce: 1,
-          onHit(projectile, object) {
-            if (!(object instanceof Enemy)) return;
-            object.hit(10, { x: 0, y: 0 });
-          },
-        },
-      ],
-    },
-  },
-  test_gun: {
-    spriteFile: "m1_garand",
-    name: "Test Gun",
-    useTime: 0.01,
-    animationTime: 0.02,
-    animation: "fire",
-    useSound: "cameraclick1",
+    useSound: "machine_gun",
     length: 320,
     projectile: {
-      hitbox: Rectangle.create({ x: 10, y: 10 }),
+      hitbox: Rectangle.create({ x: 80, y: 80 }),
       velocity: 2000,
       life: 2,
-      texture: (projectile) => projectile.scene.generateTexture(new Graphics().rect(0, 0, 10, 1).fill({ color: 0xff0000 })),
+      texture: "jam_projectile",
       collisions: [
         {
           type: Enemy,
           pierce: 1,
           onHit(projectile, object) {
-            if (!(object instanceof Enemy)) return;
-            object.hit(100, { x: 0, y: 0 });
+            if (!(object instanceof Enemy)) return false;
+            object.hit(5, { x: 0, y: 0 });
+            object.definition.speed *= 0.6
+            return true;
           },
         },
       ],
