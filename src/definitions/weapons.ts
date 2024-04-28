@@ -1,4 +1,4 @@
-import { Graphics } from "pixi.js";
+import { Assets, Graphics } from "pixi.js";
 import { Rectangle } from "../collisions";
 import { Enemy } from "../objects/enemy";
 import type { ProjectileProperties } from "../objects/projectile";
@@ -38,6 +38,35 @@ export const Weapons: Record<string, WeaponSchema> = {
       pierce: 1,
       knockback: 50,
     },
+  },
+  sausage_gun: {
+    spriteFile: "sausage_gun.png",
+    name: "Sausage Gun",
+    useTime: 0.25,
+    animationTime: 0.25,
+    animation: "fire",
+    useSound: "cameraclick2.wav",
+    length: 300,
+    projectile: {
+      hitbox: Rectangle.create({x: 10, y: 10}),
+      velocity: 2000,
+      life: 2,
+      texture: () => {
+        let texture: unknown;
+        Assets.load("./img/sausage.png").then(asset => {texture = asset})
+        return texture;
+      },
+      collisions: [
+        {
+          type: Enemy,
+          pierce: 1,
+          onHit(projectile, object) {
+            if (!(object instanceof Enemy)) return;
+            object.hit(10, { x: 0, y: 0 });
+          },
+        }
+      ]
+    }
   },
   test_gun: {
     spriteFile: "m1_garand.png",

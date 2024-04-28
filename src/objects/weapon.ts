@@ -22,7 +22,7 @@ export class Weapon extends GameObject {
     this.initialRotation = rotation;
     Assets.load(`./img/${definition.spriteFile}`).then((asset) => {
       const sprite = new Sprite(asset);
-      sprite.anchor.set(0, 1);
+      sprite.anchor.set(0, 0.5);
       sprite.scale.set(8);
       sprite.scale.y *= Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1;
       this.pixiContainer.addChild(sprite);

@@ -162,7 +162,7 @@ export class Enemy extends GameObject {
         this.position.y -= yDirection;
         this.updateHitbox();
       },
-      Math.abs(movement.x),
+      Math.abs(movement.y),
       () => {
         return this.scene.findCollidingObjects(this, Enemy).length > 0;
       },
