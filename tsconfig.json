@@ -8,6 +8,7 @@
     "strict": true,
     "allowJs": true,
     "checkJs": true,
+    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
