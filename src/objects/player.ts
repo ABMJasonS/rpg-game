@@ -36,6 +36,17 @@ export class Player extends GameObject {
       undefined,
       [this.health],
     );
+    new Derived(
+      () => {
+        $("#inventory").innerHTML = this.weapons.get().map(weaponID => {
+          const weapon = Weapons[weaponID];
+          const asset = this.scene.getImageAsset(`weapons/${weapon.spriteFile}`)
+          return `<img src="./img/${asset.path}.${asset.extension}" />`
+        }).join("")
+      },
+      undefined,
+      [this.currentWeapon, this.weapons]
+    )
   }
 
   override act(delta: number): void {
