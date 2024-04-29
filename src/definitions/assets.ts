@@ -14,7 +14,7 @@ export const GameAssets: { images: AssetSchema<ImageTypes>; sounds: AssetSchema<
       butterknife: "png",
       m1_garand: "png",
       jam_gun: "png",
-      jam_projectile: "png"
+      jam_projectile: "png",
     },
     enemies: {
       toast: "png",
@@ -30,7 +30,7 @@ export const GameAssets: { images: AssetSchema<ImageTypes>; sounds: AssetSchema<
   sounds: {
     weapons: {
       whoosh: "mp3",
-      machine_gun: "wav"
+      machine_gun: "wav",
     },
     enemies: {
       ondeath: "wav",

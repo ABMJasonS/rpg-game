@@ -12,7 +12,7 @@ export type ProjectileProperties = {
   life?: number;
   special?: (projectile: Projectile) => void;
   collisions?: {
-		type: unknown;
+    type: unknown;
     pierce: number;
     onHit: (projectile: Projectile, object: GameObject) => boolean;
   }[];
@@ -26,9 +26,9 @@ export class Projectile extends GameObject {
   constructor(scene: GameScene, position: Vector, rotation: Radians, properties: ProjectileProperties) {
     super(position, rotation, scene);
     this.properties = properties;
-		this.sprite = Sprite.from(this.scene.getImageAsset(`weapons/${properties.texture}`))
-		this.sprite.anchor.set(0.5)
-		this.sprite.scale.set(8)
+    this.sprite = Sprite.from(this.scene.getImageAsset(`weapons/${properties.texture}`));
+    this.sprite.anchor.set(0.5);
+    this.sprite.scale.set(8);
     this.pixiContainer.addChild(this.sprite);
     this.health = properties.life ?? 50;
     this.hitbox = properties.hitbox;
@@ -50,7 +50,7 @@ export class Projectile extends GameObject {
     for (const collision of collisions) {
       const hits = this.scene.findObjects<GameObject>(GameObject).filter((obj) => obj.collider && this.collider?.collide(obj.collider));
       for (const hit of hits) {
-				if (collision.onHit(this, hit)) this.pierces++
+        if (collision.onHit(this, hit)) this.pierces++;
         if (this.pierces >= collision.pierce) {
           this.scene.removeObject(this);
           return;

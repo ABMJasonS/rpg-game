@@ -78,6 +78,7 @@ export class Enemy extends GameObject {
       this.spawnDelayCount += delta;
       return;
     }
+    this.pixiContainer.alpha = 1;
     if (this.definition.images.damaged && this.health / this.definition.health <= 0.5) {
       this.sprites.normal.visible = false;
       this.sprites.damaged.visible = true;

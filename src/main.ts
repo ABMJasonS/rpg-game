@@ -21,9 +21,8 @@ import { createVector } from "./vector.js";
     resizeTo: $("#main-frame"),
     background: 0x000000,
     preference: "webgpu",
-    hello: true
+    hello: true,
   });
-
 
   const game = new GameScene(app);
 
@@ -35,11 +34,11 @@ import { createVector } from "./vector.js";
     }
     // @ts-expect-error Typescript being shit again
     for (const [name, extension] of Object.entries(GameAssets.sounds[directory])) {
-      sound.add(`${directory}/${name}`, `./sfx/${directory}/${name}.${extension}`)
+      sound.add(`${directory}/${name}`, `./sfx/${directory}/${name}.${extension}`);
     }
   }
   console.info("Assets are loaded!");
-  console.log(game._image_assets)
+  console.log(game._image_assets);
 
   game.addObject(new Player(game));
 
@@ -72,8 +71,8 @@ import { createVector } from "./vector.js";
   }, 1000);
 
   sound.play("misc/bgnoise", {
-    loop: true
-  })
+    loop: true,
+  });
 
   setInterval(
     () => {
