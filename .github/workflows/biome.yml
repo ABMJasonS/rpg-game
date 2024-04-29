@@ -42,4 +42,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run linter
-        run: pnpm ci
+        run: pnpm run ci
