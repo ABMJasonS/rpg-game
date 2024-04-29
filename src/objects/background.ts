@@ -7,7 +7,7 @@ export class Background extends GameObject {
     super({ x: -50000, y: -50000 }, 0, scene);
     this.pixiContainer.addChild(
       new TilingSprite({
-        texture: this.scene.getImageAsset("misc/tiles"),
+        texture: this.scene.getImageAsset("misc/tiles").texture,
         width: 100000,
         height: 100000,
         scale: 32,

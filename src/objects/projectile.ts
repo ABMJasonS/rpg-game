@@ -26,7 +26,7 @@ export class Projectile extends GameObject {
   constructor(scene: GameScene, position: Vector, rotation: Radians, properties: ProjectileProperties) {
     super(position, rotation, scene);
     this.properties = properties;
-    this.sprite = Sprite.from(this.scene.getImageAsset(`weapons/${properties.texture}`));
+    this.sprite = Sprite.from(this.scene.getImageAsset(`weapons/${properties.texture}`).texture);
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(8);
     this.pixiContainer.addChild(this.sprite);

@@ -23,7 +23,7 @@ export class Player extends GameObject {
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
 
-    const sprite = Sprite.from(this.scene.getImageAsset("misc/bread"));
+    const sprite = Sprite.from(this.scene.getImageAsset("misc/bread").texture);
     sprite.anchor.set(0.5);
     sprite.scale.set(10);
     this.pixiContainer.addChild(sprite);

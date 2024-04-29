@@ -1,5 +1,5 @@
 import { BulgePinchFilter, CRTFilter } from "pixi-filters";
-import { type Application, Assets, type Container, type GenerateTextureOptions, NoiseFilter, type Texture } from "pixi.js";
+import { type Application, Assets, type Container, type GenerateTextureOptions, NoiseFilter, Texture } from "pixi.js";
 import { $ } from "./dom";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
@@ -8,7 +8,7 @@ export class GameScene {
   application: Application;
 
   // @ts-expect-error No it fucking doesn't
-  _image_assets: [{ path: string; texture: Texture }] = [];
+  _image_assets: [{ path: string; extension: string; texture: Texture }] = [];
 
   // @ts-expect-error it does exist
   _null_asset: Texture;
@@ -169,16 +169,20 @@ export class GameScene {
 
   async addImageAsset(path: string, extension: string) {
     const texture = await Assets.load(`./img/${path}.${extension}`);
-    this._image_assets.push({ path, texture });
+    this._image_assets.push({ path, extension, texture });
   }
 
   getImageAsset(path: string) {
     const foundAsset = this._image_assets.find((asset) => asset.path === path);
     if (foundAsset === undefined) {
       console.error(`Asset ${path} doesn't exist`);
-      return this._null_asset;
+      return {
+        path: "nullptr",
+        extension: "png",
+        texture: this._null_asset
+      };
     }
-    return foundAsset.texture;
+    return foundAsset;
   }
 
   /**

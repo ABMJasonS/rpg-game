@@ -35,14 +35,14 @@ export class Enemy extends GameObject {
     this.hitbox = this.definition.hitbox.clone();
     this.fireDelayCount = Number.POSITIVE_INFINITY;
 
-    this.sprites.normal = new Sprite(this.scene.getImageAsset(`enemies/${this.definition.images.normal}`));
+    this.sprites.normal = new Sprite(this.scene.getImageAsset(`enemies/${this.definition.images.normal}`).texture);
     this.sprites.normal.anchor.set(0.5);
     this.sprites.normal.scale.set(8);
     this.sprites.normal.visible = true;
     this.pixiContainer.addChild(this.sprites.normal);
 
     if (definition.images.damaged) {
-      this.sprites.damaged = new Sprite(this.scene.getImageAsset(`enemies/${this.definition.images.damaged}`));
+      this.sprites.damaged = new Sprite(this.scene.getImageAsset(`enemies/${this.definition.images.damaged}`).texture);
       this.sprites.damaged.anchor.set(0.5);
       this.sprites.damaged.scale.set(8);
       this.sprites.damaged.visible = false;

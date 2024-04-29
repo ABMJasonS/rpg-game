@@ -21,7 +21,7 @@ export class Weapon extends GameObject {
     this.player = player;
     this.initialRotation = rotation;
 
-    const sprite = new Sprite(this.scene.getImageAsset(`weapons/${definition.spriteFile}`));
+    const sprite = new Sprite(this.scene.getImageAsset(`weapons/${definition.spriteFile}`).texture);
     sprite.anchor.set(0, 0.5);
     sprite.scale.set(8);
     sprite.scale.y *= Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1;

@@ -43,8 +43,8 @@ export const Weapons: Record<string, WeaponSchema> = {
   jam_gun: {
     spriteFile: "jam_gun",
     name: "Jam Gun",
-    useTime: 0.01,
-    animationTime: 0.02,
+    useTime: 0.2,
+    animationTime: 0.2,
     animation: "fire",
     useSound: "machine_gun",
     length: 320,
