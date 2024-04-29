@@ -49,7 +49,7 @@ export class Weapon extends GameObject {
       }
     }
     if (this.definition.projectile) {
-      this.scene.addObject(new Projectile(this.scene, addVectors(this.position, createPolar(this.definition.length ?? 0, this.rotation)), this.rotation, this.definition.projectile));
+      this.scene.addObject(new Projectile(this.scene, addVectors(this.position, createPolar(this.definition.length ?? 0, this.rotation)), this.rotation + (this.definition.spread ? Math.random() * this.definition.spread - this.definition.spread * 0.5 : 0), this.definition.projectile));
     }
   }
   override act(delta: number): void {

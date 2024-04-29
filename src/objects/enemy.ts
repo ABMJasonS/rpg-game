@@ -24,8 +24,8 @@ export class Enemy extends GameObject {
     normal: Sprite;
     damaged: Sprite;
   } = {
-    normal: Sprite.from(""),
-    damaged: Sprite.from(""),
+    normal: Sprite.from(this.scene._null_asset),
+    damaged: Sprite.from(this.scene._null_asset),
   };
 
   constructor(position: Vector, scene: GameScene, definition: EnemySchema) {

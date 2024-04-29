@@ -21,7 +21,7 @@ export type ProjectileProperties = {
 export class Projectile extends GameObject {
   health: number;
   properties: ProjectileProperties;
-  sprite: Sprite = Sprite.from("");
+  sprite: Sprite = Sprite.from(this.scene._null_asset);
   pierces = 0;
   constructor(scene: GameScene, position: Vector, rotation: Radians, properties: ProjectileProperties) {
     super(position, rotation, scene);
