@@ -27,8 +27,9 @@ export class Projectile extends GameObject {
     super(position, rotation, scene);
     this.properties = properties;
 		this.sprite = Sprite.from(this.scene.getImageAsset(`weapons/${properties.texture}`))
+		this.sprite.anchor.set(0.5)
+		this.sprite.scale.set(8)
     this.pixiContainer.addChild(this.sprite);
-    this.pixiContainer.scale.set(8);
     this.health = properties.life ?? 50;
     this.hitbox = properties.hitbox;
     this.updateHitbox();
