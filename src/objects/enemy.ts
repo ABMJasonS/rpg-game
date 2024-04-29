@@ -136,7 +136,6 @@ export class Enemy extends GameObject {
 
   move(movement: Vector) {
     const xDirection = movement.x < 0 ? -1 : 1;
-    console.log(this.scene.findCollidingObjects(this, Enemy))
     stepUntil(
       () => {
         this.position.x += xDirection;

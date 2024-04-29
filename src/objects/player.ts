@@ -97,7 +97,7 @@ export class Player extends GameObject {
 
   weaponSwitching() {
     for (const key of [1, 2, 3, 4, 5, 6, 7, 8]) {
-      if (this.scene.isKeyDown(key.toString())) this.currentWeapon.set(key - 1);
+      if (this.scene.isKeyDown(key.toString()) && key <= this.weapons.get().length) this.currentWeapon.set(key - 1);
     }
   }
 }
