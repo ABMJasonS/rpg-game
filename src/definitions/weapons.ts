@@ -43,8 +43,8 @@ export const Weapons: Record<string, WeaponSchema> = {
   jam_gun: {
     spriteFile: "jam_gun",
     name: "Jam Gun",
-    useTime: 0.01,
-    animationTime: 0.02,
+    useTime: 1,
+    animationTime: 1.01,
     animation: "fire",
     useSound: "machine_gun",
     length: 320,
@@ -62,7 +62,8 @@ export const Weapons: Record<string, WeaponSchema> = {
             if (!(object instanceof Enemy)) return false;
             if (object.immunity > 0) return false;
             object.hit(5, { x: 0, y: 0 });
-            object.definition.speed *= 0.6
+            object.definition = structuredClone(object.definition)
+            object.definition.speed *= 0.5
             return true;
           },
         },

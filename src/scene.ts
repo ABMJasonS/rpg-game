@@ -10,6 +10,7 @@ export class GameScene {
   // @ts-expect-error No it fucking doesn't
   _image_assets: [{ path: string; texture: Texture }] = [];
 
+  // @ts-expect-error it does exist
   _null_asset: Texture;
 
   _objects: GameObject[] = [];
@@ -147,7 +148,7 @@ export class GameScene {
 
   findCollidingObjects<T extends GameObject>(object: GameObject, type: unknown): T[] {
     if (!object.collider) return [];
-    return this.findObjects<T>(type).filter((obj) => obj.collider && object.collider?.collide(object.collider) && obj !== object);
+    return this.findObjects<T>(type).filter((obj) => obj.collider && object.collider?.collide(obj.collider) && obj !== object);
   }
 
   /**

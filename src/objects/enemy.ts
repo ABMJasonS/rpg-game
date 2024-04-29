@@ -136,6 +136,7 @@ export class Enemy extends GameObject {
 
   move(movement: Vector) {
     const xDirection = movement.x < 0 ? -1 : 1;
+    console.log(this.scene.findCollidingObjects(this, Enemy))
     stepUntil(
       () => {
         this.position.x += xDirection;
@@ -146,9 +147,7 @@ export class Enemy extends GameObject {
         this.updateHitbox();
       },
       Math.abs(movement.x),
-      () => {
-        return this.scene.findCollidingObjects(this, Enemy).length > 0;
-      },
+      () => this.scene.findCollidingObjects(this, Enemy).length > 0,
     );
     const yDirection = movement.y < 0 ? -1 : 1;
     stepUntil(
@@ -161,9 +160,7 @@ export class Enemy extends GameObject {
         this.updateHitbox();
       },
       Math.abs(movement.y),
-      () => {
-        return this.scene.findCollidingObjects(this, Enemy).length > 0;
-      },
+      () => this.scene.findCollidingObjects(this, Enemy).length > 0,
     );
   }
 
