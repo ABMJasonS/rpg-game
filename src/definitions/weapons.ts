@@ -1,7 +1,7 @@
 import { Assets, Graphics } from "pixi.js";
 import { Rectangle } from "../collisions";
 import { Enemy } from "../objects/enemy";
-import type { ProjectileProperties } from "../objects/projectile";
+import { Projectile, type ProjectileProperties } from "../objects/projectile";
 import type { Seconds } from "../units";
 import type { Radians } from "../vector";
 
@@ -62,8 +62,32 @@ export const Weapons: Record<string, WeaponSchema> = {
             if (!(object instanceof Enemy)) return false;
             if (object.immunity > 0) return false;
             object.hit(5, { x: 0, y: 0 });
-            object.definition = structuredClone(object.definition)
-            object.definition.speed *= 0.5
+            for (let index = 0; index < 10; index++) {
+              projectile.scene.addObject(
+                new Projectile(projectile.scene, projectile.position, Math.random() * Math.PI * 2, {
+                  hitbox: Rectangle.create({ x: 80, y: 80 }),
+                  velocity: 1000,
+                  life: 0.5,
+                  texture: "jam_projectile",
+                  collisions: [
+                    {
+                      type: Enemy,
+                      pierce: 1,
+                      onHit(projectile, object) {
+                        if (!(object instanceof Enemy)) return false;
+                        if (object.immunity > 0) return false;
+                        object.hit(1, { x: 0, y: 0 });
+                        object.definition = structuredClone(object.definition);
+                        object.definition.speed *= 0.9;
+                        return true;
+                      },
+                    },
+                  ],
+                }),
+              );
+            }
+            object.definition = structuredClone(object.definition);
+            object.definition.speed *= 0.6;
             return true;
           },
         },

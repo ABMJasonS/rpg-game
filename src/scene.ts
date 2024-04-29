@@ -129,11 +129,11 @@ export class GameScene {
    * @param object The game object to remove
    */
   removeObject(object: GameObject) {
+    this.application.stage.removeChild(object.pixiContainer);
     this._objects.splice(
       this._objects.findIndex((obj) => obj === object),
       1,
     );
-    this.application.stage.removeChild(object.pixiContainer);
   }
 
   /**
