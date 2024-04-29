@@ -190,6 +190,7 @@ export class Enemy extends GameObject {
     }
   }
 
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Too lazy to refactor :P
   resolveSpawnLocation(maxDistance: number, distanceIncrements: number, angleTries: Radians) {
     if (!this.collider) return;
 
