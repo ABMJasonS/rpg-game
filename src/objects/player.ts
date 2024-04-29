@@ -83,7 +83,8 @@ export class Player extends GameObject {
 
   attack(delta: number) {
     const usingWeapon = Weapons[this.weapons.get()[this.currentWeapon.get()]];
-    if ((this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left) && this.fireCount > usingWeapon.useTime) {
+    if (this.fireCount < usingWeapon.useTime) return;
+    if ((this.scene.isKeyDown(" ") || this.scene.mouseInfo.buttons.left)) {
       this.fireCount = 0;
       this.scene.addObject(new Weapon(this.position, vectorAngle(subVectors(this.scene.mouseInfo.position, this.position)), this.scene, this, usingWeapon));
     }

@@ -68,7 +68,7 @@ import { createVector } from "./vector.js";
   });
 
   setInterval(() => {
-    $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects`;
+    $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects | ${app.stage.children.length} Pixi Children`;
   }, 1000);
 
   sound.play("misc/bgnoise", {
