@@ -38,11 +38,18 @@ export class Player extends GameObject {
     );
     new Derived(
       () => {
-        $("#inventory").innerHTML = this.weapons.get().map(weaponID => {
+        $("#inventory").innerHTML = this.weapons.get().map((weaponID, i) => {
           const weapon = Weapons[weaponID];
           const asset = this.scene.getImageAsset(`weapons/${weapon.spriteFile}`)
-          return `<img src="./img/${asset.path}.${asset.extension}" />`
+          return `<img id="weapon-${i}" src="./img/${asset.path}.${asset.extension}" />`
         }).join("")
+        for (const key of [0, 1, 2, 3, 4, 5, 6, 7]) {
+          try {
+            $(`#weapon-${key}`).addEventListener("click", () => {
+              this.currentWeapon.set(key)
+            })
+          } catch {}
+        }
       },
       undefined,
       [this.currentWeapon, this.weapons]
