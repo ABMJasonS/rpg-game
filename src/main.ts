@@ -11,6 +11,7 @@ import { Player } from "./objects/player.js";
 import { TestObject } from "./objects/testobject.js";
 import { GameScene } from "./scene.js";
 import { createVector } from "./vector.js";
+import { Levels } from "./definitions/levels.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -24,7 +25,7 @@ import { createVector } from "./vector.js";
     hello: true,
   });
 
-  const game = new GameScene(app);
+  const game = new GameScene(app, Levels[0], 0);
 
   for (const directory of ["enemies", "weapons", "misc"]) {
     // @ts-expect-error Typescript being shit again
@@ -40,24 +41,7 @@ import { createVector } from "./vector.js";
   console.info("Assets are loaded!");
   console.log(game._image_assets);
 
-  game.addObject(new Player(game));
-
-  // game.addObject(new CursorTest(game));
-
-  game.addObject(new Background(game));
-
-  game.addObject(new Enemy({ x: -1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: -1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: -1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: -1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 3000, y: 0 }, game, Enemies.toaster));
-  game.addObject(new Enemy({ x: -3000, y: 0 }, game, Enemies.toaster));
-  game.addObject(new Enemy({ x: 0, y: 3000 }, game, Enemies.toaster));
-  game.addObject(new Enemy({ x: 0, y: -3000 }, game, Enemies.toaster));
+  game.start()
 
   let fps = "";
 

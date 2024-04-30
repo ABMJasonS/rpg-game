@@ -3,6 +3,7 @@ import { type Application, Assets, type Container, type GenerateTextureOptions, 
 import { $ } from "./dom";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
+import { LevelSchema, Levels } from "./definitions/levels";
 
 export class GameScene {
   application: Application;
@@ -51,11 +52,14 @@ export class GameScene {
 
   gameSpeed = 1;
 
+  level: LevelSchema;
+  levelStage: number;
+
   /**
    * Creates a scene
    * @param application The Pixi.js Application class to use
    */
-  constructor(application: Application) {
+  constructor(application: Application, level: LevelSchema, levelStage: number) {
     this.application = application;
     const mainFrame = $("#main-frame");
 
@@ -111,6 +115,9 @@ export class GameScene {
     Assets.load("./img/nullptr.png").then((asset) => {
       this._null_asset = asset;
     });
+
+    this.level = level;
+    this.levelStage = 0;
   }
 
   /**
@@ -182,6 +189,10 @@ export class GameScene {
     return foundAsset;
   }
 
+  start() {
+    this.level.stages[this.levelStage].onStart(this)
+  }
+
   /**
    * The physics process of the scene
    * @param delta Delta time
@@ -210,5 +221,14 @@ export class GameScene {
       x: ((this.mouseInfo._offset.x - this.camera.offset.x) / this.camera._scale) * this.camera.zoom + this.camera.position.x,
       y: ((this.mouseInfo._offset.y - this.camera.offset.y) / this.camera._scale) * this.camera.zoom + this.camera.position.y,
     };
+    if (this.levelStage === this.level.stages.length) {
+      console.log("level finished!")
+      return
+    }
+    if (this.level.stages[this.levelStage].finishCondition(this)) {
+      this.level.stages[this.levelStage].onFinish(this)
+      this.levelStage++
+      console.log("next stage!")
+    }
   }
 }
