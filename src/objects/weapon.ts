@@ -5,7 +5,7 @@ import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import type { Seconds } from "../units";
-import { type Radians, type Vector, addVectors, createPolar, createVector, setLength, subVectors } from "../vector";
+import { type Radians, type Vector, addVectors, createPolar, createVector, setLength, subVectors, cloneVector } from "../vector";
 import { Enemy } from "./enemy";
 import type { Player } from "./player";
 import { Projectile } from "./projectile";
@@ -54,12 +54,12 @@ export class Weapon extends GameObject {
   }
   override act(delta: number): void {
     this.animationProgress += delta;
-    this.position = this.player.position;
+    this.position = cloneVector(this.player.position);
     switch (this.definition.animation) {
       case "swing":
         this.rotation = this.animationProgress * (Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1) * (this.definition.swingAngle ?? 10) + this.initialRotation;
+        break;
     }
-
     if (this.animationProgress > this.definition.animationTime) this.scene.removeObject(this);
   }
 }

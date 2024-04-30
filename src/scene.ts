@@ -129,11 +129,8 @@ export class GameScene {
    * @param object The game object to remove
    */
   removeObject(object: GameObject) {
-    this.application.stage.removeChild(object.pixiContainer);
-    this._objects.splice(
-      this._objects.findIndex((obj) => obj === object),
-      1,
-    );
+    object._destroyed = true
+    object.pixiContainer.visible = false;
   }
 
   /**
@@ -192,6 +189,14 @@ export class GameScene {
   act(delta: number) {
     this._noisefilter.seed = Math.random();
     for (const object of this._objects) {
+      if (object._destroyed) {
+        this._objects.splice(
+          this._objects.findIndex((obj) => obj === object),
+          1,
+        );
+        object.pixiContainer.destroy()
+        continue;
+      }
       object.act(delta * this.gameSpeed);
       object.updateHitbox();
       object.updateGraphics();
