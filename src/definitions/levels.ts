@@ -32,6 +32,20 @@ export const Levels: LevelSchema[] = [
           scene.addObject(new Enemy({ x: 1500, y: -1500 }, scene, Enemies.toast));
           scene.addObject(new Enemy({ x: 1500, y: 1500 }, scene, Enemies.toast));
           scene.addObject(new Enemy({ x: -1500, y: 1500 }, scene, Enemies.toast));
+        },
+        onFinish(scene) {
+          console.log("aaaa")
+        },
+      },
+      {
+        finishCondition(scene) {
+          return scene._objects.filter((obj) => obj instanceof Enemy).length === 0;
+        },
+        onStart(scene) {
+          scene.addObject(new Enemy({ x: -1500, y: -1500 }, scene, Enemies.toast));
+          scene.addObject(new Enemy({ x: 1500, y: -1500 }, scene, Enemies.toast));
+          scene.addObject(new Enemy({ x: 1500, y: 1500 }, scene, Enemies.toast));
+          scene.addObject(new Enemy({ x: -1500, y: 1500 }, scene, Enemies.toast));
           scene.addObject(new Enemy({ x: -1500, y: -1500 }, scene, Enemies.toast));
           scene.addObject(new Enemy({ x: 1500, y: -1500 }, scene, Enemies.toast));
           scene.addObject(new Enemy({ x: 1500, y: 1500 }, scene, Enemies.toast));

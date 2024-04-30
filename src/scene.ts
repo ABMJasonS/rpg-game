@@ -221,13 +221,13 @@ export class GameScene {
       x: ((this.mouseInfo._offset.x - this.camera.offset.x) / this.camera._scale) * this.camera.zoom + this.camera.position.x,
       y: ((this.mouseInfo._offset.y - this.camera.offset.y) / this.camera._scale) * this.camera.zoom + this.camera.position.y,
     };
-    if (this.levelStage === this.level.stages.length) {
-      console.log("level finished!")
-      return
-    }
     if (this.level.stages[this.levelStage].finishCondition(this)) {
       this.level.stages[this.levelStage].onFinish(this)
+      if (this.level.stages.length === this.levelStage) {
+        return;
+      }
       this.levelStage++
+      this.level.stages[this.levelStage].onStart(this)
       console.log("next stage!")
     }
   }
