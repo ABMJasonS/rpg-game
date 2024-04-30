@@ -86,6 +86,12 @@ import { createVector } from "./vector.js";
   $("#game").style.visibility = "";
 
   app.resize();
+
+  // @ts-expect-error esbuild define
+  if (window.DEV) {
+    // @ts-expect-error for pixi dev tools
+    window.__PIXI_APP__ = app
+  }
 })();
 
 // @ts-expect-error esbuild define
