@@ -118,6 +118,8 @@ export class GameScene {
 
     this.level = level;
     this.levelStage = 0;
+
+    $("#location").innerText = level.name
   }
 
   /**
