@@ -23,7 +23,7 @@ export const GameAssets: { images: AssetSchema<ImageTypes>; sounds: AssetSchema<
     },
     misc: {
       bread: "png",
-      "test-image": "jpg",
+      "death-particle": "png",
       tiles: "png",
     },
   },
