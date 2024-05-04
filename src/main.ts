@@ -21,7 +21,6 @@ import { Levels } from "./definitions/levels.js";
   await app.init({
     resizeTo: $("#main-frame"),
     background: 0x000000,
-    preference: "webgpu",
     hello: true,
   });
 
@@ -73,6 +72,8 @@ import { Levels } from "./definitions/levels.js";
 
   // @ts-expect-error esbuild define
   if (window.DEV) {
+    // @ts-expect-error for devving
+    window.GAME = game;
     // @ts-expect-error for pixi dev tools
     window.__PIXI_APP__ = app
   }

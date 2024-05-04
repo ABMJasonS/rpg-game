@@ -209,6 +209,17 @@ export class GameScene {
     return foundAsset;
   }
 
+  /*
+  sendHintMessage(text: string) {
+    const hintFrame = $("#hint-frame")
+    hintFrame.style.opacity = "1"
+    hintFrame.innerText = text;
+    setTimeout(() => {
+      hintFrame.style.opacity = "0"
+    }, 10000)
+  }
+  */
+
   start() {
     this.level.stages[this.levelStage].onStart(this)
   }
