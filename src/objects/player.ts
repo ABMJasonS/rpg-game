@@ -6,19 +6,22 @@ import { $, html } from "../dom";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import { Derived, Signal } from "../signals";
-import { type Vector, addVectors, createVector, scale, setLength, subVectors, vectorAngle } from "../vector";
+import { type Vector, addVectors, createVector, scale, setLength, subVectors, vectorAngle, createPolar } from "../vector";
 import { Enemy } from "./enemy";
 import { Weapon } from "./weapon";
+import { Particle } from "./particle";
 
 export class Player extends GameObject {
   speed = 1000;
-  health = new Signal(100);
+  health = new Signal(1);
   fireCount = 0;
   velocity: Vector = createVector(0, 0);
   weapons: Signal<string[]> = new Signal(["butterknife", "jam_gun"]);
   currentWeapon: Signal<number> = new Signal(0);
   override hitbox: Rectangle = new Rectangle(createVector(-100, -100), createVector(100, 100));
   immunity = 0;
+  dead = false;
+  dying = false;
 
   constructor(scene: GameScene) {
     super({ x: 0, y: 0 }, 0, scene);
@@ -31,7 +34,7 @@ export class Player extends GameObject {
     new Derived(
       () => {
         $("#hp-bar-inner").style.width = `${this.health.get()}%`;
-        $("#hp-value").innerText = this.health.get().toFixed(0);
+        $("#hp-value").innerText = (this.health.get() > 0 ? this.health.get() : 0).toFixed(0);
       },
       undefined,
       [this.health],
@@ -48,7 +51,7 @@ export class Player extends GameObject {
             $(`#weapon-${key}`).addEventListener("click", () => {
               this.currentWeapon.set(key)
             })
-          } catch {}
+          } catch { }
         }
       },
       undefined,
@@ -57,6 +60,7 @@ export class Player extends GameObject {
   }
 
   override act(delta: number): void {
+    if (this.dying) return;
     if (this.immunity < 0) {
       this.immunity = 0;
     } else {
@@ -66,6 +70,10 @@ export class Player extends GameObject {
         g: (1 - this.immunity) * 255,
         b: (1 - this.immunity) * 255,
       });
+    }
+
+    if (this.health.get() <= 0 && !this.dead) {
+      this.death();
     }
 
     this.movement(delta);
@@ -117,5 +125,29 @@ export class Player extends GameObject {
     for (const key of [1, 2, 3, 4, 5, 6, 7, 8]) {
       if (this.scene.isKeyDown(key.toString()) && key <= this.weapons.get().length) this.currentWeapon.set(key - 1);
     }
+  }
+
+  death() {
+    if (this.dying) return;
+    this.pixiContainer.visible = false;
+    for (let i = 0; i < 10; i++) {
+      this.scene.addObject(new Particle({
+        position: this.position,
+        rotation: Math.random() * Math.PI * 2,
+        texture: this.scene.getImageAsset("").texture,
+        period: Math.random() + 0.5,
+        act(particle, progress, delta, sprite, seed) {
+          sprite.anchor.set(0.5)
+          sprite.scale.set(32 * (1 - progress) * seed)
+          sprite.rotation += (seed - 0.5) * 5 * delta;
+          particle.position = addVectors(particle.position, createPolar(delta * 1000 * seed, particle.rotation))
+          sprite.alpha = 1 - progress
+        },
+      }, this.scene))
+    }
+    setTimeout(() => {
+      this.dead = true;
+    }, 2000)
+    this.dying = true;
   }
 }

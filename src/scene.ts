@@ -25,12 +25,12 @@ export class GameScene {
     zoom: number;
     _scale: number;
   } = {
-    position: { x: 0, y: 0 },
-    offset: { x: 0, y: 0 },
-    rotation: 0,
-    zoom: 1,
-    _scale: 0,
-  };
+      position: { x: 0, y: 0 },
+      offset: { x: 0, y: 0 },
+      rotation: 0,
+      zoom: 1,
+      _scale: 0,
+    };
   private _keysDown: string[] = [];
   /**
    * The current position and buttons pressed on the user's mouse
@@ -42,18 +42,20 @@ export class GameScene {
       left: boolean;
     };
   } = {
-    position: { x: 0, y: 0 },
-    _offset: { x: 0, y: 0 },
-    buttons: {
-      left: false,
-    },
-  };
+      position: { x: 0, y: 0 },
+      _offset: { x: 0, y: 0 },
+      buttons: {
+        left: false,
+      },
+    };
   _noisefilter: NoiseFilter;
 
   gameSpeed = 1;
 
   level: LevelSchema;
   levelStage: number;
+
+  paused = false;
 
   /**
    * Creates a scene
@@ -120,6 +122,16 @@ export class GameScene {
     this.levelStage = 0;
 
     $("#location").innerText = level.name
+
+    $("#death-screen-restart").addEventListener("click", () => {
+      const deathscreen = $("#death-screen")
+      deathscreen.style.display = "none";
+
+      this.paused = false;
+      this.levelStage = 0;
+      this.level.onRestart(this)
+      this.start()
+    })
   }
 
   /**
@@ -140,6 +152,12 @@ export class GameScene {
   removeObject(object: GameObject) {
     object._destroyed = true
     object.pixiContainer.visible = false;
+  }
+
+  removeAllObjects() {
+    for (const object of this._objects) {
+      this.removeObject(object);
+    }
   }
 
   /**
@@ -200,6 +218,25 @@ export class GameScene {
    * @param delta Delta time
    */
   act(delta: number) {
+    if (this.paused) return;
+    if (this.level.restartCondition(this)) {
+      this.levelStage = 0
+      this.paused = true
+      const deathscreen = $("#death-screen")
+      deathscreen.style.display = "";
+      return;
+    }
+
+    if (this.level.stages[this.levelStage].finishCondition(this)) {
+      this.level.stages[this.levelStage].onFinish(this)
+      if (this.level.stages.length === this.levelStage) {
+        return;
+      }
+      this.levelStage++
+      this.level.stages[this.levelStage].onStart(this)
+      console.log("next stage!")
+    }
+
     this._noisefilter.seed = Math.random();
     for (const object of this._objects) {
       if (object._destroyed) {
@@ -223,14 +260,5 @@ export class GameScene {
       x: ((this.mouseInfo._offset.x - this.camera.offset.x) / this.camera._scale) * this.camera.zoom + this.camera.position.x,
       y: ((this.mouseInfo._offset.y - this.camera.offset.y) / this.camera._scale) * this.camera.zoom + this.camera.position.y,
     };
-    if (this.level.stages[this.levelStage].finishCondition(this)) {
-      this.level.stages[this.levelStage].onFinish(this)
-      if (this.level.stages.length === this.levelStage) {
-        return;
-      }
-      this.levelStage++
-      this.level.stages[this.levelStage].onStart(this)
-      console.log("next stage!")
-    }
   }
 }

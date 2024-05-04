@@ -7,6 +7,8 @@ import { Enemies } from "./enemies";
 export type LevelSchema = {
   name: string;
   stages: StageSchema[];
+  restartCondition: (scene: GameScene) => boolean;
+  onRestart: (scene: GameScene) => void;
   // TODO: implement obstacles
   obstacles: [];
 };
@@ -20,6 +22,12 @@ export type StageSchema = {
 export const Levels: LevelSchema[] = [
   {
     name: "The Kitchen",
+    restartCondition(scene) {
+      return scene.findObjects<Player>(Player)[0].dead
+    },
+    onRestart(scene) {
+      scene.removeAllObjects()
+    },
     stages: [
       {
         finishCondition(scene) {
