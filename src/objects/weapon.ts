@@ -25,7 +25,7 @@ export class Weapon extends GameObject {
     sprite.anchor.set(0, 0.5);
     sprite.scale.set(8);
     sprite.scale.y *= Math.abs(this.initialRotation) > Math.PI / 2 ? -1 : 1;
-    this.pixiContainer.addChild(sprite);
+    this.pixiContainer = sprite;
 
     if (this.definition.useSound) {
       sound.play(`weapons/${definition.useSound}`, {

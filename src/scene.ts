@@ -25,12 +25,12 @@ export class GameScene {
     zoom: number;
     _scale: number;
   } = {
-      position: { x: 0, y: 0 },
-      offset: { x: 0, y: 0 },
-      rotation: 0,
-      zoom: 1,
-      _scale: 0,
-    };
+    position: { x: 0, y: 0 },
+    offset: { x: 0, y: 0 },
+    rotation: 0,
+    zoom: 1,
+    _scale: 0,
+  };
   private _keysDown: string[] = [];
   /**
    * The current position and buttons pressed on the user's mouse
@@ -42,12 +42,12 @@ export class GameScene {
       left: boolean;
     };
   } = {
-      position: { x: 0, y: 0 },
-      _offset: { x: 0, y: 0 },
-      buttons: {
-        left: false,
-      },
-    };
+    position: { x: 0, y: 0 },
+    _offset: { x: 0, y: 0 },
+    buttons: {
+      left: false,
+    },
+  };
   _noisefilter: NoiseFilter;
 
   gameSpeed = 1;
@@ -63,6 +63,7 @@ export class GameScene {
    */
   constructor(application: Application, level: LevelSchema, levelStage: number) {
     this.application = application;
+
     const mainFrame = $("#main-frame");
 
     const rescale = () => {
@@ -100,6 +101,7 @@ export class GameScene {
         y: e.offsetY,
       };
     });
+
     this._noisefilter = new NoiseFilter({ noise: 0.5 });
     this.application.stage.filters = [
       new BulgePinchFilter({
@@ -121,17 +123,7 @@ export class GameScene {
     this.level = level;
     this.levelStage = 0;
 
-    $("#location").innerText = level.name
-
-    $("#death-screen-restart").addEventListener("click", () => {
-      const deathscreen = $("#death-screen")
-      deathscreen.style.display = "none";
-
-      this.paused = false;
-      this.levelStage = 0;
-      this.level.onRestart(this)
-      this.start()
-    })
+    $("#location").innerText = level.name;
   }
 
   /**
@@ -150,7 +142,7 @@ export class GameScene {
    * @param object The game object to remove
    */
   removeObject(object: GameObject) {
-    object._destroyed = true
+    object._destroyed = true;
     object.pixiContainer.visible = false;
   }
 
@@ -203,7 +195,7 @@ export class GameScene {
       return {
         path: "nullptr",
         extension: "png",
-        texture: this._null_asset
+        texture: this._null_asset,
       };
     }
     return foundAsset;
@@ -221,7 +213,7 @@ export class GameScene {
   */
 
   start() {
-    this.level.stages[this.levelStage].onStart(this)
+    this.level.stages[this.levelStage].onStart(this);
   }
 
   /**
@@ -229,40 +221,58 @@ export class GameScene {
    * @param delta Delta time
    */
   act(delta: number) {
-    if (this.paused) return;
+    const deathScreen = $("#death-screen");
+    if (this.paused) {
+      if (this.isKeyDown(" ")) {
+        this.paused = false;
+        this.levelStage = 0;
+        this.level.onRestart(this);
+        this.start();
+        deathScreen.style.visibility = "hidden";
+        return;
+      }
+      return;
+    }
     if (this.level.restartCondition(this)) {
-      this.levelStage = 0
-      this.paused = true
-      const deathscreen = $("#death-screen")
-      deathscreen.style.display = "";
+      this.paused = true;
+      deathScreen.style.visibility = "visible";
       return;
     }
 
     if (this.level.stages[this.levelStage].finishCondition(this)) {
-      this.level.stages[this.levelStage].onFinish(this)
+      this.level.stages[this.levelStage].onFinish(this);
       if (this.level.stages.length === this.levelStage) {
         return;
       }
-      this.levelStage++
-      this.level.stages[this.levelStage].onStart(this)
-      console.log("next stage!")
+      this.levelStage++;
+      this.level.stages[this.levelStage].onStart(this);
+      console.log("next stage!");
     }
 
     this._noisefilter.seed = Math.random();
+
+    this.updateObjects(delta);
+
+    this.updateCamera();
+  }
+
+  updateObjects(delta: number) {
     for (const object of this._objects) {
       if (object._destroyed) {
         this._objects.splice(
           this._objects.findIndex((obj) => obj === object),
           1,
         );
-        object.pixiContainer.destroy()
+        object.pixiContainer.destroy();
         continue;
       }
       object.act(delta * this.gameSpeed);
       object.updateHitbox();
       object.updateGraphics();
     }
+  }
 
+  updateCamera() {
     this.application.stage.x = -(this.camera.position.x * this.camera.zoom * this.camera._scale) + this.camera.offset.x;
     this.application.stage.y = -(this.camera.position.y * this.camera.zoom * this.camera._scale) + this.camera.offset.y;
     this.application.stage.scale = this.camera.zoom * this.camera._scale;

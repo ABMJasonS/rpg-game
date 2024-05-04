@@ -272,6 +272,8 @@ audio {
 
 #death-screen {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   background-color: hsla(0deg, 0%, 0%, 50%);
   backdrop-filter: blur(1rem);
   top: 0;
@@ -284,4 +286,10 @@ audio {
   border: 0px;
   transition-property: opacity;
   transition-duration: 1s;
+  text-align: center;
+  align-content: center;
+  
+  * {
+    margin: auto;
+  }
 }

@@ -29,7 +29,7 @@ export class Player extends GameObject {
     const sprite = Sprite.from(this.scene.getImageAsset("misc/bread").texture);
     sprite.anchor.set(0.5);
     sprite.scale.set(10);
-    this.pixiContainer.addChild(sprite);
+    this.pixiContainer = sprite
 
     new Derived(
       () => {
@@ -101,7 +101,7 @@ export class Player extends GameObject {
     if (this.scene.isKeyDown("s") || this.scene.isKeyDown("ArrowDown")) movement.y += 1;
     movement = setLength(movement, 1);
 
-    this.pixiContainer.scale.x = this.scene.mouseInfo.position.x - this.position.x > 0 ? -1 : 1;
+    this.pixiContainer.scale.x = this.scene.mouseInfo.position.x - this.position.x > 0 ? -10 : 10;
 
     this.position = addVectors(this.position, scale(movement, delta * 1000));
   }
