@@ -68,6 +68,8 @@ import { Levels } from "./definitions/levels.js";
   $("#loading").style.display = "none";
   $("#game").style.visibility = "";
 
+  $("#levels").innerHTML = Levels.map(level => `<button>${level.name}</button>`).join("")
+
   app.resize();
 
   // @ts-expect-error esbuild define

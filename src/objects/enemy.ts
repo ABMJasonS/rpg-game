@@ -57,7 +57,7 @@ export class Enemy extends GameObject {
           rotation: 0,
           period: 3,
           texture: this.scene.generateTexture(new Graphics().circle(0, 0, 500).fill({ color: 0x00ffee })),
-          act(particle, progress, delta,  sprite) {
+          act(particle, progress, delta, sprite) {
             sprite.anchor.set(0.5);
             particle.pixiContainer.scale = progress;
             particle.pixiContainer.alpha = 1 - progress;
