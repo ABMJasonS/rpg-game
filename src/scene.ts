@@ -224,18 +224,18 @@ export class GameScene {
     const deathScreen = $("#death-screen");
     if (this.paused) {
       if (this.isKeyDown(" ")) {
-        this.paused = false;
-        this.levelStage = 0;
         this.level.onRestart(this);
+        this.levelStage = 0;
         this.start();
-        deathScreen.style.visibility = "hidden";
+        deathScreen.style.opacity = "0";
+        this.paused = false;
         return;
       }
       return;
     }
     if (this.level.restartCondition(this)) {
       this.paused = true;
-      deathScreen.style.visibility = "visible";
+      deathScreen.style.opacity = "1";
       return;
     }
 

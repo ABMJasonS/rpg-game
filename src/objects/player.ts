@@ -60,7 +60,7 @@ export class Player extends GameObject {
   }
 
   override act(delta: number): void {
-    if (this.dying) return;
+    if (this.dead) return;
     if (this.immunity < 0) {
       this.immunity = 0;
     } else {
@@ -128,7 +128,6 @@ export class Player extends GameObject {
   }
 
   death() {
-    if (this.dying) return;
     this.pixiContainer.visible = false;
     for (let i = 0; i < 10; i++) {
       this.scene.addObject(new Particle({
@@ -145,9 +144,8 @@ export class Player extends GameObject {
         },
       }, this.scene))
     }
-    setTimeout(() => {
-      this.dead = true;
-    }, 2000)
-    this.dying = true;
+    this.dead = true;
+
+    this.scene.removeObject(this);
   }
 }

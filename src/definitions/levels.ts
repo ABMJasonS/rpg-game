@@ -9,8 +9,6 @@ export type LevelSchema = {
   stages: StageSchema[];
   restartCondition: (scene: GameScene) => boolean;
   onRestart: (scene: GameScene) => void;
-  // TODO: implement obstacles
-  obstacles: [];
 };
 
 export type StageSchema = {
@@ -23,7 +21,9 @@ export const Levels: LevelSchema[] = [
   {
     name: "The Kitchen",
     restartCondition(scene) {
-      return scene.findObjects<Player>(Player)[0].dead
+      const player = scene.findObjects<Player>(Player)[0]
+      if (!player) return false;
+      return player.dead;
     },
     onRestart(scene) {
       scene.removeAllObjects()
@@ -45,6 +45,19 @@ export const Levels: LevelSchema[] = [
           console.log("aaaa")
         },
       },
+    ],
+  },
+  {
+    name: "The Kitchen",
+    restartCondition(scene) {
+      const player = scene.findObjects<Player>(Player)[0]
+      if (!player) return false;
+      return player.dead;
+    },
+    onRestart(scene) {
+      scene.removeAllObjects()
+    },
+    stages: [
       {
         finishCondition(scene) {
           return scene._objects.filter((obj) => obj instanceof Enemy).length === 0;
@@ -68,6 +81,5 @@ export const Levels: LevelSchema[] = [
         },
       },
     ],
-    obstacles: [],
   },
 ];
