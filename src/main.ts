@@ -12,6 +12,7 @@ import { TestObject } from "./objects/testobject.js";
 import { GameScene } from "./scene.js";
 import { createVector } from "./vector.js";
 import { Levels } from "./definitions/levels.js";
+import { PlayerClasses } from "./definitions/classes.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -65,8 +66,13 @@ import { Levels } from "./definitions/levels.js";
   );
 
   $("#main-frame").appendChild(app.canvas);
-  $("#loading").style.display = "none";
   $("#game").style.visibility = "";
+
+  const playButton = $("#play-button")
+  playButton.innerText = "Play Kitchen Nightmare"
+  playButton.addEventListener("click", () => {})
+
+  $("#classes").innerHTML = PlayerClasses.map(playerClass => `<button>${playerClass.name}</button>`).join("")
 
   $("#levels").innerHTML = Levels.map(level => `<button>${level.name}</button>`).join("")
 
