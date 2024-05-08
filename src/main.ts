@@ -1,16 +1,8 @@
 import { sound } from "@pixi/sound";
 import { Application, Assets, Graphics, TextureStyle } from "pixi.js";
 import { GameAssets } from "./definitions/assets.js";
-import { Enemies } from "./definitions/enemies.js";
-import { Weapons } from "./definitions/weapons.js";
-import { $ } from "./dom.js";
-import { Background } from "./objects/background.js";
-import { CursorTest } from "./objects/cursortest.js";
-import { Enemy } from "./objects/enemy.js";
-import { Player } from "./objects/player.js";
-import { TestObject } from "./objects/testobject.js";
+import { $, html } from "./dom.js";
 import { GameScene } from "./scene.js";
-import { createVector } from "./vector.js";
 import { Levels } from "./definitions/levels.js";
 import { PlayerClasses } from "./definitions/classes.js";
 
@@ -39,9 +31,6 @@ import { PlayerClasses } from "./definitions/classes.js";
     }
   }
   console.info("Assets are loaded!");
-  console.log(game._image_assets);
-
-  game.start()
 
   let fps = "";
 
@@ -66,15 +55,33 @@ import { PlayerClasses } from "./definitions/classes.js";
   );
 
   $("#main-frame").appendChild(app.canvas);
-  $("#game").style.visibility = "";
 
   const playButton = $("#play-button")
   playButton.innerText = "Play Kitchen Nightmare"
-  playButton.addEventListener("click", () => {})
+  playButton.addEventListener("click", () => {
+    $("#menu").style.display = "none"
+    $("#classes-container").style.display = ""
+  })
 
-  $("#classes").innerHTML = PlayerClasses.map(playerClass => `<button>${playerClass.name}</button>`).join("")
+  let selectedClass = 0;
 
-  $("#levels").innerHTML = Levels.map(level => `<button>${level.name}</button>`).join("")
+  $("#classes").innerHTML = PlayerClasses.map((playerClass, i) => html`
+    <input ${i === 0 ? "checked" : ""} name="class" id="class-${i}" type="radio" value="${i}" />
+    <label for="class=${i}">${playerClass.name}</label>`
+  ).join("")
+  $("#open-world").addEventListener("click", () => {
+    $("#classes-container").style.display = "none";
+    $("#levels-container").style.display = "";
+  })
+
+  $("#levels").innerHTML = Levels.map((level, i) => html`
+    <input ${i === 0 ? "checked": ""} name="level" type="radio" id="level-${i}" value="${i}"/>
+    <label for="level-${i}">${level.name}</label>`
+  ).join("")
+  $("#open-level").addEventListener("click", () => {
+    $("#levels-container").style.display = "none"
+    $("#game").style.display = ""
+  })
 
   app.resize();
 

@@ -6,10 +6,17 @@
  * ```ts
  * const button = html`<button id="button-id">button content</button>`
  * ```
- * @param string The string to use
+ * @param strings The string to use
  * @returns The same string inputted
  */
-export const html = (string: TemplateStringsArray, ...values: unknown[]): string => string.join("") + values.join("");
+export const html = (strings: TemplateStringsArray, ...values: unknown[]): string => {
+  let result = "";
+  for (let i = 0; i < strings.length; i++) {
+    result += strings[i];
+    result += values[i] ?? ""
+  }
+  return result;
+};
 
 /**
  * Selects an element from the DOM. Poor man's jQuery.
