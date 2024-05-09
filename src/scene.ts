@@ -25,12 +25,12 @@ export class GameScene {
     zoom: number;
     _scale: number;
   } = {
-    position: { x: 0, y: 0 },
-    offset: { x: 0, y: 0 },
-    rotation: 0,
-    zoom: 1,
-    _scale: 0,
-  };
+      position: { x: 0, y: 0 },
+      offset: { x: 0, y: 0 },
+      rotation: 0,
+      zoom: 1,
+      _scale: 0,
+    };
   private _keysDown: string[] = [];
   /**
    * The current position and buttons pressed on the user's mouse
@@ -42,12 +42,12 @@ export class GameScene {
       left: boolean;
     };
   } = {
-    position: { x: 0, y: 0 },
-    _offset: { x: 0, y: 0 },
-    buttons: {
-      left: false,
-    },
-  };
+      position: { x: 0, y: 0 },
+      _offset: { x: 0, y: 0 },
+      buttons: {
+        left: false,
+      },
+    };
   _noisefilter: NoiseFilter;
 
   gameSpeed = 1;
@@ -66,14 +66,7 @@ export class GameScene {
 
     const mainFrame = $("#main-frame");
 
-    const rescale = () => {
-      const dimensions = $("#main-frame").getBoundingClientRect();
-      this.camera._scale = (dimensions.width * dimensions.height) / (2000 * 2000);
-      this.camera.offset.x = dimensions.width / 2;
-      this.camera.offset.y = dimensions.height / 2;
-    };
-    rescale();
-    window.addEventListener("resize", rescale);
+    window.addEventListener("resize", this.resize);
 
     window.addEventListener("keydown", (e) => {
       if (!this._keysDown.find((k) => k === e.key)) {
@@ -119,6 +112,13 @@ export class GameScene {
     this.levelStage = 0;
 
     $("#location").innerText = level.name;
+  }
+
+  resize() {
+    const dimensions = $("#main-frame").getBoundingClientRect();
+    this.camera._scale = (dimensions.width * dimensions.height) / (1200 * 1200);
+    this.camera.offset.x = dimensions.width / 2;
+    this.camera.offset.y = dimensions.height / 2;
   }
 
   /**

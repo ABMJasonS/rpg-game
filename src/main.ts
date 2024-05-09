@@ -95,6 +95,7 @@ import { PlayerClasses } from "./definitions/classes.js";
     $("#game").style.display = ""
     game.level = Levels[selectedLevel]
     game.start()
+    game.resize()
     app.ticker.start()
     app.resize()
   })
