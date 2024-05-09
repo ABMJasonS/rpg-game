@@ -37,7 +37,7 @@ import { PlayerClasses } from "./definitions/classes.js";
   app.ticker.add((ticker) => {
     fps = ticker.FPS.toFixed(0);
     game.act(1 / ticker.FPS);
-  });
+  }).stop();
 
   setInterval(() => {
     $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects | ${app.stage.children.length} Pixi Children`;
@@ -55,6 +55,12 @@ import { PlayerClasses } from "./definitions/classes.js";
   );
 
   $("#main-frame").appendChild(app.canvas);
+
+  let playerName = "";
+  const playerNameField = $<HTMLInputElement>("#player-name")
+  playerNameField.addEventListener("click", () => {
+    playerName = playerNameField.value
+  })
 
   const playButton = $("#play-button")
   playButton.innerText = "Play Kitchen Nightmare"
@@ -74,16 +80,24 @@ import { PlayerClasses } from "./definitions/classes.js";
     $("#levels-container").style.display = "";
   })
 
+  let selectedLevel = 0;
+
   $("#levels").innerHTML = Levels.map((level, i) => html`
     <input ${i === 0 ? "checked": ""} name="level" type="radio" id="level-${i}" value="${i}"/>
     <label for="level-${i}">${level.name}</label>`
   ).join("")
+  $("#levels").addEventListener("change", (e) => {
+    selectedLevel = parseInt((e.target as HTMLInputElement).value) ?? 0;
+  })
+
   $("#open-level").addEventListener("click", () => {
     $("#levels-container").style.display = "none"
     $("#game").style.display = ""
+    game.level = Levels[selectedLevel]
+    game.start()
+    app.ticker.start()
+    app.resize()
   })
-
-  app.resize();
 
   // @ts-expect-error esbuild define
   if (window.DEV) {

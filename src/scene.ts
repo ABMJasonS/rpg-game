@@ -104,11 +104,6 @@ export class GameScene {
 
     this._noisefilter = new NoiseFilter({ noise: 0.5 });
     this.application.stage.filters = [
-      new BulgePinchFilter({
-        center: createVector(0.5, 0.5),
-        radius: this.application.canvas.width,
-        strength: 0.8,
-      }),
       this._noisefilter,
       new CRTFilter({
         vignetting: 0.6,
