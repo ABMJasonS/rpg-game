@@ -13,11 +13,11 @@
     />
     <link rel="icon" type="image/x-icon" href="./img/bread-big.png">
   </head>
-  <body class="loading">
+  <body>
     <div class="main-container" id="loading">
-      <h1>Loading...</h1>
+      Loading...
     </div>
-    <div class="main-container" id="game" style="visibility: hidden">
+    <div class="main-container" id="game" style="display: none;">
       <div id="top">
         <div id="title">
           <span id="gametitle">Kitchen Nightmare</span>
@@ -36,18 +36,6 @@
                 </div>
               </div>
             </div>
-            <div class="stat" id="mana-stat">
-              <span class="stat-label">Mana: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="mana-bar-inner" style="background-color: red;"></div>
-              </div>
-            </div>
-            <div class="stat" id="stamina-stat">
-              <span class="stat-label">Stamina: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="stamina-bar-inner" style="background-color: red;"></div>
-              </div>
-            </div>
           </div>
         </div>
         <div id="item-equip">
@@ -60,6 +48,9 @@
       <div id="bottom">
         <div id="main-frame">
           <span id="fps-counter">-- fps</span>
+          <div id="overlay-screen" style="opacity: 0;">
+            <h1>Placeholder Content</h1>
+          </div>
         </div>
       </div>
     </div>
