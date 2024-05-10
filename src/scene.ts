@@ -1,6 +1,6 @@
 import { BulgePinchFilter, CRTFilter } from "pixi-filters";
 import { type Application, Assets, type Container, type GenerateTextureOptions, NoiseFilter, Texture } from "pixi.js";
-import { $ } from "./dom";
+import { $, html } from "./dom";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
 import { LevelSchema, Levels } from "./definitions/levels";
@@ -216,13 +216,17 @@ export class GameScene {
    * @param delta Delta time
    */
   act(delta: number) {
-    const deathScreen = $("#death-screen");
+    const deathScreen = $("#overlay-screen");
     if (this.paused) {
       if (this.isKeyDown(" ")) {
         this.level.onRestart(this);
         this.levelStage = 0;
         this.start();
         deathScreen.style.opacity = "0";
+        deathScreen.innerHTML = html`
+          <h1>You Died.</h1>
+          <p>Press SPACE to Restart.</p>
+        `
         this.paused = false;
         return;
       }

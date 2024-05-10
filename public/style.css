@@ -270,7 +270,7 @@ audio {
   display: none;
 }
 
-#death-screen {
+#overlay-screen {
   position: absolute;
   display: flex;
   flex-direction: column;

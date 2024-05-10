@@ -87,7 +87,7 @@ import { PlayerClasses } from "./definitions/classes.js";
     <label for="level-${i}">${level.name}</label>`
   ).join("")
   $("#levels").addEventListener("change", (e) => {
-    selectedLevel = parseInt((e.target as HTMLInputElement).value) ?? 0;
+    selectedLevel = Number.parseInt((e.target as HTMLInputElement).value) ?? 0;
   })
 
   $("#open-level").addEventListener("click", () => {
