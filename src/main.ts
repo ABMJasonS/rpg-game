@@ -82,8 +82,9 @@ import { createVector } from "./vector.js";
   );
 
   $("#main-frame").appendChild(app.canvas);
+  $("body").classList.remove("loading");
   $("#loading").style.display = "none";
-  $("#game").style.visibility = "";
+  $("#game").style.visibility = "visible";
 
   app.resize();
 })();

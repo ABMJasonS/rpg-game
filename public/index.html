@@ -13,9 +13,9 @@
     />
     <link rel="icon" type="image/x-icon" href="./img/bread-big.png">
   </head>
-  <body>
+  <body class="loading">
     <div class="main-container" id="loading">
-      Loading...
+      <h1>Loading...</h1>
     </div>
     <div class="main-container" id="game" style="visibility: hidden">
       <div id="top">
@@ -51,19 +51,16 @@
           </div>
         </div>
         <div id="item-equip">
-          <div id="playerview"></div>
-          <div id="equipbox">
-            <h2>equip items</h2>
-            <div id="box"></div>
-          </div>
+          <h1>Inventory</h1>
+          <div class="item firsti"></div>
+          <div class="item secondi"></div>
+          <div class="item thirdi"></div>
         </div>
       </div>
       <div id="bottom">
         <div id="main-frame">
           <span id="fps-counter">-- fps</span>
         </div>
-        <div id="inventory"></div>
-        <div id="mini-map"></div>
       </div>
     </div>
     <script src="./main.js"></script>

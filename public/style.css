@@ -47,6 +47,10 @@ body {
   margin-left: 10px;
 }
 
+#game {
+  visibility: hidden;
+}
+
 #location {
   position: absolute;
   right: 10px;
@@ -102,14 +106,6 @@ body {
   padding: 5px;
 }
 
-#inventory {
-  grid-area: inv;
-}
-
-#mini-map {
-  grid-area: map;
-  width: fill;
-}
 
 .main-container #bottom {
   margin-top: 0;
@@ -117,70 +113,43 @@ body {
   border: none;
   display: grid;
   grid-template-areas:
-    "main main main main main main main inv inv inv"
-    "main main main main main main main map map map"
-    "main main main main main main main map map map";
+    "main";
+}
+
+#item-equip .item {
+}
+
+.firsti {
+  grid-area: t;
+}
+
+.secondi {
+  grid-area: u;
+}
+
+.thirdi {
+  grid-area: v;
+}
+
+#item-equip h1 {
+  text-align: center;
+  grid-area: i;
+  height: max-content;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
 }
 
 #item-equip {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-areas: 
+  "i i i"
+  "t u v"
+  "t u v"
+  "t u v";
 }
 
-#playerview {
-  border: none;
-}
 
-#equipbox {
-  text-align: center;
-  border: none;
-  justify-content: center;
-}
-
-#equipbox h2 {
-  margin-top: 20px;
-}
-
-#box {
-  height: 8em;
-  width: 8em;
-  padding: 4px;
-  margin: auto;
-  margin-top: 20px;
-  cursor: pointer;
-  box-shadow: 0 0 0 rgba(255,255,255, 0.4);
-  animation: pulse 2s infinite;
-}
-
-#box:hover {
-  animation: none;
-}
-
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-  }
-  70% {
-      -webkit-box-shadow: 0 0 0 20px rgba(255,255,255, 0);
-  }
-  100% {
-      -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-  }
-}
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-    box-shadow: 0 0 0 0 rgba(255,255,255, 0.4);
-  }
-  70% {
-      -moz-box-shadow: 0 0 0 20px rgba(255,255,255, 0);
-      box-shadow: 0 0 0 20px rgba(255,255,255, 0);
-  }
-  100% {
-      -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-      box-shadow: 0 0 0 0 rgba(255,255,255, 0);
-  }
-}
 
 #stats {
   display: flex;
@@ -268,4 +237,22 @@ body {
 
 audio {
   display: none;
+}
+
+#loading {
+  overflow: hidden!important;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.loading {
+  overflow: hidden;
+}
+
+#loading h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
