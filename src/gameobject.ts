@@ -10,6 +10,7 @@ export class GameObject {
   scene: GameScene;
   collider: Hitbox | undefined = undefined;
   hitbox: Hitbox | undefined = undefined;
+  _destroyed = false;
   constructor(position: Vector, rotation: Radians, scene: GameScene) {
     this.pixiContainer = new Container();
     this.position = position;
@@ -25,12 +26,14 @@ export class GameObject {
   }
 
   updateHitbox() {
+    if (this._destroyed) return;
     if (!this.hitbox) return;
     this.collider = this.hitbox.clone();
     this.collider.translate(this.position);
   }
 
   updateGraphics() {
+    if (this._destroyed) return;
     this.pixiContainer.x = this.position.x;
     this.pixiContainer.y = this.position.y;
     this.pixiContainer.rotation = this.rotation;

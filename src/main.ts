@@ -1,16 +1,10 @@
 import { sound } from "@pixi/sound";
 import { Application, Assets, Graphics, TextureStyle } from "pixi.js";
 import { GameAssets } from "./definitions/assets.js";
-import { Enemies } from "./definitions/enemies.js";
-import { Weapons } from "./definitions/weapons.js";
-import { $ } from "./dom.js";
-import { Background } from "./objects/background.js";
-import { CursorTest } from "./objects/cursortest.js";
-import { Enemy } from "./objects/enemy.js";
-import { Player } from "./objects/player.js";
-import { TestObject } from "./objects/testobject.js";
+import { $, html } from "./dom.js";
 import { GameScene } from "./scene.js";
-import { createVector } from "./vector.js";
+import { Levels } from "./definitions/levels.js";
+import { PlayerClasses } from "./definitions/classes.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -20,11 +14,10 @@ import { createVector } from "./vector.js";
   await app.init({
     resizeTo: $("#main-frame"),
     background: 0x000000,
-    preference: "webgpu",
     hello: true,
   });
 
-  const game = new GameScene(app);
+  const game = new GameScene(app, Levels[0], 0);
 
   for (const directory of ["enemies", "weapons", "misc"]) {
     // @ts-expect-error Typescript being shit again
@@ -38,33 +31,13 @@ import { createVector } from "./vector.js";
     }
   }
   console.info("Assets are loaded!");
-  console.log(game._image_assets);
-
-  game.addObject(new Player(game));
-
-  // game.addObject(new CursorTest(game));
-
-  game.addObject(new Background(game));
-
-  game.addObject(new Enemy({ x: -1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: -1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: -1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: -1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: -1500, y: 1500 }, game, Enemies.toast));
-  game.addObject(new Enemy({ x: 3000, y: 0 }, game, Enemies.toaster));
-  game.addObject(new Enemy({ x: -3000, y: 0 }, game, Enemies.toaster));
-  game.addObject(new Enemy({ x: 0, y: 3000 }, game, Enemies.toaster));
-  game.addObject(new Enemy({ x: 0, y: -3000 }, game, Enemies.toaster));
 
   let fps = "";
 
   app.ticker.add((ticker) => {
     fps = ticker.FPS.toFixed(0);
     game.act(1 / ticker.FPS);
-  });
+  }).stop();
 
   setInterval(() => {
     $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects | ${app.stage.children.length} Pixi Children`;
@@ -82,10 +55,58 @@ import { createVector } from "./vector.js";
   );
 
   $("#main-frame").appendChild(app.canvas);
-  $("#loading").style.display = "none";
-  $("#game").style.visibility = "";
 
-  app.resize();
+  let playerName = "";
+  const playerNameField = $<HTMLInputElement>("#player-name")
+  playerNameField.addEventListener("click", () => {
+    playerName = playerNameField.value
+  })
+
+  const playButton = $("#play-button")
+  playButton.innerText = "Play Kitchen Nightmare"
+  playButton.addEventListener("click", () => {
+    $("#menu").style.display = "none"
+    $("#classes-container").style.display = ""
+  })
+
+  let selectedClass = 0;
+
+  $("#classes").innerHTML = PlayerClasses.map((playerClass, i) => html`
+    <input ${i === 0 ? "checked" : ""} name="class" id="class-${i}" type="radio" value="${i}" />
+    <label for="class=${i}">${playerClass.name}</label>`
+  ).join("")
+  $("#open-world").addEventListener("click", () => {
+    $("#classes-container").style.display = "none";
+    $("#levels-container").style.display = "";
+  })
+
+  let selectedLevel = 0;
+
+  $("#levels").innerHTML = Levels.map((level, i) => html`
+    <input ${i === 0 ? "checked": ""} name="level" type="radio" id="level-${i}" value="${i}"/>
+    <label for="level-${i}">${level.name}</label>`
+  ).join("")
+  $("#levels").addEventListener("change", (e) => {
+    selectedLevel = parseInt((e.target as HTMLInputElement).value) ?? 0;
+  })
+
+  $("#open-level").addEventListener("click", () => {
+    $("#levels-container").style.display = "none"
+    $("#game").style.display = ""
+    game.level = Levels[selectedLevel]
+    game.start()
+    game.resize()
+    app.ticker.start()
+    app.resize()
+  })
+
+  // @ts-expect-error esbuild define
+  if (window.DEV) {
+    // @ts-expect-error for devving
+    window.GAME = game;
+    // @ts-expect-error for pixi dev tools
+    window.__PIXI_APP__ = app
+  }
 })();
 
 // @ts-expect-error esbuild define

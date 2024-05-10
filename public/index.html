@@ -14,10 +14,27 @@
     <link rel="icon" type="image/x-icon" href="./img/bread-big.png">
   </head>
   <body>
-    <div class="main-container" id="loading">
-      Loading...
+    <div class="main-container" id="menu">
+      <div>
+        <input type="text" id="player-name" placeholder="Your Name">
+        <button id="play-button">Loading...</button>
+      </div>
     </div>
-    <div class="main-container" id="game" style="visibility: hidden">
+    <div class="main-container" id="classes-container" style="display: none;">
+      <div>
+        <h1>Pick a class:</h1>
+        <div id="classes"></div>
+        <button id="open-world">Open World</button>
+      </div>
+    </div>
+    <div class="main-container" id="levels-container" style="display: none;">
+      <div>
+        <h1>Levels:</h1>
+        <div id="levels"></div>
+        <button id="open-level">Play Level</button>
+      </div>
+    </div>
+    <div class="main-container" id="game" style="display: none;">
       <div id="top">
         <div id="title">
           <span id="gametitle">Kitchen Nightmare</span>
@@ -36,18 +53,6 @@
                 </div>
               </div>
             </div>
-            <div class="stat" id="mana-stat">
-              <span class="stat-label">Mana: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="mana-bar-inner" style="background-color: red;"></div>
-              </div>
-            </div>
-            <div class="stat" id="stamina-stat">
-              <span class="stat-label">Stamina: </span>
-              <div class="stat-bar">
-                <div class="stat-bar-inner" id="stamina-bar-inner" style="background-color: red;"></div>
-              </div>
-            </div>
           </div>
         </div>
         <div id="item-equip">
@@ -61,6 +66,10 @@
       <div id="bottom">
         <div id="main-frame">
           <span id="fps-counter">-- fps</span>
+          <div id="death-screen" style="opacity: 0;">
+            <h1>You died.</h1>
+            <p>Press SPACE to Restart</p>
+          </div>
         </div>
         <div id="inventory"></div>
         <div id="mini-map"></div>
