@@ -239,7 +239,6 @@ audio {
   display: none;
 }
 
-<<<<<<< HEAD
 #loading {
   overflow: hidden!important;
   height: 100%;
@@ -256,7 +255,8 @@ audio {
   top: 50%;
   left: 50%;
   transform: translate(-50%, 0);
-=======
+}
+
 #overlay-screen {
   position: absolute;
   display: flex;
@@ -299,5 +299,4 @@ audio {
       width: 60%;
     }
   }
->>>>>>> 77cd7eb39494af02ac574747f5f5f0fd478d091b
 }
