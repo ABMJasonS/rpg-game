@@ -55,12 +55,9 @@ import { PlayerClasses } from "./definitions/classes.js";
   );
 
   $("#main-frame").appendChild(app.canvas);
-<<<<<<< HEAD
   $("body").classList.remove("loading");
   $("#loading").style.display = "none";
   $("#game").style.visibility = "visible";
-=======
->>>>>>> 77cd7eb39494af02ac574747f5f5f0fd478d091b
 
   let playerName = "";
   const playerNameField = $<HTMLInputElement>("#player-name")
