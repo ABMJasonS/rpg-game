@@ -1,7 +1,7 @@
 import { Background } from "../objects/background";
 import { Enemy } from "../objects/enemy";
 import { Player } from "../objects/player";
-import { GameScene } from "../scene";
+import type { GameScene } from "../scene";
 import { Enemies } from "./enemies";
 
 export type LevelSchema = {
@@ -21,12 +21,12 @@ export const Levels: LevelSchema[] = [
   {
     name: "The Kitchen",
     restartCondition(scene) {
-      const player = scene.findObjects<Player>(Player)[0]
+      const player = scene.findObjects<Player>(Player)[0];
       if (!player) return false;
       return player.dead;
     },
     onRestart(scene) {
-      scene.removeAllObjects()
+      scene.removeAllObjects();
     },
     stages: [
       {
@@ -42,7 +42,7 @@ export const Levels: LevelSchema[] = [
           scene.addObject(new Enemy({ x: -1500, y: 1500 }, scene, Enemies.toast));
         },
         onFinish(scene) {
-          console.log("aaaa")
+          console.log("aaaa");
         },
       },
     ],
@@ -50,12 +50,12 @@ export const Levels: LevelSchema[] = [
   {
     name: "The Kitchen",
     restartCondition(scene) {
-      const player = scene.findObjects<Player>(Player)[0]
+      const player = scene.findObjects<Player>(Player)[0];
       if (!player) return false;
       return player.dead;
     },
     onRestart(scene) {
-      scene.removeAllObjects()
+      scene.removeAllObjects();
     },
     stages: [
       {
@@ -77,7 +77,7 @@ export const Levels: LevelSchema[] = [
           scene.addObject(new Enemy({ x: 0, y: -3000 }, scene, Enemies.toaster));
         },
         onFinish(scene) {
-          console.log("aaaa")
+          console.log("aaaa");
         },
       },
     ],

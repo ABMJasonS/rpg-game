@@ -1,10 +1,10 @@
 import { sound } from "@pixi/sound";
 import { Application, Assets, Graphics, TextureStyle } from "pixi.js";
 import { GameAssets } from "./definitions/assets.js";
+import { PlayerClasses } from "./definitions/classes.js";
+import { Levels } from "./definitions/levels.js";
 import { $, html } from "./dom.js";
 import { GameScene } from "./scene.js";
-import { Levels } from "./definitions/levels.js";
-import { PlayerClasses } from "./definitions/classes.js";
 
 (async () => {
   TextureStyle.defaultOptions.scaleMode = "nearest";
@@ -34,10 +34,12 @@ import { PlayerClasses } from "./definitions/classes.js";
 
   let fps = "";
 
-  app.ticker.add((ticker) => {
-    fps = ticker.FPS.toFixed(0);
-    game.act(1 / ticker.FPS);
-  }).stop();
+  app.ticker
+    .add((ticker) => {
+      fps = ticker.FPS.toFixed(0);
+      game.act(1 / ticker.FPS);
+    })
+    .stop();
 
   setInterval(() => {
     $("#fps-counter").innerText = `${fps} FPS | ${game._objects.length} Objects | ${app.stage.children.length} Pixi Children`;
@@ -74,7 +76,7 @@ import { PlayerClasses } from "./definitions/classes.js";
   })
   */
 
-  let selectedClass = 0;
+  const selectedClass = 0;
 
   /*
   $("#classes").innerHTML = PlayerClasses.map((playerClass, i) => html`
@@ -87,7 +89,7 @@ import { PlayerClasses } from "./definitions/classes.js";
   })
   */
 
-  let selectedLevel = 0;
+  const selectedLevel = 0;
 
   /*
   $("#levels").innerHTML = Levels.map((level, i) => html`
@@ -103,13 +105,13 @@ import { PlayerClasses } from "./definitions/classes.js";
   $("#open-level").addEventListener("click", () => {
     $("#levels-container").style.display = "none"
     */
-    $("#game").style.display = ""
-    game.level = Levels[selectedLevel]
-    game.start()
-    game.resize()
-    app.ticker.start()
-    app.resize()
-    /*
+  $("#game").style.display = "";
+  game.level = Levels[selectedLevel];
+  game.start();
+  game.resize();
+  app.ticker.start();
+  app.resize();
+  /*
   })
   */
 
@@ -118,7 +120,7 @@ import { PlayerClasses } from "./definitions/classes.js";
     // @ts-expect-error for devving
     window.GAME = game;
     // @ts-expect-error for pixi dev tools
-    window.__PIXI_APP__ = app
+    window.__PIXI_APP__ = app;
   }
 })();
 

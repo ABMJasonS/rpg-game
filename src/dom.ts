@@ -13,7 +13,7 @@ export const html = (strings: TemplateStringsArray, ...values: unknown[]): strin
   let result = "";
   for (let i = 0; i < strings.length; i++) {
     result += strings[i];
-    result += values[i] ?? ""
+    result += values[i] ?? "";
   }
   return result;
 };

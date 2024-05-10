@@ -6,10 +6,10 @@ import { $, html } from "../dom";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import { Derived, Signal } from "../signals";
-import { type Vector, addVectors, createVector, scale, setLength, subVectors, vectorAngle, createPolar } from "../vector";
+import { type Vector, addVectors, createPolar, createVector, scale, setLength, subVectors, vectorAngle } from "../vector";
 import { Enemy } from "./enemy";
-import { Weapon } from "./weapon";
 import { Particle } from "./particle";
+import { Weapon } from "./weapon";
 
 export class Player extends GameObject {
   speed = 1000;
@@ -29,7 +29,7 @@ export class Player extends GameObject {
     const sprite = Sprite.from(this.scene.getImageAsset("misc/bread").texture);
     sprite.anchor.set(0.5);
     sprite.scale.set(10);
-    this.pixiContainer = sprite
+    this.pixiContainer = sprite;
 
     new Derived(
       () => {
@@ -132,19 +132,24 @@ export class Player extends GameObject {
   death() {
     this.pixiContainer.visible = false;
     for (let i = 0; i < 10; i++) {
-      this.scene.addObject(new Particle({
-        position: this.position,
-        rotation: Math.random() * Math.PI * 2,
-        texture: this.scene.getImageAsset("").texture,
-        period: Math.random() + 0.5,
-        act(particle, progress, delta, sprite, seed) {
-          sprite.anchor.set(0.5)
-          sprite.scale.set(32 * (1 - progress) * seed)
-          sprite.rotation += (seed - 0.5) * 5 * delta;
-          particle.position = addVectors(particle.position, createPolar(delta * 1000 * seed, particle.rotation))
-          sprite.alpha = 1 - progress
-        },
-      }, this.scene))
+      this.scene.addObject(
+        new Particle(
+          {
+            position: this.position,
+            rotation: Math.random() * Math.PI * 2,
+            texture: this.scene.getImageAsset("").texture,
+            period: Math.random() + 0.5,
+            act(particle, progress, delta, sprite, seed) {
+              sprite.anchor.set(0.5);
+              sprite.scale.set(32 * (1 - progress) * seed);
+              sprite.rotation += (seed - 0.5) * 5 * delta;
+              particle.position = addVectors(particle.position, createPolar(delta * 1000 * seed, particle.rotation));
+              sprite.alpha = 1 - progress;
+            },
+          },
+          this.scene,
+        ),
+      );
     }
     this.dead = true;
 

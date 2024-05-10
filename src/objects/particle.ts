@@ -21,8 +21,8 @@ export class Particle extends GameObject {
     super(schema.position, schema.rotation, scene);
     this.schema = schema;
     this.sprite = Sprite.from(schema.texture);
-    this.pixiContainer = this.sprite
-    this.seed = Math.random()
+    this.pixiContainer = this.sprite;
+    this.seed = Math.random();
   }
 
   override act(delta: number): void {

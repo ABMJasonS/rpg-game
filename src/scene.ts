@@ -1,9 +1,9 @@
 import { BulgePinchFilter, CRTFilter } from "pixi-filters";
-import { type Application, Assets, type Container, type GenerateTextureOptions, NoiseFilter, Texture } from "pixi.js";
+import { type Application, Assets, type Container, type GenerateTextureOptions, NoiseFilter, type Texture } from "pixi.js";
+import { type LevelSchema, Levels } from "./definitions/levels";
 import { $, html } from "./dom";
 import type { GameObject } from "./gameobject";
 import { type Radians, type Vector, createVector } from "./vector";
-import { LevelSchema, Levels } from "./definitions/levels";
 
 export class GameScene {
   application: Application;
@@ -25,12 +25,12 @@ export class GameScene {
     zoom: number;
     _scale: number;
   } = {
-      position: { x: 0, y: 0 },
-      offset: { x: 0, y: 0 },
-      rotation: 0,
-      zoom: 1,
-      _scale: 0,
-    };
+    position: { x: 0, y: 0 },
+    offset: { x: 0, y: 0 },
+    rotation: 0,
+    zoom: 1,
+    _scale: 0,
+  };
   private _keysDown: string[] = [];
   /**
    * The current position and buttons pressed on the user's mouse
@@ -42,12 +42,12 @@ export class GameScene {
       left: boolean;
     };
   } = {
-      position: { x: 0, y: 0 },
-      _offset: { x: 0, y: 0 },
-      buttons: {
-        left: false,
-      },
-    };
+    position: { x: 0, y: 0 },
+    _offset: { x: 0, y: 0 },
+    buttons: {
+      left: false,
+    },
+  };
   _noisefilter: NoiseFilter;
 
   gameSpeed = 1;
@@ -226,7 +226,7 @@ export class GameScene {
         deathScreen.innerHTML = html`
           <h1>You Died.</h1>
           <p>Press SPACE to Restart.</p>
-        `
+        `;
         this.paused = false;
         return;
       }

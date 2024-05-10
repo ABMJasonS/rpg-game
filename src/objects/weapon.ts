@@ -5,7 +5,7 @@ import type { WeaponSchema } from "../definitions/weapons";
 import { GameObject } from "../gameobject";
 import type { GameScene } from "../scene";
 import type { Seconds } from "../units";
-import { type Radians, type Vector, addVectors, createPolar, createVector, setLength, subVectors, cloneVector } from "../vector";
+import { type Radians, type Vector, addVectors, cloneVector, createPolar, createVector, setLength, subVectors } from "../vector";
 import { Enemy } from "./enemy";
 import type { Player } from "./player";
 import { Projectile } from "./projectile";
