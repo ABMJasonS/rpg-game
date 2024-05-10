@@ -39,6 +39,7 @@ export class Player extends GameObject {
       undefined,
       [this.health],
     );
+    /*
     new Derived(
       () => {
         $("#inventory").innerHTML = this.weapons.get().map((weaponID, i) => {
@@ -57,6 +58,7 @@ export class Player extends GameObject {
       undefined,
       [this.currentWeapon, this.weapons]
     )
+    */
   }
 
   override act(delta: number): void {
