@@ -13,7 +13,7 @@ import { Particle } from "./particle";
 
 export class Player extends GameObject {
   speed = 1000;
-  health = new Signal(1);
+  health = new Signal(69420);
   fireCount = 0;
   velocity: Vector = createVector(0, 0);
   weapons: Signal<string[]> = new Signal(["butterknife", "jam_gun"]);
