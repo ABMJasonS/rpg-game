@@ -59,21 +59,24 @@ import { PlayerClasses } from "./definitions/classes.js";
   $("#loading").style.display = "none";
   $("#game").style.visibility = "visible";
 
-  let playerName = "";
+  /*let playerName = "";
   const playerNameField = $<HTMLInputElement>("#player-name")
   playerNameField.addEventListener("click", () => {
     playerName = playerNameField.value
-  })
+  })*/
 
+  /*
   const playButton = $("#play-button")
   playButton.innerText = "Play Kitchen Nightmare"
   playButton.addEventListener("click", () => {
     $("#menu").style.display = "none"
     $("#classes-container").style.display = ""
   })
+  */
 
   let selectedClass = 0;
 
+  /*
   $("#classes").innerHTML = PlayerClasses.map((playerClass, i) => html`
     <input ${i === 0 ? "checked" : ""} name="class" id="class-${i}" type="radio" value="${i}" />
     <label for="class=${i}">${playerClass.name}</label>`
@@ -82,9 +85,11 @@ import { PlayerClasses } from "./definitions/classes.js";
     $("#classes-container").style.display = "none";
     $("#levels-container").style.display = "";
   })
+  */
 
   let selectedLevel = 0;
 
+  /*
   $("#levels").innerHTML = Levels.map((level, i) => html`
     <input ${i === 0 ? "checked": ""} name="level" type="radio" id="level-${i}" value="${i}"/>
     <label for="level-${i}">${level.name}</label>`
@@ -92,16 +97,21 @@ import { PlayerClasses } from "./definitions/classes.js";
   $("#levels").addEventListener("change", (e) => {
     selectedLevel = Number.parseInt((e.target as HTMLInputElement).value) ?? 0;
   })
+  */
 
+  /*
   $("#open-level").addEventListener("click", () => {
     $("#levels-container").style.display = "none"
+    */
     $("#game").style.display = ""
     game.level = Levels[selectedLevel]
     game.start()
     game.resize()
     app.ticker.start()
     app.resize()
+    /*
   })
+  */
 
   // @ts-expect-error esbuild define
   if (window.DEV) {
